@@ -20,9 +20,9 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 # API Configuration
-YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '[REDACTED_YOUTUBE_KEY]')
-INSTAGRAM_APP_ID = os.environ.get('INSTAGRAM_APP_ID', '[REDACTED_INSTAGRAM_ID]')
-INSTAGRAM_APP_SECRET = os.environ.get('INSTAGRAM_APP_SECRET', '[REDACTED_INSTAGRAM_SECRET]')
+YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '')
+INSTAGRAM_APP_ID = os.environ.get('INSTAGRAM_APP_ID', '')
+INSTAGRAM_APP_SECRET = os.environ.get('INSTAGRAM_APP_SECRET', '')
 
 # Database Models
 class User(db.Model):

@@ -21,7 +21,7 @@ from stripe_integration import (
 # Configuration
 PORT = 8080
 DATA_DIR = "/home/daz/.openclaw/workspace/levelup-ai/creator-app/data"
-YOUTUBE_API_KEY = "[REDACTED_YOUTUBE_KEY]"
+YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '')
 
 # Ensure data directory exists
 os.makedirs(DATA_DIR, exist_ok=True)
