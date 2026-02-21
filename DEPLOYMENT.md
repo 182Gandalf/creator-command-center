@@ -1,4 +1,4 @@
-# Deployment Guide - Creator Command Center
+# Deployment Guide - FlowCast
 
 ## Recommended Hosting: Railway (Best Free Option)
 

@@ -1,5 +1,5 @@
-# Creator Command Center
-# Flask Backend Application
+# FlowCast
+# Social Media Management Platform
 
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy

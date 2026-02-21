@@ -1,4 +1,4 @@
-# Creator Command Center
+# FlowCast
 
 A social media management tool for content creators. Schedule posts, track analytics, and get AI-powered content ideas.
 
