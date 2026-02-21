@@ -223,59 +223,105 @@ def instagram_account():
 
 @app.route('/api/ai-content-ideas')
 def ai_content_ideas():
-    """Generate AI content ideas based on user's content history"""
-    # Get user's recent posts to personalize suggestions
-    recent_posts = Post.query.order_by(Post.created_at.desc()).limit(5).all()
+    """Generate AI content ideas using multi-provider router with caching"""
+    from ai_router import generate_content_ideas
     
-    # AI-generated ideas (in production, this would call OpenAI/Claude API)
-    ideas = [
+    # Get parameters
+    topic = request.args.get('topic', 'social media growth')
+    platform = request.args.get('platform', 'instagram')
+    count = min(int(request.args.get('count', 5)), 10)  # Max 10 ideas
+    
+    # Get user tier (from session or default to free)
+    # In production, get from authenticated user
+    user_tier = session.get('subscription_tier', 'free')
+    
+    try:
+        # Generate ideas using AI router (with automatic caching)
+        result = generate_content_ideas(
+            user_tier=user_tier,
+            topic=topic,
+            platform=platform,
+            count=count
+        )
+        
+        if result['success']:
+            # Add metadata for debugging
+            response = {
+                'success': True,
+                'ideas': result['ideas'],
+                'model_used': result.get('model_used', 'fallback'),
+                'cached': result.get('cached', False),
+                'cost_usd': result.get('cost_usd', 0),
+                'tier': user_tier
+            }
+            return jsonify(response)
+        else:
+            # Fallback to default ideas
+            return jsonify({
+                'success': True,
+                'ideas': get_default_ideas(topic, platform, count),
+                'model_used': 'fallback',
+                'cached': False,
+                'cost_usd': 0,
+                'tier': user_tier,
+                'note': 'Using fallback ideas'
+            })
+    
+    except Exception as e:
+        # Log error and return fallback
+        print(f"AI generation error: {e}")
+        return jsonify({
+            'success': True,
+            'ideas': get_default_ideas(topic, platform, count),
+            'model_used': 'fallback',
+            'error': str(e)
+        })
+
+def get_default_ideas(topic, platform, count):
+    """Fallback ideas when AI is unavailable"""
+    templates = [
         {
-            'id': 1,
-            'title': '5 AI Tools That Save Me 10 Hours/Week',
-            'format': 'Carousel (5 slides)',
-            'platform': 'Instagram',
+            'title': f'5 Secrets About {topic} Nobody Talks About',
+            'format': 'Carousel' if platform == 'instagram' else 'Video',
+            'platform': platform.capitalize(),
             'estimated_engagement': 'High',
             'best_posting_time': 'Tuesday 10 AM',
-            'hook': 'Stop wasting time on manual tasks...'
+            'hook': f'Revealing hidden truths about {topic}...'
         },
         {
-            'id': 2,
-            'title': 'How I Batch Create Content',
-            'format': 'YouTube Short',
-            'platform': 'YouTube',
-            'estimated_engagement': 'Medium',
+            'title': f'How I Mastered {topic} in 30 Days',
+            'format': 'Reel' if platform == 'instagram' else 'Short',
+            'platform': platform.capitalize(),
+            'estimated_engagement': 'High',
             'best_posting_time': 'Thursday 2 PM',
-            'hook': 'I create a week of content in 2 hours...'
+            'hook': f'My journey with {topic}...'
         },
         {
-            'id': 3,
-            'title': 'Before vs After: My Workflow',
-            'format': 'Reel/TikTok',
-            'platform': 'Instagram',
+            'title': f'The Biggest {topic} Mistakes Beginners Make',
+            'format': 'Carousel' if platform == 'instagram' else 'Post',
+            'platform': platform.capitalize(),
+            'estimated_engagement': 'Medium',
+            'best_posting_time': 'Wednesday 1 PM',
+            'hook': f'Avoid these {topic} pitfalls...'
+        },
+        {
+            'title': f'Before vs After: My {topic} Journey',
+            'format': 'Reel' if platform == 'instagram' else 'Video',
+            'platform': platform.capitalize(),
             'estimated_engagement': 'High',
             'best_posting_time': 'Saturday 11 AM',
-            'hook': 'This changed everything for me...'
+            'hook': f'Transformation through {topic}...'
         },
         {
-            'id': 4,
-            'title': 'The Truth About Going Viral',
-            'format': 'Long-form Video',
-            'platform': 'YouTube',
-            'estimated_engagement': 'Very High',
+            'title': f'Why Most People Fail at {topic}',
+            'format': 'Story' if platform == 'instagram' else 'Post',
+            'platform': platform.capitalize(),
+            'estimated_engagement': 'Medium',
             'best_posting_time': 'Sunday 9 AM',
-            'hook': 'Everyone gets this wrong...'
-        },
-        {
-            'id': 5,
-            'title': '3 Mistakes Killing Your Engagement',
-            'format': 'Carousel',
-            'platform': 'Instagram',
-            'estimated_engagement': 'High',
-            'best_posting_time': 'Wednesday 1 PM',
-            'hook': 'I made all of these...'
+            'hook': f'The mindset shift for {topic}...'
         }
     ]
-    return jsonify({'success': True, 'ideas': ideas})
+    return templates[:count]
 
 @app.route('/api/youtube/auth')
 def youtube_auth():
