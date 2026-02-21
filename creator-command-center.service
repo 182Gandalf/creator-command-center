@@ -1,0 +1,19 @@
+[Unit]
+Description=Creator Command Center Web App
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/daz/.openclaw/workspace/levelup-ai/creator-app
+Environment="PATH=/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/bin:/usr/bin:/bin"
+Environment="YOUTUBE_API_KEY=[REDACTED_YOUTUBE_KEY]"
+Environment="PYTHONUNBUFFERED=1"
+Environment="PORT=8080"
+ExecStart=/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/bin/python3 app_simple.py
+StandardOutput=journal
+StandardError=journal
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

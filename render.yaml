@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: creator-command-center
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app_simple.py
+    envVars:
+      - key: YOUTUBE_API_KEY
+        value: [REDACTED_YOUTUBE_KEY]
+      - key: PORT
+        value: 8080
+      - key: PYTHON_VERSION
+        value: 3.11.0

@@ -1,0 +1,72 @@
+Traceback (most recent call last):
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/bin/flask", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/flask/cli.py", line 1064, in main
+    cli.main()
+    ~~~~~~~~^^
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/click/core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/click/core.py", line 1873, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/click/core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/click/core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/click/decorators.py", line 93, in new_func
+    return ctx.invoke(f, obj, *args, **kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/click/core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/flask/cli.py", line 912, in run_command
+    raise e from None
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/flask/cli.py", line 898, in run_command
+    app = info.load_app()
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/flask/cli.py", line 309, in load_app
+    app = locate_app(import_name, name)
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/flask/cli.py", line 219, in locate_app
+    __import__(module_name)
+    ~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/app.py", line 5, in <module>
+    from flask_sqlalchemy import SQLAlchemy
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/flask_sqlalchemy/__init__.py", line 5, in <module>
+    from .extension import SQLAlchemy
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/flask_sqlalchemy/extension.py", line 9, in <module>
+    import sqlalchemy as sa
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/__init__.py", line 13, in <module>
+    from .engine import AdaptedConnection as AdaptedConnection
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/engine/__init__.py", line 18, in <module>
+    from . import events as events
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/engine/events.py", line 19, in <module>
+    from .base import Connection
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 30, in <module>
+    from .interfaces import BindTyping
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/engine/interfaces.py", line 38, in <module>
+    from ..sql.compiler import Compiled as Compiled
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/sql/__init__.py", line 14, in <module>
+    from .compiler import COLLECT_CARTESIAN_PRODUCTS as COLLECT_CARTESIAN_PRODUCTS
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/sql/compiler.py", line 61, in <module>
+    from . import crud
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/sql/crud.py", line 34, in <module>
+    from . import dml
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/sql/dml.py", line 34, in <module>
+    from . import util as sql_util
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/sql/util.py", line 46, in <module>
+    from .ddl import sort_tables as sort_tables  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/sql/ddl.py", line 30, in <module>
+    from .elements import ClauseElement
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/sql/elements.py", line 810, in <module>
+    class SQLCoreOperations(Generic[_T_co], ColumnOperators, TypingOnly):
+    ...<472 lines>...
+                ...
+  File "/usr/lib/python3.13/typing.py", line 1257, in _generic_init_subclass
+    super(Generic, cls).__init_subclass__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 1988, in __init_subclass__
+    raise AssertionError(
+    ...<2 lines>...
+    )
+AssertionError: Class <class 'sqlalchemy.sql.elements.SQLCoreOperations'> directly inherits TypingOnly but has additional attributes {'__firstlineno__', '__static_attributes__'}.
