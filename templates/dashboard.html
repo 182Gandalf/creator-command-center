@@ -356,6 +356,142 @@
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
+        
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-content h2 {
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .platform-checkboxes {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .platform-checkboxes label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+        
+        .btn-secondary {
+            background: var(--bg-hover);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-card);
+        }
+        
+        /* Calendar Enhancements */
+        .calendar-day {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .calendar-day:hover {
+            background: var(--bg-hover);
+        }
+        
+        .calendar-day.today {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .calendar-day.has-post::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+        
+        /* Idea Card Actions */
+        .idea-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-small.btn-secondary {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
 <body>
@@ -448,31 +584,311 @@
     </footer>
     
     <script>
-        // Load stats
-        fetch('/api/dashboard-stats')
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('total-posts').textContent = data.total_posts || 0;
+        // Application State
+        const app = {
+            stats: {},
+            posts: [],
+            ideas: [],
+            subscription: {},
+            youtubeConnected: false,
+            currentUser: null
+        };
+
+        // Initialize Dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboard();
+            setupEventListeners();
+        });
+
+        async function loadDashboard() {
+            try {
+                showLoading(true);
+                
+                // Load all data in parallel
+                const [stats, ideas, subscription, analytics] = await Promise.all([
+                    fetch('/api/dashboard-stats').then(r => r.json()),
+                    fetch('/api/ai-content-ideas').then(r => r.json()),
+                    fetch('/api/user/subscription').then(r => r.json()),
+                    fetch('/api/analytics').then(r => r.json())
+                ]);
+                
+                app.stats = stats;
+                app.ideas = ideas.ideas || [];
+                app.subscription = subscription;
+                
+                // Update UI
+                updateStats(stats);
+                updateAIIdeas(app.ideas);
+                updateSubscriptionBadge(subscription);
+                renderCalendar();
+                
+                showLoading(false);
+            } catch (error) {
+                console.error('Failed to load dashboard:', error);
+                showError('Failed to load dashboard data. Please refresh.');
+                showLoading(false);
+            }
+        }
+
+        function updateStats(data) {
+            const elements = {
+                'total-posts': data.total_posts || 0,
+                'scheduled-count': data.scheduled_posts || 0,
+                'engagement-rate': (data.engagement_rate || 0) + '%',
+                'platform-count': (data.youtube_scheduled || 0) + (data.instagram_scheduled || 0)
+            };
+            
+            Object.entries(elements).forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
             });
-        
-        // Load AI ideas
-        fetch('/api/ai-content-ideas')
-            .then(res => res.json())
-            .then(data => {
-                const container = document.getElementById('ai-ideas');
-                if (data.ideas && data.ideas.length > 0) {
-                    container.innerHTML = data.ideas.map(idea => `
-                        <div class="idea-card">
-                            <div class="idea-title">${idea.title}</div>
-                            <div class="idea-meta">
-                                <span>📱 ${idea.platform}</span>
-                                <span>📝 ${idea.format}</span>
-                            </div>
-                            <button class="btn-small">Use This Idea</button>
+        }
+
+        function updateAIIdeas(ideas) {
+            const container = document.getElementById('ai-ideas');
+            if (!container) return;
+            
+            if (ideas.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted);">No ideas available. Upgrade to Pro for unlimited AI suggestions.</p>';
+                return;
+            }
+            
+            container.innerHTML = ideas.map(idea => `
+                <div class="idea-card" data-id="${idea.id}">
+                    <div class="idea-title">${idea.title}</div>
+                    <div class="idea-meta">
+                        <span>📱 ${idea.platform}</span>
+                        <span>📝 ${idea.format}</span>
+                        <span>📊 ${idea.estimated_engagement} engagement</span>
+                    </div>
+                    <div class="idea-hook" style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.5rem;">
+                        💡 ${idea.hook}
+                    </div>
+                    <div class="idea-actions" style="margin-top: 1rem;">
+                        <button class="btn-small" onclick="useIdea(${idea.id})">Use This Idea</button>
+                        <button class="btn-small btn-secondary" onclick="scheduleIdea(${idea.id})">Schedule</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateSubscriptionBadge(sub) {
+            const badge = document.querySelector('.ai-badge');
+            if (badge) {
+                badge.textContent = sub.tier.charAt(0).toUpperCase() + sub.tier.slice(1) + ' Tier';
+            }
+        }
+
+        function renderCalendar() {
+            const calendarGrid = document.getElementById('calendar-grid');
+            if (!calendarGrid) return;
+            
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth();
+            
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDay = firstDay.getDay();
+            
+            let html = '';
+            
+            // Day headers
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayNames.forEach(day => {
+                html += `<div class="calendar-day-header">${day}</div>`;
+            });
+            
+            // Empty cells before first day
+            for (let i = 0; i < startingDay; i++) {
+                html += `<div class="calendar-day empty"></div>`;
+            }
+            
+            // Days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const isToday = day === today.getDate();
+                const hasPost = app.posts.some(p => {
+                    const postDate = new Date(p.scheduled_at);
+                    return postDate.getDate() === day && postDate.getMonth() === month;
+                });
+                
+                html += `
+                    <div class="calendar-day ${isToday ? 'today' : ''} ${hasPost ? 'has-post' : ''}" data-day="${day}">
+                        <span class="day-number">${day}</span>
+                        ${hasPost ? '<span class="post-indicator">●</span>' : ''}
+                    </div>
+                `;
+            }
+            
+            calendarGrid.innerHTML = html;
+            
+            // Add click handlers
+            document.querySelectorAll('.calendar-day:not(.empty)').forEach(day => {
+                day.addEventListener('click', () => {
+                    const dayNum = day.dataset.day;
+                    openCreatePostModal(new Date(year, month, dayNum));
+                });
+            });
+        }
+
+        function setupEventListeners() {
+            // Create Post button
+            const createBtn = document.getElementById('create-post-btn');
+            if (createBtn) {
+                createBtn.addEventListener('click', () => openCreatePostModal());
+            }
+            
+            // YouTube Connect button
+            const youtubeBtn = document.getElementById('connect-youtube');
+            if (youtubeBtn) {
+                youtubeBtn.addEventListener('click', connectYouTube);
+            }
+        }
+
+        function openCreatePostModal(date = new Date()) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h2>Create New Post</h2>
+                    <form id="create-post-form">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" name="title" required placeholder="Enter post title">
                         </div>
-                    `).join('');
-                }
+                        <div class="form-group">
+                            <label>Content</label>
+                            <textarea name="content" rows="4" placeholder="What's on your mind?"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Platforms</label>
+                            <div class="platform-checkboxes">
+                                <label><input type="checkbox" name="platforms" value="youtube"> YouTube</label>
+                                <label><input type="checkbox" name="platforms" value="instagram"> Instagram</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Schedule Date</label>
+                            <input type="datetime-local" name="scheduled_at" value="${date.toISOString().slice(0, 16)}">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Schedule Post</button>
+                            <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            modal.querySelector('form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await createPost(new FormData(e.target));
             });
+        }
+
+        async function createPost(formData) {
+            const platforms = Array.from(formData.getAll('platforms'));
+            
+            // Check platform limit
+            if (platforms.length > app.subscription.platforms_allowed) {
+                showError(`Your ${app.subscription.tier} tier allows ${app.subscription.platforms_allowed} platform(s). Upgrade for more.`);
+                return;
+            }
+            
+            // Check post limit
+            if (app.subscription.posts_used >= app.subscription.posts_limit) {
+                showError(`You've reached your ${app.subscription.posts_limit} post limit. Upgrade to create more.`);
+                return;
+            }
+            
+            const data = {
+                title: formData.get('title'),
+                content: formData.get('content'),
+                platforms: platforms,
+                scheduled_at: formData.get('scheduled_at')
+            };
+            
+            try {
+                const response = await fetch('/api/create-post', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccess('Post scheduled successfully!');
+                    closeModal();
+                    loadDashboard(); // Refresh
+                } else {
+                    showError(result.error || 'Failed to create post');
+                }
+            } catch (error) {
+                showError('Network error. Please try again.');
+            }
+        }
+
+        function connectYouTube() {
+            // Open YouTube OAuth in popup
+            const width = 500;
+            const height = 600;
+            const left = (window.innerWidth - width) / 2;
+            const top = (window.innerHeight - height) / 2;
+            
+            const popup = window.open(
+                '/api/youtube/auth',
+                'YouTube Connect',
+                `width=${width},height=${height},left=${left},top=${top}`
+            );
+            
+            // Poll for completion
+            const checkInterval = setInterval(() => {
+                if (popup.closed) {
+                    clearInterval(checkInterval);
+                    loadDashboard(); // Refresh to show connection status
+                }
+            }, 1000);
+        }
+
+        function useIdea(ideaId) {
+            const idea = app.ideas.find(i => i.id === ideaId);
+            if (!idea) return;
+            
+            openCreatePostModal();
+            
+            // Pre-fill form
+            setTimeout(() => {
+                const form = document.getElementById('create-post-form');
+                if (form) {
+                    form.querySelector('[name="title"]').value = idea.title;
+                    form.querySelector('[name="content"]').value = idea.hook;
+                }
+            }, 100);
+        }
+
+        function scheduleIdea(ideaId) {
+            useIdea(ideaId);
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.modal');
+            if (modal) modal.remove();
+        }
+
+        function showLoading(show) {
+            // Add loading overlay if needed
+        }
+
+        function showError(message) {
+            alert('Error: ' + message); // Replace with toast notification
+        }
+
+        function showSuccess(message) {
+            alert(message); // Replace with toast notification
+        }
     </script>
 </body>
 </html>
