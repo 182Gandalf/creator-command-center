@@ -1,119 +1,368 @@
-# Privacy Policy - Creator Command Center
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Creator Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-hover: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .last-updated {
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+        
+        .content-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem 0;
+            font-size: 1.25rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <span>🚀</span>
+            <span>Creator Command Center</span>
+        </a>
+        <nav class="nav-links">
+            <a href="/">Dashboard</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/terms">Terms</a>
+            <a href="/privacy" class="active">Privacy</a>
+            <a href="/refund">Refunds</a>
+        </nav>
+    </header>
 
-**Last Updated:** February 20, 2026
+    <div class="container">
+        <h1>Privacy Policy</h1>
+        <p class="last-updated">Last Updated: February 20, 2026</p>
 
-## 1. Introduction
+        <div class="content-section">
+            <h2>1. Introduction</h2>
+            <p>Creator Command Center ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services.</p>
+            <p>By using Creator Command Center, you agree to the collection and use of information in accordance with this policy. If you do not agree with this policy, please do not use our services.</p>
+        </div>
 
-Creator Command Center ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information.
+        <div class="content-section">
+            <h2>2. Information We Collect</h2>
+            
+            <h3>2.1 Personal Information</h3>
+            <p>We may collect personal information that you voluntarily provide to us when you:</p>
+            <ul>
+                <li>Register for an account</li>
+                <li>Subscribe to a paid plan</li>
+                <li>Connect social media accounts</li>
+                <li>Contact our support team</li>
+                <li>Participate in surveys or promotions</li>
+            </ul>
+            <p>This information may include:</p>
+            <ul>
+                <li>Name and email address</li>
+                <li>Payment information (processed securely by Paddle)</li>
+                <li>Social media account credentials (OAuth tokens)</li>
+                <li>Profile information from connected platforms</li>
+            </ul>
 
-## 2. Information We Collect
+            <h3>2.2 Usage Data</h3>
+            <p>We automatically collect certain information when you use our services:</p>
+            <ul>
+                <li>IP address and browser type</li>
+                <li>Device information</li>
+                <li>Pages visited and actions taken</li>
+                <li>Content you create and schedule</li>
+                <li>API usage and performance data</li>
+            </ul>
 
-### 2.1 Account Information
-- Email address
-- Name (optional)
-- Payment information (processed by Paddle)
+            <h3>2.3 Social Media Data</h3>
+            <p>With your explicit permission, we access:</p>
+            <ul>
+                <li>YouTube channel information (subscribers, views, videos)</li>
+                <li>Instagram account details and media</li>
+                <li>Post performance metrics and analytics</li>
+                <li>Audience demographics (where available)</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>Important:</strong> We only access social media data that you explicitly authorize. You can disconnect any platform at any time from your account settings.
+            </div>
+        </div>
 
-### 2.2 Usage Data
-- Posts scheduled
-- Platforms connected
-- Content created
-- Analytics data
+        <div class="content-section">
+            <h2>3. How We Use Your Information</h2>
+            <p>We use the collected information for the following purposes:</p>
+            <ul>
+                <li><strong>Provide and maintain the Service:</strong> To operate our platform and deliver the features you request</li>
+                <li><strong>Process payments:</strong> To handle subscription billing through our payment processor, Paddle</li>
+                <li><strong>Send notifications:</strong> To alert you about scheduled posts, account activity, and service updates</li>
+                <li><strong>Generate AI content:</strong> To analyze your content patterns and suggest relevant ideas</li>
+                <li><strong>Improve our services:</strong> To understand usage patterns and enhance functionality</li>
+                <li><strong>Customer support:</strong> To respond to your inquiries and resolve issues</li>
+                <li><strong>Legal compliance:</strong> To comply with applicable laws and regulations</li>
+            </ul>
+        </div>
 
-### 2.3 Social Media Data
-With your permission, we access:
-- YouTube channel information
-- Instagram account details
-- Post performance metrics
+        <div class="content-section">
+            <h2>4. Data Storage and Security</h2>
+            
+            <h3>4.1 Data Storage</h3>
+            <p>Your data is stored on secure servers provided by Railway (hosting) and SQLite/PostgreSQL databases. We implement industry-standard security measures including:</p>
+            <ul>
+                <li>Encryption in transit (HTTPS/TLS 1.3)</li>
+                <li>Encryption at rest for sensitive data</li>
+                <li>Regular security audits and updates</li>
+                <li>Access controls and authentication</li>
+                <li>Automated backups</li>
+            </ul>
 
-## 3. How We Use Your Information
+            <h3>4.2 Data Retention</h3>
+            <p>We retain your data for as long as your account is active. After account deletion:</p>
+            <ul>
+                <li>Personal information is deleted within 30 days</li>
+                <li>Anonymized usage data may be retained for analytics</li>
+                <li>Legal requirements may necessitate longer retention</li>
+            </ul>
+        </div>
 
-We use your information to:
-- Provide the Service
-- Process payments
-- Send service-related notifications
-- Improve our features
-- Comply with legal obligations
+        <div class="content-section">
+            <h2>5. Third-Party Services</h2>
+            <p>We use the following third-party services to operate our platform:</p>
+            
+            <h3>5.1 Payment Processing</h3>
+            <p><strong>Paddle:</strong> Processes all subscription payments. Paddle's Privacy Policy: <a href="https://paddle.com/legal/privacy" target="_blank">paddle.com/legal/privacy</a></p>
+            
+            <h3>5.2 Social Media APIs</h3>
+            <ul>
+                <li><strong>YouTube Data API:</strong> Subject to Google's Privacy Policy</li>
+                <li><strong>Instagram Basic Display API:</strong> Subject to Meta's Privacy Policy</li>
+            </ul>
+            
+            <h3>5.3 Hosting and Infrastructure</h3>
+            <ul>
+                <li><strong>Railway:</strong> Cloud hosting provider</li>
+                <li><strong>GitHub:</strong> Code repository and deployment</li>
+            </ul>
+        </div>
 
-## 4. Data Storage and Security
+        <div class="content-section">
+            <h2>6. Your Data Protection Rights (GDPR)</h2>
+            <p>If you are a resident of the European Union, you have the following data protection rights:</p>
+            <ul>
+                <li><strong>Right to Access:</strong> Request copies of your personal data</li>
+                <li><strong>Right to Rectification:</strong> Request correction of inaccurate data</li>
+                <li><strong>Right to Erasure:</strong> Request deletion of your data ("right to be forgotten")</li>
+                <li><strong>Right to Restrict Processing:</strong> Request limitation of data processing</li>
+                <li><strong>Right to Data Portability:</strong> Request transfer of your data to another service</li>
+                <li><strong>Right to Object:</strong> Object to processing of your personal data</li>
+                <li><strong>Right to Withdraw Consent:</strong> Withdraw consent at any time</li>
+            </ul>
+            <p>To exercise these rights, please contact us at: <a href="mailto:gandalftheclaw@gmail.com">gandalftheclaw@gmail.com</a></p>
+            <p>You also have the right to complain to your local data protection authority if you believe we have not handled your data properly.</p>
+        </div>
 
-### 4.1 Storage
-- Data stored on secure servers
-- Encrypted in transit and at rest
-- Backed up regularly
+        <div class="content-section">
+            <h2>7. Cookies and Tracking Technologies</h2>
+            <p>We use cookies and similar tracking technologies to enhance your experience:</p>
+            
+            <h3>7.1 Essential Cookies</h3>
+            <p>Required for the website to function properly (e.g., login session, security).</p>
+            
+            <h3>7.2 Analytics Cookies</h3>
+            <p>Help us understand how visitors interact with our website. These are optional and you can opt out.</p>
+            
+            <h3>7.3 Managing Cookies</h3>
+            <p>You can control cookies through your browser settings. However, disabling essential cookies may affect site functionality.</p>
+        </div>
 
-### 4.2 Security Measures
-- Industry-standard encryption
-- Regular security audits
-- Access controls
+        <div class="content-section">
+            <h2>8. Children's Privacy</h2>
+            <p>Our Service is not intended for use by children under the age of 16. We do not knowingly collect personal information from children under 16. If we become aware that we have collected data from a child under 16, we will delete that information immediately.</p>
+        </div>
 
-## 5. Third-Party Services
+        <div class="content-section">
+            <h2>9. International Data Transfers</h2>
+            <p>Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place:</p>
+            <ul>
+                <li>Data is primarily stored in the EU (Netherlands)</li>
+                <li>US-based services comply with GDPR requirements</li>
+                <li>Standard Contractual Clauses (SCCs) where required</li>
+            </ul>
+        </div>
 
-We use the following third-party services:
+        <div class="content-section">
+            <h2>10. Changes to This Privacy Policy</h2>
+            <p>We may update this Privacy Policy from time to time. We will notify you of any changes by:</p>
+            <ul>
+                <li>Posting the new policy on this page</li>
+                <li>Updating the "Last Updated" date</li>
+                <li>Sending an email notification for significant changes</li>
+            </ul>
+            <p>We encourage you to review this policy periodically.</p>
+        </div>
 
-### 5.1 Payment Processing
-- **Paddle:** Processes all payments
-- Paddle's Privacy Policy: https://paddle.com/legal/privacy
+        <div class="content-section">
+            <h2>11. Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
+            <ul>
+                <li><strong>Email:</strong> <a href="mailto:gandalftheclaw@gmail.com">gandalftheclaw@gmail.com</a></li>
+                <li><strong>Response Time:</strong> Within 48 hours</li>
+            </ul>
+        </div>
+    </div>
 
-### 5.2 Social Media APIs
-- YouTube Data API
-- Instagram Basic Display API
-- Google Calendar API
-
-## 6. Data Sharing
-
-We do NOT:
-- Sell your personal data
-- Share data with advertisers
-- Use data for marketing without consent
-
-We may share data:
-- With service providers (hosting, analytics)
-- When legally required
-- To protect our rights
-
-## 7. Your Rights (GDPR)
-
-If you are in the EU, you have the right to:
-- Access your data
-- Correct inaccurate data
-- Delete your data ("right to be forgotten")
-- Export your data
-- Object to processing
-- Withdraw consent
-
-To exercise these rights, email: gandaftheclaw@gmail.com
-
-## 8. Cookies and Tracking
-
-We use:
-- Essential cookies (login session)
-- Analytics cookies (optional)
-
-You can disable non-essential cookies in your browser.
-
-## 9. Data Retention
-
-We retain your data:
-- While your account is active
-- For 30 days after account deletion
-- As required by law
-
-## 10. Children's Privacy
-
-The Service is not intended for users under 16. We do not knowingly collect data from children.
-
-## 11. International Transfers
-
-Data may be transferred to and processed in:
-- Netherlands
-- European Union
-- United States (with appropriate safeguards)
-
-## 12. Changes to This Policy
-
-We may update this policy. Changes are effective upon posting.
-
-## 13. Contact Us
-
-For privacy questions:
-- Email: gandaftheclaw@gmail.com
+    <footer>
+        <div class="footer-links">
+            <a href="/">Dashboard</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/terms">Terms</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/refund">Refunds</a>
+        </div>
+        <p>&copy; 2026 Creator Command Center. All rights reserved.</p>
+    </footer>
+</body>
+</html>

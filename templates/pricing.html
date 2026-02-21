@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Creator Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-hover: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+        }
+        
+        .badge {
+            position: absolute;
+            top: -12px;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .plan-description {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        
+        .features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        
+        .features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .features li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: 700;
+        }
+        
+        .features li.disabled {
+            color: var(--text-muted);
+        }
+        
+        .features li.disabled:before {
+            content: "✗";
+            color: var(--text-muted);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-hover);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-card);
+        }
+        
+        .comparison {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .comparison h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        .faq {
+            margin-top: 4rem;
+        }
+        
+        .faq h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .faq-item h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <span>🚀</span>
+            <span>Creator Command Center</span>
+        </a>
+        <nav class="nav-links">
+            <a href="/">Dashboard</a>
+            <a href="/pricing" class="active">Pricing</a>
+            <a href="/terms">Terms</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/refund">Refunds</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Simple, Transparent Pricing</h1>
+            <p>Start free, upgrade when you're ready. No hidden fees, no surprises. EU-friendly pricing with VAT included.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="pricing-card">
+                <div class="plan-name">Free</div>
+                <div class="plan-description">Perfect for getting started</div>
+                <div class="price">€0<span>/month</span></div>
+                <ul class="features">
+                    <li>10 posts per month</li>
+                    <li>1 social platform</li>
+                    <li>5 AI content ideas/day</li>
+                    <li>Basic analytics</li>
+                    <li>Content calendar</li>
+                    <li class="disabled">Team collaboration</li>
+                    <li class="disabled">Priority support</li>
+                </ul>
+                <a href="/" class="btn btn-secondary">Get Started Free</a>
+            </div>
+
+            <!-- Creator Plan -->
+            <div class="pricing-card featured">
+                <div class="badge">Most Popular</div>
+                <div class="plan-name">Creator</div>
+                <div class="plan-description">For serious creators</div>
+                <div class="price">€12<span>/month</span></div>
+                <ul class="features">
+                    <li>100 posts per month</li>
+                    <li>3 social platforms</li>
+                    <li>Unlimited AI ideas</li>
+                    <li>Advanced analytics</li>
+                    <li>Content calendar</li>
+                    <li>Best time to post</li>
+                    <li>Email notifications</li>
+                </ul>
+                <a href="/" class="btn btn-primary">Start 14-Day Trial</a>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="pricing-card">
+                <div class="plan-name">Pro</div>
+                <div class="plan-description">For growing teams</div>
+                <div class="price">€29<span>/month</span></div>
+                <ul class="features">
+                    <li>Unlimited posts</li>
+                    <li>5 social platforms</li>
+                    <li>Unlimited AI ideas</li>
+                    <li>Advanced analytics</li>
+                    <li>Content calendar</li>
+                    <li>3 team members</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="/" class="btn btn-secondary">Start 14-Day Trial</a>
+            </div>
+
+            <!-- Agency Plan -->
+            <div class="pricing-card">
+                <div class="plan-name">Agency</div>
+                <div class="plan-description">For agencies & businesses</div>
+                <div class="price">€79<span>/month</span></div>
+                <ul class="features">
+                    <li>Unlimited everything</li>
+                    <li>Unlimited platforms</li>
+                    <li>AI image generation</li>
+                    <li>White-label option</li>
+                    <li>10 team members</li>
+                    <li>API access</li>
+                    <li>Dedicated support</li>
+                </ul>
+                <a href="mailto:gandalftheclaw@gmail.com" class="btn btn-secondary">Contact Sales</a>
+            </div>
+        </div>
+
+        <div class="comparison">
+            <h2>Compare Plans</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Free</th>
+                        <th>Creator</th>
+                        <th>Pro</th>
+                        <th>Agency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monthly Posts</td>
+                        <td>10</td>
+                        <td>100</td>
+                        <td>Unlimited</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Social Platforms</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>5</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>AI Content Ideas</td>
+                        <td>5/day</td>
+                        <td>Unlimited</td>
+                        <td>Unlimited</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Team Members</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Analytics</td>
+                        <td>Basic</td>
+                        <td>Advanced</td>
+                        <td>Advanced</td>
+                        <td>Advanced + API</td>
+                    </tr>
+                    <tr>
+                        <td>Support</td>
+                        <td>Community</td>
+                        <td>Email</td>
+                        <td>Priority</td>
+                        <td>Dedicated</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="faq">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <h3>Can I switch plans anytime?</h3>
+                <p>Yes! You can upgrade or downgrade at any time. Changes take effect on your next billing cycle.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Is there a free trial?</h3>
+                <p>Yes, all paid plans include a 14-day free trial. No credit card required to start.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>What payment methods do you accept?</h3>
+                <p>We accept all major credit cards, PayPal, and bank transfers (EU only). All payments processed securely via Paddle.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Can I get a refund?</h3>
+                <p>We offer refunds within 14 days of your first payment if you're not satisfied. See our <a href="/refund">Refund Policy</a> for details.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Do you offer discounts for annual billing?</h3>
+                <p>Yes! Pay annually and get 2 months free (17% discount). Contact us for annual billing options.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/">Dashboard</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/terms">Terms</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/refund">Refunds</a>
+        </div>
+        <p>&copy; 2026 Creator Command Center. All rights reserved.</p>
+    </footer>
+</body>
+</html>

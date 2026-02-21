@@ -1,85 +1,420 @@
-# Refund Policy - Creator Command Center
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refund Policy - Creator Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-hover: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .last-updated {
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+        
+        .content-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            color: var(--text);
+            margin: 1.5rem 0 0.75rem 0;
+            font-size: 1.25rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .success-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .process-step {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        
+        .step-content p {
+            margin-bottom: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <span>🚀</span>
+            <span>Creator Command Center</span>
+        </a>
+        <nav class="nav-links">
+            <a href="/">Dashboard</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/terms">Terms</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/refund" class="active">Refunds</a>
+        </nav>
+    </header>
 
-**Last Updated:** February 20, 2026
+    <div class="container">
+        <h1>Refund Policy</h1>
+        <p class="last-updated">Last Updated: February 20, 2026</p>
 
-## 1. Free Trial
+        <div class="content-section">
+            <h2>1. Our Commitment</h2>
+            <p>We want you to be completely satisfied with Creator Command Center. If you're not happy with our service, we'll make it right. This Refund Policy outlines when and how you can request a refund.</p>
+            
+            <div class="success-box">
+                <strong>Good news:</strong> All paid plans include a 14-day free trial, so you can test the full service before committing to a subscription.
+            </div>
+        </div>
 
-- All paid plans include a 14-day free trial
-- No credit card required to start
-- Convert to paid only after trial ends
+        <div class="content-section">
+            <h2>2. Free Trial Period</h2>
+            <p>Every paid subscription begins with a 14-day free trial. During this period:</p>
+            <ul>
+                <li>You have full access to all plan features</li>
+                <li>No credit card is required to start</li>
+                <li>You can cancel anytime without charge</li>
+                <li>If you don't subscribe after the trial, your account automatically converts to the Free plan</li>
+            </ul>
+            <p>We encourage you to fully test the service during this trial to ensure it meets your needs.</p>
+        </div>
 
-## 2. Subscription Payments
+        <div class="content-section">
+            <h2>3. Refund Eligibility</h2>
+            
+            <h3>3.1 Full Refunds Available</h3>
+            <p>You are eligible for a full refund within 14 days of your first paid subscription if:</p>
+            <ul>
+                <li>You experienced technical issues that prevented you from using the service</li>
+                <li>The service did not materially match the description or your reasonable expectations</li>
+                <li>You were accidentally charged due to a billing error</li>
+                <li>You forgot to cancel after the trial but contact us within 48 hours of the charge</li>
+            </ul>
 
-### 2.1 Automatic Renewal
-- Subscriptions automatically renew monthly
-- Charged on the same date each month
-- Cancellation stops future charges only
+            <h3>3.2 Partial Refunds</h3>
+            <p>In certain circumstances, we may offer partial refunds:</p>
+            <ul>
+                <li>Service outages lasting more than 24 hours in a billing period</li>
+                <li>Significant feature removal or degradation</li>
+                <li>Duplicate charges (refund of the duplicate amount)</li>
+            </ul>
 
-### 2.2 Payment Processing
-- All payments processed by Paddle
-- Paddle handles refunds and billing inquiries
+            <h3>3.3 Non-Refundable Situations</h3>
+            <div class="warning-box">
+                <strong>We generally cannot provide refunds for:</strong>
+                <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                    <li>Change of mind after the 14-day refund period</li>
+                    <li>Failure to cancel before the next billing cycle</li>
+                    <li>Not using the service during your subscription period</li>
+                    <li>Violation of our <a href="/terms">Terms of Service</a></li>
+                    <li>Downgrades (new pricing takes effect next cycle)</li>
+                    <li>Partial month usage after the refund period</li>
+                </ul>
+            </div>
+        </div>
 
-## 3. Refund Eligibility
+        <div class="content-section">
+            <h2>4. How to Request a Refund</h2>
+            <p>We've made the refund process simple and straightforward:</p>
+            
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Contact Us</h4>
+                    <p>Email us at <a href="mailto:gandalftheclaw@gmail.com">gandalftheclaw@gmail.com</a> with the subject line "Refund Request - [Your Account Email]"</p>
+                </div>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Provide Details</h4>
+                    <p>Include your account email, the date of purchase, and the reason for your refund request. The more details you provide, the faster we can process your request.</p>
+                </div>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Review Process</h4>
+                    <p>We review all refund requests within 48 hours (usually much faster). We may contact you for additional information if needed.</p>
+                </div>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Refund Issued</h4>
+                    <p>If approved, refunds are processed within 5-10 business days to your original payment method. You'll receive a confirmation email.</p>
+                </div>
+            </div>
+        </div>
 
-### 3.1 Eligible for Refund
-- Technical issues preventing service use
-- Accidental duplicate charges
-- Service not as described
-- Within 14 days of first payment
+        <div class="content-section">
+            <h2>5. Cancellation vs. Refund</h2>
+            <p>It's important to understand the difference:</p>
+            
+            <div class="highlight-box">
+                <strong>Cancellation:</strong> Stops future billing. You keep access until the end of your current billing period. No refund is issued for the current period.<br><br>
+                <strong>Refund:</strong> Returns money for a payment already made. May result in immediate loss of access depending on the circumstances.
+            </div>
+            
+            <h3>5.1 How to Cancel</h3>
+            <p>You can cancel your subscription anytime:</p>
+            <ul>
+                <li>Through your Account Settings on the dashboard</li>
+                <li>By emailing <a href="mailto:gandalftheclaw@gmail.com">gandalftheclaw@gmail.com</a></li>
+            </ul>
+            <p>Cancellation takes effect at the end of your current billing period. You'll continue to have access until then.</p>
+        </div>
 
-### 3.2 Not Eligible for Refund
-- Change of mind after trial period
-- Failure to cancel before renewal
-- Violation of Terms of Service
-- Partial month usage
+        <div class="content-section">
+            <h2>6. Processing Time and Methods</h2>
+            
+            <h3>6.1 Timeline</h3>
+            <ul>
+                <li><strong>Refund request review:</strong> Within 48 hours</li>
+                <li><strong>Refund processing:</strong> 5-10 business days after approval</li>
+                <li><strong>Funds appear in your account:</strong> Depends on your bank (typically 3-5 additional business days)</li>
+            </ul>
 
-## 4. How to Request a Refund
+            <h3>6.2 Refund Method</h3>
+            <p>All refunds are issued to the original payment method used for the purchase. If that method is no longer available (e.g., expired credit card), we will contact you to arrange an alternative.</p>
 
-1. Email: gandaftheclaw@gmail.com
-2. Subject: "Refund Request - [Your Email]"
-3. Include:
-   - Account email
-   - Reason for refund
-   - Date of charge
+            <h3>6.3 Currency</h3>
+            <p>Refunds are issued in Euros (€), the original currency of the transaction. The amount you receive may vary slightly due to exchange rate fluctuations if your bank account is in a different currency.</p>
+        </div>
 
-We aim to respond within 48 hours.
+        <div class="content-section">
+            <h2>7. Special Circumstances</h2>
+            
+            <h3>7.1 Annual Billing</h3>
+            <p>If you pre-paid for an annual subscription, refunds are calculated based on the monthly equivalent rate for the time used, minus any applicable discounts.</p>
+            
+            <h3>7.2 Add-ons and Extras</h3>
+            <p>Refunds for add-ons (additional team members, extra posts, etc.) follow the same 14-day policy and are evaluated on a case-by-case basis.</p>
+            
+            <h3>7.3 Fraud Prevention</h3>
+            <p>To protect against fraud, we may require additional verification before processing refunds. This may include confirming your identity or providing proof of the issue.</p>
+        </div>
 
-## 5. Processing Time
+        <div class="content-section">
+            <h2>8. Disputes and Chargebacks</h2>
+            <p>We encourage you to contact us first if you have a billing issue. We're usually able to resolve problems quickly and amicably.</p>
+            
+            <p>If you initiate a chargeback through your bank or credit card company:</p>
+            <ul>
+                <li>Your account may be suspended pending investigation</li>
+                <li>We will provide evidence to the payment processor</li>
+                <li>Fraudulent chargebacks may result in account termination</li>
+                <li>We reserve the right to contest invalid chargebacks</li>
+            </ul>
+        </div>
 
-- Approved refunds: 5-10 business days
-- Refund method: Original payment method
-- Processing by Paddle
+        <div class="content-section">
+            <h2>9. Changes to This Policy</h2>
+            <p>We may update this Refund Policy from time to time. Changes are effective immediately upon posting. The policy in effect at the time of your purchase applies to your transaction.</p>
+        </div>
 
-## 6. Cancellation
+        <div class="content-section">
+            <h2>10. Contact Us</h2>
+            <p>For refund requests or questions about this policy:</p>
+            <ul>
+                <li><strong>Email:</strong> <a href="mailto:gandalftheclaw@gmail.com">gandalftheclaw@gmail.com</a></li>
+                <li><strong>Subject Line:</strong> "Refund Request - [Your Account Email]"</li>
+                <li><strong>Response Time:</strong> Within 48 hours</li>
+            </ul>
+            
+            <div class="success-box">
+                <strong>We value your business and want you to be happy.</strong> If you have any concerns about our service, please reach out. We're here to help and will do our best to find a solution that works for you.
+            </div>
+        </div>
+    </div>
 
-### 6.1 How to Cancel
-1. Go to Account Settings
-2. Click "Cancel Subscription"
-3. Or email: gandaftheclaw@gmail.com
-
-### 6.2 Cancellation Timing
-- Effective at end of current billing period
-- Access continues until period ends
-- No partial refunds for unused time
-
-## 7. Downgrades
-
-- Can downgrade anytime
-- New pricing effective next billing cycle
-- No refunds for price differences
-
-## 8. Disputes
-
-For billing disputes:
-1. Contact us first
-2. We will investigate promptly
-3. Paddle handles chargeback disputes
-
-## 9. Changes to Policy
-
-We may update this policy. Changes effective upon posting.
-
-## 10. Contact
-
-Refund questions:
-- Email: gandaftheclaw@gmail.com
+    <footer>
+        <div class="footer-links">
+            <a href="/">Dashboard</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/terms">Terms</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/refund">Refunds</a>
+        </div>
+        <p>&copy; 2026 Creator Command Center. All rights reserved.</p>
+    </footer>
+</body>
+</html>

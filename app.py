@@ -85,6 +85,26 @@ def index():
     """Main dashboard"""
     return render_template('dashboard.html')
 
+@app.route('/pricing')
+def pricing():
+    """Pricing page"""
+    return render_template('pricing.html')
+
+@app.route('/terms')
+def terms():
+    """Terms of Service"""
+    return render_template('terms.html')
+
+@app.route('/privacy')
+def privacy():
+    """Privacy Policy"""
+    return render_template('privacy.html')
+
+@app.route('/refund')
+def refund():
+    """Refund Policy"""
+    return render_template('refund.html')
+
 @app.route('/api/dashboard-stats')
 def dashboard_stats():
     """Get dashboard statistics"""
