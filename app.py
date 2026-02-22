@@ -85,6 +85,24 @@ def index():
     """Main dashboard"""
     return render_template('dashboard.html')
 
+@app.route('/api/health')
+def health_check():
+    """Health check and API status"""
+    # Check which AI providers are configured
+    ai_status = {
+        'gemini': bool(os.environ.get('GEMINI_API_KEY')),
+        'deepseek': bool(os.environ.get('DEEPSEEK_API_KEY')),
+        'openai': bool(os.environ.get('OPENAI_API_KEY')),
+        'mistral': bool(os.environ.get('MISTRAL_API_KEY'))
+    }
+    
+    return jsonify({
+        'status': 'healthy',
+        'ai_providers_configured': ai_status,
+        'youtube_api': bool(YOUTUBE_API_KEY),
+        'instagram_config': bool(INSTAGRAM_APP_ID and INSTAGRAM_APP_SECRET)
+    })
+
 @app.route('/pricing')
 def pricing():
     """Pricing page"""
