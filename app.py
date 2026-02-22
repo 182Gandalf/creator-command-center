@@ -273,7 +273,8 @@ def ai_content_ideas():
             }
             return jsonify(response)
         else:
-            # Fallback to default ideas
+            # Fallback to default ideas - include error details
+            error_msg = result.get('error', 'Unknown error')
             return jsonify({
                 'success': True,
                 'ideas': get_default_ideas(topic, platform, count),
@@ -281,7 +282,7 @@ def ai_content_ideas():
                 'cached': False,
                 'cost_usd': 0,
                 'tier': user_tier,
-                'note': 'Using fallback ideas'
+                'note': f'Using fallback ideas - AI error: {error_msg}'
             })
     
     except Exception as e:
