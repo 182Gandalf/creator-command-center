@@ -17,7 +17,7 @@
 
 ### 2. Add Gemini API Key to Railway
 **Status:** Key provided but not added
-**Key:** `[REDACTED_GEMINI_KEY]`
+**Key:** `[REDACTED - SEE GOOGLE CLOUD CONSOLE]`
 **Action:**
 - [ ] Go to Railway dashboard → FlowCast project → Variables
 - [ ] Add: `GEMINI_API_KEY` = above key
