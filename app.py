@@ -291,7 +291,13 @@ def ai_content_ideas():
             'success': True,
             'ideas': get_default_ideas(topic, platform, count),
             'model_used': 'fallback',
-            'error': str(e)
+            'error': str(e),
+            'tier': user_tier,
+            'debug': {
+                'gemini_configured': bool(os.environ.get('GEMINI_API_KEY')),
+                'deepseek_configured': bool(os.environ.get('DEEPSEEK_API_KEY')),
+                'openai_configured': bool(os.environ.get('OPENAI_API_KEY'))
+            }
         })
 
 def get_default_ideas(topic, platform, count):
