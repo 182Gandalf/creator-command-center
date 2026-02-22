@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FlowCast - Post to all your social platforms from one place. AI-powered scheduling that actually understands your brand.">
+    <title>FlowCast - Schedule Smarter, Grow Faster</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="manifest" href="/static/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #f97316; --primary-light: #fb923c; --primary-dark: #ea580c;
+            --secondary: #8b5cf6; --accent: #ec4899; --bg: #0f172a; --bg-card: #1e293b;
+            --bg-hover: #334155; --text: #f8fafc; --text-muted: #94a3b8; --border: #334155;
+            --success: #10b981; --gradient-start: #f97316; --gradient-end: #fbbf24;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden;
+        }
+        .header {
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 1rem 2rem;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+        }
+        .header-content {
+            max-width: 1400px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center;
+        }
+        .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-text {
+            font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            letter-spacing: -0.02em;
+        }
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
+        }
+        .nav { display: flex; align-items: center; gap: 2.5rem; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta { display: flex; gap: 1rem; }
+        .btn {
+            padding: 0.625rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+            text-decoration: none; transition: all 0.3s ease; cursor: pointer; border: none;
+        }
+        .btn-secondary { color: var(--text); background: transparent; border: 1px solid var(--border); }
+        .btn-secondary:hover { background: var(--bg-card); border-color: var(--text-muted); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: white; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4); }
+        .btn-large { padding: 1rem 2rem; font-size: 1rem; }
+        .hero {
+            padding: 10rem 2rem 6rem; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(249, 115, 22, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.1), transparent);
+            pointer-events: none;
+        }
+        .hero-content {
+            max-width: 1400px; margin: 0 auto; display: grid;
+            grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+            position: relative; z-index: 1;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.3);
+            padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.875rem;
+            color: var(--primary-light); margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-family: 'Outfit', sans-serif; font-size: 4rem; font-weight: 800;
+            line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.03em;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero-subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 540px; line-height: 1.7; }
+        .hero-cta { display: flex; gap: 1rem; margin-bottom: 3rem; }
+        .hero-social-proof { display: flex; align-items: center; gap: 1rem; color: var(--text-muted); font-size: 0.9rem; }
+        .avatar-group { display: flex; }
+        .avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 2px solid var(--bg); margin-left: -10px;
+            display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600;
+        }
+        .avatar:first-child { margin-left: 0; }
+        .hero-visual { position: relative; }
+        .dashboard-preview {
+            background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border);
+            overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .preview-header {
+            background: rgba(30, 41, 59, 0.8); padding: 1rem 1.5rem;
+            display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border);
+        }
+        .preview-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .preview-dot.red { background: #ef4444; }
+        .preview-dot.yellow { background: #f59e0b; }
+        .preview-dot.green { background: #10b981; }
+        .preview-content { padding: 1.5rem; }
+        .preview-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .preview-stat { background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: 8px; }
+        .preview-stat-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem; }
+        .preview-stat-value { font-size: 1.25rem; font-weight: 700; color: var(--success); }
+        .features { padding: 6rem 2rem; }
+        .features-content { max-width: 1400px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-family: 'Outfit', sans-serif; font-size: 3rem; font-weight: 800; margin-bottom: 1rem; }
+        .section-header p { color: var(--text-muted); font-size: 1.25rem; max-width: 600px; margin: 0 auto; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .feature-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            padding: 2rem; transition: all 0.3s ease;
+        }
+        .feature-card:hover { border-color: var(--primary); transform: translateY(-4px); }
+        .feature-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(251, 191, 36, 0.2));
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin-bottom: 1.5rem;
+        }
+        .feature-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+        .how-it-works {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(249, 115, 22, 0.03) 50%, transparent 100%);
+        }
+        .hiw-content { max-width: 1400px; margin: 0 auto; }
+        .hiw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; margin-top: 4rem; }
+        .hiw-step { text-align: center; position: relative; }
+        .hiw-step::after {
+            content: ''; position: absolute; top: 40px; right: -50%; width: 100%; height: 2px;
+            background: linear-gradient(90deg, var(--border), var(--primary), var(--border));
+        }
+        .hiw-step:last-child::after { display: none; }
+        .hiw-number {
+            width: 80px; height: 80px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800;
+            margin: 0 auto 1.5rem; color: white;
+        }
+        .hiw-step h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .hiw-step p { color: var(--text-muted); font-size: 0.95rem; }
+        .ai-section { padding: 6rem 2rem; }
+        .ai-content {
+            max-width: 1400px; margin: 0 auto; display: grid;
+            grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+        }
+        .ai-text h2 { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .ai-text > p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.7; }
+        .ai-features { display: flex; flex-direction: column; gap: 1rem; }
+        .ai-feature { display: flex; align-items: flex-start; gap: 1rem; }
+        .ai-feature-icon {
+            width: 24px; height: 24px; background: var(--success); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 0.75rem;
+            flex-shrink: 0; margin-top: 2px;
+        }
+        .ai-feature-text h4 { font-weight: 600; margin-bottom: 0.25rem; }
+        .ai-feature-text p { color: var(--text-muted); font-size: 0.9rem; }
+        .ai-interface { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+        .ai-interface-header {
+            background: rgba(30, 41, 59, 0.8); padding: 1rem 1.5rem;
+            display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid var(--border);
+        }
+        .ai-interface-header .status {
+            width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .ai-interface-header span { font-weight: 600; font-size: 0.9rem; }
+        .ai-interface-body { padding: 1.5rem; min-height: 300px; }
+        .chat-message { margin-bottom: 1rem; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-message.user { text-align: right; }
+        .chat-bubble { display: inline-block; padding: 0.75rem 1rem; border-radius: 12px; max-width: 80%; font-size: 0.9rem; text-align: left; }
+        .chat-message.user .chat-bubble { background: var(--primary); color: white; }
+        .chat-message.assistant .chat-bubble { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); }
+        .chat-message.assistant .chat-bubble strong { color: var(--primary-light); }
+        .pricing-teaser { padding: 6rem 2rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%); }
+        .pricing-content { max-width: 1400px; margin: 0 auto; text-align: center; }
+        .pricing-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; }
+        .pricing-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; text-align: left; transition: all 0.3s ease; }
+        .pricing-card:hover { transform: translateY(-4px); border-color: var(--primary); }
+        .pricing-card.featured { border-color: var(--primary); position: relative; }
+        .pricing-card.featured::before {
+            content: 'Most Popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); color: white;
+            padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+        }
+        .pricing-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .pricing-card .price { font-size: 3rem; font-weight: 800; margin: 1rem 0; }
+        .pricing-card .price span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+        .pricing-card ul { list-style: none; margin: 1.5rem 0; }
+        .pricing-card li { padding: 0.5rem 0; color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+        .pricing-card li::before { content: '✓'; color: var(--success); font-weight: bold; }
+        .pricing-card .btn { width: 100%; text-align: center; display: block; }
+        .cta-section { padding: 6rem 2rem; text-align: center; }
+        .cta-content { max-width: 800px; margin: 0 auto; }
+        .cta-content h2 { font-family: 'Outfit', sans-serif; font-size: 3rem; font-weight: 800; margin-bottom: 1rem; }
+        .cta-content p { color: var(--text-muted); font-size: 1.25rem; margin-bottom: 2rem; }
+        footer { background: rgba(15, 23, 42, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 3rem 2rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .footer-left { display: flex; align-items: center; gap: 2rem; }
+        .footer-left p { color: var(--text-muted); font-size: 0.875rem; }
+        .footer-social { display: flex; gap: 1rem; }
+        .footer-social a {
+            width: 40px; height: 40px; background: var(--bg-card); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; color: var(--text-muted);
+            text-decoration: none; transition: all 0.3s;
+        }
+        .footer-social a:hover { background: var(--primary); color: white; }
+        @media (max-width: 1024px) {
+            .hero-content, .ai-content { grid-template-columns: 1fr; }
+            .features-grid, .hiw-grid, .pricing-cards { grid-template-columns: 1fr; }
+            .hiw-step::after { display: none; }
+            .hero h1 { font-size: 3rem; }
+            .nav-links { display: none; }
+        }
+        @media (max-width: 768px) {
+            .hero { padding: 8rem 1rem 4rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .section-header h2 { font-size: 2rem; }
+            .hero-cta { flex-direction: column; }
+            .footer-content { flex-direction: column; gap: 2rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">⚡</div>
+                <span class="logo-text">FlowCast</span>
+            </a>
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="/terms">Terms</a></li>
+                    <li><a href="/privacy">Privacy</a></li>
+                    <li><a href="/refund">Refunds</a></li>
+                </ul>
+                <div class="nav-cta">
+                    <a href="/dashboard" class="btn btn-secondary">Log In</a>
+                    <a href="/pricing" class="btn btn-primary">Get Started</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge"><span>✨</span><span>Now with AI-powered content ideas</span></div>
+                <h1>Schedule smarter.<br><span>Grow faster.</span></h1>
+                <p class="hero-subtitle">Schedule content to YouTube, Instagram & more, powered by AI-generated ideas. Try it for free for 7 days, then pay as little as €5/month.</p>
+                <div class="hero-cta">
+                    <a href="/pricing" class="btn btn-primary btn-large">Start Free Trial</a>
+                    <a href="#how-it-works" class="btn btn-secondary btn-large">See How It Works</a>
+                </div>
+                <div class="hero-social-proof">
+                    <div class="avatar-group">
+                        <div class="avatar">JD</div>
+                        <div class="avatar">MK</div>
+                        <div class="avatar">AL</div>
+                        <div class="avatar">+2k</div>
+                    </div>
+                    <span>Trusted by 2,000+ creators</span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="dashboard-preview">
+                    <div class="preview-header">
+                        <div class="preview-dot red"></div>
+                        <div class="preview-dot yellow"></div>
+                        <div class="preview-dot green"></div>
+                        <span style="margin-left: 1rem; color: var(--text-muted); font-size: 0.875rem;">FlowCast Dashboard</span>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-stats">
+                            <div class="preview-stat"><div class="preview-stat-label">Posts This Month</div><div class="preview-stat-value">24</div></div>
+                            <div class="preview-stat"><div class="preview-stat-label">Engagement</div><div class="preview-stat-value">+32%</div></div>
+                            <div class="preview-stat"><div class="preview-stat-label">Scheduled</div><div class="preview-stat-value">8</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="features-content">
+            <div class="section-header">
+                <h2>Everything you need to grow</h2>
+                <p>Powerful features that help you create, schedule, and analyze your content — all in one place.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Schedule posts across all major platforms. Our calendar view makes it easy to visualize your content strategy at a glance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Content Assistant</h3>
+                    <p>Stuck for ideas? Your AI assistant analyzes your niche and suggests content that your audience will love.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Track what works. See engagement rates, best posting times, and growth metrics all in one clean dashboard.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Auto-Crosspost</h3>
+                    <p>Write once, publish everywhere. Automatically adapt your content for each platform's unique format.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3>Content Ideas</h3>
+                    <p>Never run out of inspiration. Get daily fresh ideas tailored to your brand and audience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Growth Insights</h3>
+                    <p>Understand your audience better. Track follower growth, engagement patterns, and optimize your strategy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="how-it-works">
+        <div class="hiw-content">
+            <div class="section-header">
+                <h2>How it works</h2>
+                <p>Get started in minutes. No complicated setup, no learning curve.</p>
+            </div>
+            <div class="hiw-grid">
+                <div class="hiw-step">
+                    <div class="hiw-number">1</div>
+                    <h3>Connect your accounts</h3>
+                    <p>Link your social profiles in seconds. We support YouTube, Instagram, TikTok, LinkedIn, and more.</p>
+                </div>
+                <div class="hiw-step">
+                    <div class="hiw-number">2</div>
+                    <h3>Create or get AI ideas</h3>
+                    <p>Write your own posts or let our AI suggest content based on your niche and audience.</p>
+                </div>
+                <div class="hiw-step">
+                    <div class="hiw-number">3</div>
+                    <h3>Schedule and grow</h3>
+                    <p>Set your posting schedule and watch your engagement grow. We'll handle the rest.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews-section" style="padding: 6rem 2rem; background: var(--bg-card);">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div class="section-header">
+                <h2>Loved by creators worldwide</h2>
+                <p>Join thousands of content creators who've transformed their social media workflow.</p>
+            </div>
+            
+            <!-- Stats Row -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin: 3rem 0; text-align: center;">
+                <div>
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">2,000+</div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">Active Creators</div>
+                </div>
+                <div>
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">50K+</div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">Posts Scheduled</div>
+                </div>
+                <div>
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">4.9/5</div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">Average Rating</div>
+                </div>
+                <div>
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">32%</div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">Avg. Engagement Boost</div>
+                </div>
+            </div>
+            
+            <!-- Testimonials Grid -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem;">
+                <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem;">
+                    <div style="display: flex; gap: 4px; margin-bottom: 1rem;">
+                        <span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">"FlowCast cut my content planning time by 70%. The AI suggestions are surprisingly good — they actually sound like me, not a robot."</p>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem;">SM</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 0.9rem;">Sarah Mitchell</div>
+                            <div style="color: var(--text-muted); font-size: 0.8rem;">Fitness Creator, 125K followers</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem;">
+                    <div style="display: flex; gap: 4px; margin-bottom: 1rem;">
+                        <span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">"I went from posting randomly to having a consistent schedule. My engagement doubled in the first month. Best investment for my brand."</p>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #f093fb, #f5576c); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem;">JK</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 0.9rem;">James Kim</div>
+                            <div style="color: var(--text-muted); font-size: 0.8rem;">Tech Reviewer, 89K followers</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem;">
+                    <div style="display: flex; gap: 4px; margin-bottom: 1rem;">
+                        <span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span><span style="color: var(--primary);">★</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">"Finally, a scheduler that doesn't break the bank. The free tier got me hooked, and the AI features made upgrading a no-brainer."</p>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #4facfe, #00f2fe); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem;">AP</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 0.9rem;">Alex Peters</div>
+                            <div style="color: var(--text-muted); font-size: 0.8rem;">Small Business Owner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ai-section">
+        <div class="ai-content">
+            <div class="ai-text">
+                <h2>Your AI content partner</h2>
+                <p>Not just another AI tool. FlowCast learns your voice, understands your audience, and helps you create content that feels authentically you.</p>
+                <div class="ai-features">
+                    <div class="ai-feature">
+                        <div class="ai-feature-icon">✓</div>
+                        <div class="ai-feature-text"><h4>Learns your brand voice</h4><p>The more you use it, the better it gets at matching your style.</p></div>
+                    </div>
+                    <div class="ai-feature">
+                        <div class="ai-feature-icon">✓</div>
+                        <div class="ai-feature-text"><h4>Trend-aware suggestions</h4><p>Get ideas based on what's actually working in your niche right now.</p></div>
+                    </div>
+                    <div class="ai-feature">
+                        <div class="ai-feature-icon">✓</div>
+                        <div class="ai-feature-text"><h4>Platform-optimized</h4><p>Each suggestion is tailored for the platform you're posting to.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-interface">
+                <div class="ai-interface-header">
+                    <div class="status"></div>
+                    <span>FlowCast Assistant</span>
+                </div>
+                <div class="ai-interface-body">
+                    <div class="chat-message user"><div class="chat-bubble">I need ideas for a fitness post this week</div></div>
+                    <div class="chat-message assistant"><div class="chat-bubble"><strong>Here are 3 ideas based on trending fitness content:</strong><br><br>🎯 <strong>The 5-Minute Rule:</strong> "If you only have 5 minutes, do this workout"<br><br>💪 <strong>Form Check:</strong> Common squat mistakes (and how to fix them)<br><br>🥗 <strong>Pre/Post:</strong> What to eat before vs. after different workout types</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing-teaser">
+        <div class="pricing-content">
+            <div class="section-header">
+                <h2>Simple, transparent pricing</h2>
+                <p>Start free, upgrade when you're ready. No hidden fees, no surprises.</p>
+            </div>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">€5<span>/month</span></div>
+                    <ul>
+                        <li>5 scheduled posts/month</li>
+                        <li>2 social accounts</li>
+                        <li>Basic analytics</li>
+                        <li>Email support</li>
+                    </ul>
+                    <a href="/pricing" class="btn btn-secondary">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Creator</h3>
+                    <div class="price">€15<span>/month</span></div>
+                    <ul>
+                        <li>Unlimited posts</li>
+                        <li>5 social accounts</li>
+                        <li>AI content ideas</li>
+                        <li>Advanced analytics</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="/pricing" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Pro</h3>
+                    <div class="price">€39<span>/month</span></div>
+                    <ul>
+                        <li>Unlimited everything</li>
+                        <li>Unlimited accounts</li>
+                        <li>Custom AI training</li>
+                        <li>Team collaboration</li>
+                        <li>White-label options</li>
+                    </ul>
+                    <a href="/pricing" class="btn btn-secondary">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to grow your audience?</h2>
+            <p>Join 2,000+ creators who are already scheduling smarter with FlowCast.</p>
+            <a href="/pricing" class="btn btn-primary btn-large">Start Your Free Trial</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <a href="/" class="logo">
+                    <div class="logo-icon">⚡</div>
+                    <span class="logo-text">FlowCast</span>
+                </a>
+                <p>&copy; 2026 FlowCast. All rights reserved.</p>
+            </div>
+            <div class="footer-social">
+                <a href="#" title="Twitter">𝕏</a>
+                <a href="#" title="Instagram">📷</a>
+                <a href="#" title="LinkedIn">💼</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,13 +1,20 @@
 # FlowCast
 # Social Media Management Platform
 
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime, timedelta
 import os
 import requests
 import json
+import secrets
+
+# Import OAuth manager for secure token handling
+from oauth_manager import (
+    get_token_manager, get_youtube_auth_url, exchange_youtube_code,
+    log_token_action, revoke_youtube_token
+)
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -347,78 +354,170 @@ def get_default_ideas(topic, platform, count):
     ]
     return templates[:count]
 
+# Initialize token manager
+token_manager = get_token_manager()
+
 @app.route('/api/youtube/auth')
 def youtube_auth():
-    """Initiate YouTube OAuth flow"""
-    # Google OAuth2 configuration
-    client_id = os.environ.get('GOOGLE_CLIENT_ID', '')
+    """
+    Initiate YouTube OAuth flow with CSRF protection and consent tracking
+    
+    Query params:
+        - redirect_uri: Optional custom redirect URI
+        - user_id: User ID for tracking (required in production)
+    """
+    client_id = os.environ.get('YOUTUBE_CLIENT_ID', '')
+    if not client_id:
+        return jsonify({'success': False, 'error': 'YouTube OAuth not configured'}), 500
+    
+    # Generate CSRF state token
+    state = secrets.token_urlsafe(32)
+    session['oauth_state'] = state
+    
+    # Store user consent intent
+    user_id = request.args.get('user_id') or session.get('user_id')
+    if user_id:
+        session['oauth_user_id'] = user_id
+    
+    # Build authorization URL
     redirect_uri = request.args.get('redirect_uri', url_for('youtube_callback', _external=True))
+    auth_url = get_youtube_auth_url(client_id, redirect_uri, state)
     
-    auth_url = 'https://accounts.google.com/o/oauth2/v2/auth'
-    scope = 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.upload'
+    # Log consent initiation
+    log_token_action(user_id or 'anonymous', 'youtube', 'auth_initiated', {
+        'ip_address': request.remote_addr,
+        'user_agent': request.user_agent.string[:100] if request.user_agent else 'unknown'
+    })
     
-    params = {
-        'client_id': client_id,
-        'redirect_uri': redirect_uri,
-        'response_type': 'code',
-        'scope': scope,
-        'access_type': 'offline',
-        'prompt': 'consent'
-    }
-    
-    auth_request_url = f"{auth_url}?{'&'.join([f'{k}={v}' for k, v in params.items()])}"
-    return redirect(auth_request_url)
+    return redirect(auth_url)
 
 @app.route('/api/youtube/callback')
 def youtube_callback():
-    """Handle YouTube OAuth callback"""
+    """
+    Handle YouTube OAuth callback with token encryption and audit logging
+    
+    Exchanges authorization code for tokens, encrypts them, and stores in database.
+    """
+    # Verify CSRF state
+    state = request.args.get('state')
+    stored_state = session.pop('oauth_state', None)
+    
+    if not state or state != stored_state:
+        log_token_action('unknown', 'youtube', 'auth_failed', {'reason': 'csrf_mismatch'})
+        return jsonify({'success': False, 'error': 'Invalid state parameter'}), 403
+    
     code = request.args.get('code')
+    error = request.args.get('error')
+    
+    if error:
+        log_token_action('unknown', 'youtube', 'auth_denied', {'error': error})
+        return jsonify({'success': False, 'error': f'Authorization denied: {error}'}), 400
+    
     if not code:
         return jsonify({'success': False, 'error': 'No authorization code provided'}), 400
     
     # Exchange code for tokens
-    token_url = 'https://oauth2.googleapis.com/token'
-    client_id = os.environ.get('GOOGLE_CLIENT_ID', '')
-    client_secret = os.environ.get('GOOGLE_CLIENT_SECRET', '')
+    client_id = os.environ.get('YOUTUBE_CLIENT_ID', '')
+    client_secret = os.environ.get('YOUTUBE_CLIENT_SECRET', '')
     redirect_uri = url_for('youtube_callback', _external=True)
     
-    data = {
-        'code': code,
-        'client_id': client_id,
-        'client_secret': client_secret,
-        'redirect_uri': redirect_uri,
-        'grant_type': 'authorization_code'
+    result = exchange_youtube_code(code, client_id, client_secret, redirect_uri)
+    
+    if not result['success']:
+        log_token_action('unknown', 'youtube', 'auth_failed', {'error': result.get('error')})
+        return jsonify({
+            'success': False,
+            'error': 'Failed to obtain access token',
+            'details': result.get('error')
+        }), 400
+    
+    # Prepare token data for encryption
+    expires_at = (datetime.utcnow() + timedelta(seconds=result['expires_in'])).isoformat()
+    
+    token_data = {
+        'access_token': result['access_token'],
+        'refresh_token': result.get('refresh_token'),  # Only present on first auth
+        'expires_at': expires_at,
+        'scope': result['scope'],
+        'connected_at': datetime.utcnow().isoformat()
     }
     
+    # Encrypt tokens
     try:
-        response = requests.post(token_url, data=data)
-        tokens = response.json()
-        
-        if 'access_token' in tokens:
-            # Store token in session (in production, store in database)
-            session['youtube_token'] = tokens['access_token']
-            if 'refresh_token' in tokens:
-                session['youtube_refresh_token'] = tokens['refresh_token']
-            
-            return jsonify({
-                'success': True,
-                'message': 'YouTube account connected successfully'
-            })
-        else:
-            return jsonify({
-                'success': False,
-                'error': 'Failed to obtain access token',
-                'details': tokens
-            }), 400
+        encrypted_tokens = token_manager.encrypt_token(token_data)
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        log_token_action('unknown', 'youtube', 'encryption_failed', {'error': str(e)})
+        return jsonify({'success': False, 'error': 'Token encryption failed'}), 500
+    
+    # Get user from session
+    user_id = session.pop('oauth_user_id', None)
+    
+    # In production: store in database
+    # For now, store in session with warning
+    session['youtube_token_encrypted'] = encrypted_tokens
+    session['youtube_connected'] = True
+    session['youtube_scope'] = result['scope']
+    
+    # Generate consent record
+    consent = generate_consent_record(
+        user_id=user_id or 'session_user',
+        platform='youtube',
+        scopes=result['scope'].split(),
+        ip_address=request.remote_addr
+    )
+    
+    # Log successful connection
+    log_token_action(user_id or 'session_user', 'youtube', 'connected', {
+        'scopes': result['scope'],
+        'ip_address': request.remote_addr,
+        'consent_record': consent
+    })
+    
+    # Return success (in production, redirect to dashboard)
+    return jsonify({
+        'success': True,
+        'message': 'YouTube account connected successfully',
+        'scopes': result['scope'],
+        'consent': consent
+    })
 
 @app.route('/api/youtube/disconnect', methods=['POST'])
 def youtube_disconnect():
-    """Disconnect YouTube account"""
-    session.pop('youtube_token', None)
+    """
+    Disconnect YouTube account with token revocation and audit logging
+    
+    Revokes OAuth tokens and clears stored credentials.
+    """
+    user_id = session.get('user_id', 'unknown')
+    
+    # Try to revoke tokens if available
+    encrypted_tokens = session.get('youtube_token_encrypted')
+    if encrypted_tokens:
+        try:
+            token_data = token_manager.decrypt_token(encrypted_tokens)
+            access_token = token_data.get('access_token')
+            
+            if access_token:
+                revoke_youtube_token(access_token)
+                log_token_action(user_id, 'youtube', 'token_revoked')
+        except Exception as e:
+            logger.warning(f"Token revocation failed: {e}")
+    
+    # Clear session data
+    session.pop('youtube_token_encrypted', None)
+    session.pop('youtube_connected', None)
+    session.pop('youtube_scope', None)
+    session.pop('youtube_token', None)  # Legacy cleanup
     session.pop('youtube_refresh_token', None)
-    return jsonify({'success': True, 'message': 'YouTube disconnected'})
+    
+    log_token_action(user_id, 'youtube', 'disconnected', {
+        'ip_address': request.remote_addr
+    })
+    
+    return jsonify({
+        'success': True,
+        'message': 'YouTube disconnected successfully'
+    })
 
 @app.route('/api/posts/<int:post_id>', methods=['GET', 'PUT', 'DELETE'])
 def manage_post(post_id):
