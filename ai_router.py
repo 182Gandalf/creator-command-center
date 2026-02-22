@@ -358,13 +358,33 @@ Make them engaging and trendy for 2025."""
                 'cost_usd': round(total_cost, 6)
             }
     
-    # All providers failed, return fallback ideas
+    # All providers failed, return fallback ideas with error details
+    error_details = []
+    for provider in providers:
+        if provider == 'gemini_flash':
+            api_key = os.environ.get('GEMINI_API_KEY', '')
+            if api_key:
+                test_result = call_gemini("test", api_key)
+                if not test_result.get('success'):
+                    error_details.append(f"Gemini: {test_result.get('error', 'Unknown')}")
+            else:
+                error_details.append("Gemini: No API key")
+        elif provider == 'deepseek':
+            api_key = os.environ.get('DEEPSEEK_API_KEY', '')
+            if api_key:
+                test_result = call_deepseek("test", api_key)
+                if not test_result.get('success'):
+                    error_details.append(f"DeepSeek: {test_result.get('error', 'Unknown')}")
+            else:
+                error_details.append("DeepSeek: No API key")
+    
     return {
         'success': True,
         'ideas': get_fallback_ideas(topic, platform, count),
         'model_used': 'fallback',
         'cached': False,
-        'cost_usd': 0
+        'cost_usd': 0,
+        'error': '; '.join(error_details) if error_details else 'All AI providers failed'
     }
 
 def parse_ideas(content):
