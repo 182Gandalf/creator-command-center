@@ -231,9 +231,8 @@ def ai_content_ideas():
     platform = request.args.get('platform', 'instagram')
     count = min(int(request.args.get('count', 5)), 10)  # Max 10 ideas
     
-    # Get user tier (from session or default to free)
-    # In production, get from authenticated user
-    user_tier = session.get('subscription_tier', 'free')
+    # Get user tier (from query param for testing, or session in production)
+    user_tier = request.args.get('tier') or session.get('subscription_tier', 'free')
     
     try:
         # Generate ideas using AI router (with automatic caching)
