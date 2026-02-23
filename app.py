@@ -134,7 +134,12 @@ class AIUsageTracker(db.Model):
 # Routes
 @app.route('/')
 def index():
-    """Main dashboard"""
+    """Landing page"""
+    return render_template('index.html')
+
+@app.route('/dashboard')
+def dashboard():
+    """Main dashboard (requires login)"""
     return render_template('dashboard.html')
 
 @app.route('/api/health')
