@@ -5,6 +5,16 @@
 
 ---
 
+## 📝 Document Delivery Protocol
+
+**Rule:** All documents requiring user review/interaction must be delivered via:
+1. **Telegram** - Send as message or file attachment
+2. **Email** - Send to: stgdar001@gmail.com
+
+**Applies to:** Integration guides, review submissions, documentation, plans, reports
+
+---
+
 ## 📊 Current Status
 
 ### ✅ Completed (Last 24h)
