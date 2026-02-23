@@ -46,6 +46,19 @@
 
 ---
 
+## ⏸️ Temporarily Disabled (Pre-Beta)
+
+The following features are disabled until beta testing begins:
+
+| Feature | Status | Re-enable When |
+|---------|--------|----------------|
+| FlowCast Post Scheduler (Every Minute) | ⏸️ Disabled | Beta testing starts |
+| Creator Command Center - Daily AI Content Ideas | ⏸️ Disabled | Beta testing starts |
+
+**Note:** These are disabled to prevent automated actions during development. Re-enable before inviting beta users.
+
+---
+
 ## 🎯 Immediate Priorities (Next 48h)
 
 ### Critical (Blockers)
