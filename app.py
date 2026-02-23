@@ -539,7 +539,10 @@ def youtube_auth():
         session['oauth_user_id'] = user_id
     
     # Build authorization URL
-    redirect_uri = request.args.get('redirect_uri', url_for('youtube_callback', _external=True))
+    redirect_uri = request.args.get('redirect_uri', url_for('youtube_callback', _external=True, _scheme='https'))
+    # Force HTTPS redirect URI
+    if redirect_uri.startswith('http://'):
+        redirect_uri = redirect_uri.replace('http://', 'https://', 1)
     auth_url = get_youtube_auth_url(client_id, redirect_uri, state)
     
     # Log consent initiation
@@ -578,7 +581,10 @@ def youtube_callback():
     # Exchange code for tokens
     client_id = os.environ.get('YOUTUBE_CLIENT_ID', '')
     client_secret = os.environ.get('YOUTUBE_CLIENT_SECRET', '')
-    redirect_uri = url_for('youtube_callback', _external=True)
+    redirect_uri = url_for('youtube_callback', _external=True, _scheme='https')
+    # Force HTTPS redirect URI
+    if redirect_uri.startswith('http://'):
+        redirect_uri = redirect_uri.replace('http://', 'https://', 1)
     
     result = exchange_youtube_code(code, client_id, client_secret, redirect_uri)
     
