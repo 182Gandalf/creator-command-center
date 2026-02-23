@@ -31,6 +31,10 @@ YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '')
 INSTAGRAM_APP_ID = os.environ.get('INSTAGRAM_APP_ID', '')
 INSTAGRAM_APP_SECRET = os.environ.get('INSTAGRAM_APP_SECRET', '')
 
+# TikTok Configuration
+TIKTOK_CLIENT_KEY = os.environ.get('TIKTOK_CLIENT_KEY', 'awc9mhr7an8b6m9l')
+TIKTOK_CLIENT_SECRET = os.environ.get('TIKTOK_CLIENT_SECRET', 'EMJrQ6bzOl6ZNeNgqwCxRLxPYr6vUd8N')
+
 # HTTPS Enforcement (for production behind Cloudflare)
 @app.before_request
 def enforce_https():
