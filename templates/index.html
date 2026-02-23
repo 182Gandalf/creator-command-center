@@ -243,10 +243,55 @@
             .nav-links { display: none; }
         }
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.25rem; }
+            .header { padding: 0.75rem 1rem; }
+            .header-content { 
+                flex-direction: row; 
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+            .logo { gap: 0.5rem; }
+            .logo-icon { width: 36px; height: 36px; font-size: 20px; }
+            .logo-text { font-size: 1.25rem; }
+            .nav { width: 100%; justify-content: space-between; }
+            .nav-cta { gap: 0.5rem; }
+            .btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
+            
+            .hero { padding: 3rem 1rem; }
+            .hero h1 { font-size: 2rem; line-height: 1.2; }
+            .hero-subtitle { font-size: 1rem; }
+            .hero-cta { flex-direction: column; width: 100%; }
+            .hero-cta .btn { width: 100%; }
+            
+            .problem { padding: 3rem 1rem; }
+            .problem h2 { font-size: 1.75rem; }
+            .pain-points { grid-template-columns: 1fr; gap: 1rem; }
+            .pain-point { padding: 1.25rem; }
+            
+            .preview { padding: 3rem 1rem; }
+            .preview h2 { font-size: 1.75rem; }
+            .showcase-grid { 
+                display: flex; 
+                flex-direction: column;
+                overflow-x: hidden;
+            }
+            .showcase-body { padding: 1rem; }
+            .showcase-stats { grid-template-columns: 1fr; }
+            .showcase-calendar { overflow-x: auto; }
+            .calendar-grid { min-width: 280px; }
+            
+            .testimonials { padding: 3rem 1rem; }
+            .testimonials h2 { font-size: 1.75rem; }
             .testimonials-grid { grid-template-columns: 1fr; }
-            .testimonial-stats { flex-direction: column; gap: 2rem; }
-            .footer-content { flex-direction: column; gap: 2rem; text-align: center; }
+            .testimonial-stats { flex-direction: column; gap: 1.5rem; }
+            .testimonial-stat-value { font-size: 2rem; }
+            
+            .cta { padding: 3rem 1rem; }
+            .cta-content { padding: 2rem 1.5rem; }
+            .cta h2 { font-size: 1.5rem; }
+            .cta p { font-size: 1rem; }
+            
+            .footer { padding: 2rem 1rem; }
+            .footer-content { flex-direction: column; gap: 1.5rem; text-align: center; }
         }
     </style>
 </head>
