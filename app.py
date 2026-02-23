@@ -1155,37 +1155,6 @@ def tiktok_disconnect():
 
 # ==================== END TIKTOK ROUTES ====================
 
-@app.route('/api/posts/<int:post_id>', methods=['GET', 'PUT', 'DELETE'])
-def manage_post(post_id):
-    """Get, update, or delete a specific post"""
-    post = Post.query.get_or_404(post_id)
-    
-    if request.method == 'GET':
-        return jsonify({
-            'id': post.id,
-            'title': post.title,
-            'content': post.content,
-            'platforms': json.loads(post.platforms) if post.platforms else [],
-            'status': post.status,
-            'scheduled_at': post.scheduled_at.isoformat() if post.scheduled_at else None,
-            'created_at': post.created_at.isoformat()
-        })
-    
-    elif request.method == 'PUT':
-        data = request.json
-        post.title = data.get('title', post.title)
-        post.content = data.get('content', post.content)
-        post.platforms = json.dumps(data.get('platforms', []))
-        if data.get('scheduled_at'):
-            post.scheduled_at = datetime.fromisoformat(data['scheduled_at'])
-        db.session.commit()
-        return jsonify({'success': True, 'message': 'Post updated'})
-    
-    elif request.method == 'DELETE':
-        db.session.delete(post)
-        db.session.commit()
-        return jsonify({'success': True, 'message': 'Post deleted'})
-
 @app.route('/api/publish-now/<int:post_id>', methods=['POST'])
 def publish_now(post_id):
     """Publish a post immediately"""
