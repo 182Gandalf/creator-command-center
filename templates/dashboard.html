@@ -844,13 +844,29 @@
             });
         }
 
+        // Check authentication on load
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/me');
+                const data = await response.json();
+                if (!data.success) {
+                    window.location.href = '/login';
+                    return null;
+                }
+                return data.user;
+            } catch (error) {
+                window.location.href = '/login';
+                return null;
+            }
+        }
+
         function setupEventListeners() {
             // Create Post button
             const createBtn = document.getElementById('create-post-btn');
             if (createBtn) {
                 createBtn.addEventListener('click', () => openCreatePostModal());
             }
-            
+
             // YouTube Connect button
             const youtubeBtn = document.getElementById('connect-youtube');
             if (youtubeBtn) {
@@ -878,7 +894,29 @@
                             <div class="platform-checkboxes">
                                 <label><input type="checkbox" name="platforms" value="youtube"> YouTube</label>
                                 <label><input type="checkbox" name="platforms" value="instagram"> Instagram</label>
-                                <label><input type="checkbox" name="platforms" value="tiktok"> TikTok (uploads to inbox)</label>
+                                <label><input type="checkbox" name="platforms" value="tiktok" id="tiktok-checkbox"> TikTok</label>
+                            </div>
+                        </div>
+                        <div id="tiktok-options" class="tiktok-options" style="display: none; margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                            <h4 style="margin-bottom: 0.75rem; color: #fe2c55;">🎵 TikTok Options</h4>
+                            <div class="form-group">
+                                <label>Privacy</label>
+                                <select name="tiktok_privacy" class="form-control" style="width: 100%; padding: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 6px; color: var(--text);">
+                                    <option value="PUBLIC">Public - Everyone can view</option>
+                                    <option value="FRIENDS_ONLY">Friends - Only followers</option>
+                                    <option value="SELF_ONLY">Private - Only you</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-top: 0.75rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" name="tiktok_allow_comments" checked> Allow comments
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-top: 0.5rem;">
+                                    <input type="checkbox" name="tiktok_allow_duets" checked> Allow duets
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-top: 0.5rem;">
+                                    <input type="checkbox" name="tiktok_allow_stitches" checked> Allow stitches
+                                </label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -894,6 +932,15 @@
             `;
             
             document.body.appendChild(modal);
+            
+            // Show/hide TikTok options
+            const tiktokCheckbox = modal.querySelector('#tiktok-checkbox');
+            const tiktokOptions = modal.querySelector('#tiktok-options');
+            if (tiktokCheckbox && tiktokOptions) {
+                tiktokCheckbox.addEventListener('change', (e) => {
+                    tiktokOptions.style.display = e.target.checked ? 'block' : 'none';
+                });
+            }
             
             modal.querySelector('form').addEventListener('submit', async (e) => {
                 e.preventDefault();

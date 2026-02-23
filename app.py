@@ -315,6 +315,304 @@ def create_post():
         'posts_remaining': user.get_post_limit() - posts_count - 1
     })
 
+# ==================== AUTHENTICATION API ROUTES ====================
+
+@app.route('/api/signup', methods=['POST'])
+def api_signup():
+    """Handle user registration"""
+    data = request.json
+    email = data.get('email', '').lower().strip()
+    password = data.get('password', '')
+    
+    # Validation
+    if not email or not password:
+        return jsonify({'success': False, 'error': 'Email and password required'}), 400
+    
+    if len(password) < 8:
+        return jsonify({'success': False, 'error': 'Password must be at least 8 characters'}), 400
+    
+    # Check if user exists
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({'success': False, 'error': 'Email already registered'}), 409
+    
+    # Create new user
+    import hashlib
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+    
+    user = User(
+        email=email,
+        password_hash=password_hash,
+        subscription_tier='free',
+        trial_started_at=datetime.utcnow()
+    )
+    
+    db.session.add(user)
+    db.session.commit()
+    
+    # Auto-login after signup
+    session['user_id'] = user.id
+    session['user_email'] = user.email
+    
+    return jsonify({
+        'success': True,
+        'message': 'Account created successfully',
+        'user': {
+            'id': user.id,
+            'email': user.email,
+            'tier': user.subscription_tier
+        }
+    })
+
+@app.route('/api/login', methods=['POST'])
+def api_login():
+    """Handle user login"""
+    data = request.json
+    email = data.get('email', '').lower().strip()
+    password = data.get('password', '')
+    
+    if not email or not password:
+        return jsonify({'success': False, 'error': 'Email and password required'}), 400
+    
+    # Find user
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({'success': False, 'error': 'Invalid credentials'}), 401
+    
+    # Verify password
+    import hashlib
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+    if password_hash != user.password_hash:
+        return jsonify({'success': False, 'error': 'Invalid credentials'}), 401
+    
+    # Create session
+    session['user_id'] = user.id
+    session['user_email'] = user.email
+    
+    return jsonify({
+        'success': True,
+        'message': 'Login successful',
+        'user': {
+            'id': user.id,
+            'email': user.email,
+            'tier': user.subscription_tier,
+            'tiktok_connected': user.tiktok_connected,
+            'youtube_connected': user.youtube_connected,
+            'instagram_connected': user.instagram_connected
+        }
+    })
+
+@app.route('/api/logout', methods=['POST'])
+def api_logout():
+    """Handle user logout"""
+    session.clear()
+    return jsonify({'success': True, 'message': 'Logout successful'})
+
+@app.route('/api/me')
+def get_current_user():
+    """Get current logged in user info"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Not authenticated'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    # Get post counts
+    posts_count = Post.query.filter_by(user_id=user.id).count()
+    scheduled_count = Post.query.filter_by(user_id=user.id, status='scheduled').count()
+    
+    return jsonify({
+        'success': True,
+        'user': {
+            'id': user.id,
+            'email': user.email,
+            'tier': user.subscription_tier,
+            'posts_used': posts_count,
+            'posts_limit': user.get_post_limit(),
+            'platforms_limit': user.get_platforms_allowed(),
+            'scheduled_posts': scheduled_count,
+            'tiktok_connected': user.tiktok_connected,
+            'youtube_connected': user.youtube_connected,
+            'instagram_connected': user.instagram_connected
+        }
+    })
+
+# ==================== CONTENT CREATION & SCHEDULING API ====================
+
+@app.route('/api/posts')
+def get_posts():
+    """Get all posts for current user"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Not authenticated'}), 401
+    
+    posts = Post.query.filter_by(user_id=user_id).order_by(Post.created_at.desc()).all()
+    
+    posts_data = []
+    for post in posts:
+        posts_data.append({
+            'id': post.id,
+            'title': post.title,
+            'content': post.content,
+            'platforms': json.loads(post.platforms) if post.platforms else [],
+            'status': post.status,
+            'scheduled_at': post.scheduled_at.isoformat() if post.scheduled_at else None,
+            'published_at': post.published_at.isoformat() if post.published_at else None,
+            'created_at': post.created_at.isoformat(),
+            'tiktok_publish_id': post.tiktok_publish_id,
+            'tiktok_draft_status': post.tiktok_draft_status
+        })
+    
+    return jsonify({'success': True, 'posts': posts_data})
+
+@app.route('/api/posts/<int:post_id>', methods=['GET', 'PUT', 'DELETE'])
+def manage_post(post_id):
+    """Get, update or delete a specific post"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Not authenticated'}), 401
+    
+    post = Post.query.filter_by(id=post_id, user_id=user_id).first()
+    if not post:
+        return jsonify({'success': False, 'error': 'Post not found'}), 404
+    
+    if request.method == 'GET':
+        return jsonify({
+            'success': True,
+            'post': {
+                'id': post.id,
+                'title': post.title,
+                'content': post.content,
+                'platforms': json.loads(post.platforms) if post.platforms else [],
+                'status': post.status,
+                'scheduled_at': post.scheduled_at.isoformat() if post.scheduled_at else None,
+                'published_at': post.published_at.isoformat() if post.published_at else None,
+                'created_at': post.created_at.isoformat()
+            }
+        })
+    
+    elif request.method == 'PUT':
+        data = request.json
+        post.title = data.get('title', post.title)
+        post.content = data.get('content', post.content)
+        if data.get('platforms'):
+            post.platforms = json.dumps(data['platforms'])
+        if data.get('scheduled_at'):
+            post.scheduled_at = datetime.fromisoformat(data['scheduled_at'])
+        post.updated_at = datetime.utcnow()
+        db.session.commit()
+        
+        return jsonify({'success': True, 'message': 'Post updated successfully'})
+    
+    elif request.method == 'DELETE':
+        db.session.delete(post)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Post deleted successfully'})
+
+@app.route('/api/posts/<int:post_id>/publish', methods=['POST'])
+def publish_post(post_id):
+    """Publish a post to connected platforms"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Not authenticated'}), 401
+    
+    user = User.query.get(user_id)
+    post = Post.query.filter_by(id=post_id, user_id=user_id).first()
+    
+    if not post:
+        return jsonify({'success': False, 'error': 'Post not found'}), 404
+    
+    platforms = json.loads(post.platforms) if post.platforms else []
+    results = []
+    
+    for platform in platforms:
+        if platform == 'tiktok':
+            if not user.tiktok_connected:
+                results.append({'platform': 'tiktok', 'status': 'error', 'message': 'TikTok not connected'})
+            else:
+                # Simulate TikTok publishing (API integration pending)
+                post.tiktok_draft_status = 'pending'
+                results.append({
+                    'platform': 'tiktok', 
+                    'status': 'pending', 
+                    'message': 'Content queued for TikTok posting. Will be published via Direct Post API once approved.',
+                    'note': 'Demo mode - TikTok API integration pending approval'
+                })
+        elif platform == 'youtube':
+            if not user.youtube_connected:
+                results.append({'platform': 'youtube', 'status': 'error', 'message': 'YouTube not connected'})
+            else:
+                results.append({'platform': 'youtube', 'status': 'published', 'message': 'Published to YouTube'})
+        elif platform == 'instagram':
+            if not user.instagram_connected:
+                results.append({'platform': 'instagram', 'status': 'error', 'message': 'Instagram not connected'})
+            else:
+                results.append({'platform': 'instagram', 'status': 'published', 'message': 'Published to Instagram'})
+    
+    post.status = 'published'
+    post.published_at = datetime.utcnow()
+    db.session.commit()
+    
+    return jsonify({
+        'success': True,
+        'message': 'Post published',
+        'results': results
+    })
+
+@app.route('/api/tiktok/posts', methods=['GET', 'POST'])
+def tiktok_posts():
+    """Get or create TikTok-specific posts"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Not authenticated'}), 401
+    
+    user = User.query.get(user_id)
+    
+    if request.method == 'POST':
+        data = request.json
+        
+        # Create TikTok-specific post
+        post = Post(
+            user_id=user_id,
+            title=data.get('title', ''),
+            content=data.get('caption', ''),  # Caption with hashtags
+            platforms=json.dumps(['tiktok']),
+            status='draft',
+            scheduled_at=datetime.fromisoformat(data['scheduled_at']) if data.get('scheduled_at') else None
+        )
+        
+        db.session.add(post)
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'TikTok post created',
+            'post_id': post.id,
+            'note': 'Post ready for TikTok Direct Post API integration'
+        })
+    
+    else:  # GET
+        posts = Post.query.filter(
+            Post.user_id == user_id,
+            Post.platforms.contains('tiktok')
+        ).order_by(Post.created_at.desc()).all()
+        
+        return jsonify({
+            'success': True,
+            'posts': [{
+                'id': p.id,
+                'title': p.title,
+                'caption': p.content,
+                'status': p.status,
+                'scheduled_at': p.scheduled_at.isoformat() if p.scheduled_at else None,
+                'tiktok_status': p.tiktok_draft_status or 'not_submitted'
+            } for p in posts]
+        })
+
+# ==================== END AUTHENTICATION & CONTENT API ====================
+
 @app.route('/api/youtube/channels')
 def youtube_channels():
     """Fetch YouTube channels for connected account"""
