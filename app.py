@@ -46,6 +46,10 @@ INSTAGRAM_APP_SECRET = os.environ.get('INSTAGRAM_APP_SECRET', '')
 TIKTOK_CLIENT_KEY = os.environ.get('TIKTOK_CLIENT_KEY', 'awc9mhr7an8b6m9l')
 TIKTOK_CLIENT_SECRET = os.environ.get('TIKTOK_CLIENT_SECRET', 'EMJrQ6bzOl6ZNeNgqwCxRLxPYr6vUd8N')
 
+# Google OAuth Configuration
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', '')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', '')
+
 # HTTPS Enforcement (for production behind Cloudflare)
 @app.before_request
 def enforce_https():
@@ -1214,6 +1218,110 @@ def get_subscription():
             'Email support'
         ]
     })
+
+# ==================== GOOGLE OAUTH ROUTES ====================
+
+@app.route('/api/google/auth')
+def google_auth():
+    """Initiate Google OAuth flow for sign-in"""
+    if not GOOGLE_CLIENT_ID:
+        return jsonify({'success': False, 'error': 'Google OAuth not configured'}), 500
+    
+    # Generate state for CSRF protection
+    state = secrets.token_urlsafe(32)
+    session['google_oauth_state'] = state
+    
+    # Build Google OAuth URL
+    redirect_uri = url_for('google_callback', _external=True, _scheme='https')
+    if redirect_uri.startswith('http://'):
+        redirect_uri = redirect_uri.replace('http://', 'https://', 1)
+    
+    auth_url = (
+        f"https://accounts.google.com/o/oauth2/v2/auth?"
+        f"client_id={GOOGLE_CLIENT_ID}&"
+        f"redirect_uri={redirect_uri}&"
+        f"response_type=code&"
+        f"scope=openid%20email%20profile&"
+        f"state={state}&"
+        f"access_type=offline&"
+        f"prompt=select_account"
+    )
+    
+    return redirect(auth_url)
+
+@app.route('/api/google/callback')
+def google_callback():
+    """Handle Google OAuth callback"""
+    # Verify state
+    state = request.args.get('state')
+    stored_state = session.pop('google_oauth_state', None)
+    
+    if not state or state != stored_state:
+        return jsonify({'success': False, 'error': 'Invalid state parameter'}), 403
+    
+    code = request.args.get('code')
+    error = request.args.get('error')
+    
+    if error:
+        return jsonify({'success': False, 'error': f'Google auth denied: {error}'}), 400
+    
+    if not code:
+        return jsonify({'success': False, 'error': 'No authorization code'}), 400
+    
+    # Exchange code for tokens
+    redirect_uri = url_for('google_callback', _external=True, _scheme='https')
+    if redirect_uri.startswith('http://'):
+        redirect_uri = redirect_uri.replace('http://', 'https://', 1)
+    
+    token_url = "https://oauth2.googleapis.com/token"
+    response = requests.post(token_url, data={
+        'code': code,
+        'client_id': GOOGLE_CLIENT_ID,
+        'client_secret': GOOGLE_CLIENT_SECRET,
+        'redirect_uri': redirect_uri,
+        'grant_type': 'authorization_code'
+    })
+    
+    if response.status_code != 200:
+        return jsonify({'success': False, 'error': 'Failed to get access token'}), 400
+    
+    tokens = response.json()
+    access_token = tokens.get('access_token')
+    
+    # Get user info from Google
+    user_info_response = requests.get(
+        'https://www.googleapis.com/oauth2/v2/userinfo',
+        headers={'Authorization': f'Bearer {access_token}'}
+    )
+    
+    if user_info_response.status_code != 200:
+        return jsonify({'success': False, 'error': 'Failed to get user info'}), 400
+    
+    user_info = user_info_response.json()
+    email = user_info.get('email')
+    name = user_info.get('name', '')
+    
+    # Check if user exists, create if not
+    user = User.query.filter_by(email=email.lower()).first()
+    if not user:
+        # Create new user
+        user = User(
+            email=email.lower(),
+            password_hash='google_oauth',  # Mark as OAuth user
+            subscription_tier='free',
+            trial_started_at=datetime.utcnow()
+        )
+        db.session.add(user)
+        db.session.commit()
+    
+    # Create session
+    session['user_id'] = user.id
+    session['user_email'] = user.email
+    
+    # Redirect to dashboard
+    return redirect('/dashboard')
+
+# ==================== END GOOGLE OAUTH ROUTES ====================
 
 @app.route('/api/analytics')
 def get_analytics():
