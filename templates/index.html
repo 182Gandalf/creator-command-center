@@ -38,6 +38,16 @@
         .avatar-group { display: flex; }
         .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: 3px solid var(--bg); margin-left: -12px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; }
         .avatar:first-child { margin-left: 0; }
+        .problem { padding: 5rem 2rem; background: linear-gradient(180deg, var(--bg) 0%, rgba(17, 24, 39, 0.5) 50%, var(--bg) 100%); }
+        .problem-content { max-width: 900px; margin: 0 auto; text-align: center; }
+        .section-label { display: inline-block; background: rgba(236, 72, 153, 0.1); border: 1px solid rgba(236, 72, 153, 0.3); color: var(--accent); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .problem h2 { font-size: 2.75rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
+        .problem > p { font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 2rem; }
+        .pain-points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; text-align: left; }
+        .pain-point { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; }
+        .pain-point-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .pain-point h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .pain-point p { font-size: 0.95rem; color: var(--text-muted); margin: 0; }
         .preview { padding: 5rem 2rem; background: linear-gradient(180deg, var(--bg) 0%, rgba(17, 24, 39, 0.8) 100%); }
         .preview-content { max-width: 1200px; margin: 0 auto; }
         .preview-header { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
@@ -93,6 +103,7 @@
         @media (max-width: 1024px) {
             .hero-content { grid-template-columns: 1fr; gap: 3rem; }
             .hero h1 { font-size: 3rem; }
+            .pain-points { grid-template-columns: 1fr; }
             .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
             .showcase-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
@@ -180,6 +191,32 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROBLEM SECTION -->
+        <section class="problem">
+            <div class="problem-content">
+                <span class="section-label">Sound Familiar?</span>
+                <h2>Creator life doesn't have to be this hard</h2>
+                <p>You've got the talent. You've got the passion. But keeping up with content? That's a full-time job you never signed up for.</p>
+                <div class="pain-points">
+                    <div class="pain-point">
+                        <div class="pain-point-icon">😰</div>
+                        <h3>The Blank Page Panic</h3>
+                        <p>Staring at your screen, knowing you need to post but having zero idea what to create. The pressure is real and it's eating into your creative energy.</p>
+                    </div>
+                    <div class="pain-point">
+                        <div class="pain-point-icon">😤</div>
+                        <h3>The Algorithm Treadmill</h3>
+                        <p>Posting consistently shouldn't mean sacrificing your weekends. Yet here you are, working 7 days a week just to stay relevant.</p>
+                    </div>
+                    <div class="pain-point">
+                        <div class="pain-point-icon">😔</div>
+                        <h3>The Burnout Cycle</h3>
+                        <p>You started creating because you loved it. Now it feels like a chore. The spark is fading and you're running on empty.</p>
                     </div>
                 </div>
             </div>
