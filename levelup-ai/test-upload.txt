@@ -1,0 +1,7 @@
+Test upload from OpenClaw!
+
+This is a test file to verify Google Drive integration is working.
+
+If you can see this in your Level-Up-AI-Drafts folder, we're ready to go!
+
+— Gandalf

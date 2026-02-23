@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "himalaya": {
+      "version": "1.0.0",
+      "installedAt": 1771443727354
+    },
+    "notion": {
+      "version": "1.0.0",
+      "installedAt": 1771448649695
+    },
+    "gog": {
+      "version": "1.0.0",
+      "installedAt": 1771481137051
+    }
+  }
+}
