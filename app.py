@@ -142,6 +142,16 @@ def dashboard():
     """Main dashboard (requires login)"""
     return render_template('dashboard.html')
 
+@app.route('/robots.txt')
+def robots():
+    """Serve robots.txt for SEO"""
+    return app.send_static_file('robots.txt')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    """Serve sitemap.xml for SEO"""
+    return app.send_static_file('sitemap.xml')
+
 @app.route('/api/health')
 def health_check():
     """Health check and API status"""

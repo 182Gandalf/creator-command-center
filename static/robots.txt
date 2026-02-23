@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://flowcast.space/sitemap.xml
+
+# Disallow admin/dashboard routes
+Disallow: /dashboard
+Disallow: /api/
+
+# Crawl-delay for bots
+Crawl-delay: 10
