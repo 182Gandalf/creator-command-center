@@ -41,6 +41,8 @@ class User(db.Model):
     password_hash = db.Column(db.String(256))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     subscription_tier = db.Column(db.String(20), default='free')  # free, pro, team
+    trial_started_at = db.Column(db.DateTime)  # When the 7-day trial started
+    trial_ended_at = db.Column(db.DateTime)   # When trial ended (or user upgraded)
     youtube_connected = db.Column(db.Boolean, default=False)
     youtube_token = db.Column(db.Text)  # OAuth token
     instagram_connected = db.Column(db.Boolean, default=False)
@@ -48,12 +50,12 @@ class User(db.Model):
     posts = db.relationship('Post', backref='author', lazy=True, cascade='all, delete-orphan')
     
     def get_post_limit(self):
-        limits = {'free': 10, 'pro': 100, 'team': 1000}
-        return limits.get(self.subscription_tier, 10)
+        limits = {'free': 20, 'pro': 100, 'team': 1000}
+        return limits.get(self.subscription_tier, 20)
     
     def get_platforms_allowed(self):
-        platforms = {'free': 1, 'pro': 3, 'team': 5}
-        return platforms.get(self.subscription_tier, 1)
+        platforms = {'free': 2, 'pro': 3, 'team': 5}
+        return platforms.get(self.subscription_tier, 2)
 
 class Post(db.Model):
     """Scheduled and published posts"""
@@ -85,6 +87,29 @@ class ContentIdea(db.Model):
     format_type = db.Column(db.String(50))  # carousel, video, reel, etc.
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     used_in_post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=True)
+
+class AIUsageTracker(db.Model):
+    """Track daily AI usage per user for enforcing limits"""
+    __tablename__ = 'ai_usage_tracker'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, unique=True)
+    requests_today = db.Column(db.Integer, default=0)
+    last_request_date = db.Column(db.Date, default=datetime.utcnow().date)
+    
+    def check_and_increment(self, limit=5):
+        """Check if user has remaining quota and increment if so"""
+        today = datetime.utcnow().date()
+        if self.last_request_date != today:
+            # Reset for new day
+            self.requests_today = 0
+            self.last_request_date = today
+        
+        if self.requests_today >= limit:
+            return False, limit - self.requests_today
+        
+        self.requests_today += 1
+        return True, limit - self.requests_today
 
 # Routes
 @app.route('/')
@@ -167,14 +192,51 @@ def content_calendar():
 
 @app.route('/api/create-post', methods=['POST'])
 def create_post():
-    """Create and schedule a new post"""
+    """Create and schedule a new post with subscription limits"""
     data = request.json
+    
+    # Get user from session (in production, use proper auth)
+    user_id = session.get('user_id')
+    if not user_id:
+        # For demo: use user ID 1 if exists, or return error
+        user = User.query.first()
+        if user:
+            user_id = user.id
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Authentication required. Please log in.'
+            }), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({
+            'success': False,
+            'error': 'User not found'
+        }), 404
+    
+    # Check post limit (20 for free/trial tier)
+    posts_count = Post.query.filter_by(user_id=user_id).count()
+    if posts_count >= user.get_post_limit():
+        return jsonify({
+            'success': False,
+            'error': f'Post limit reached. Free tier allows {user.get_post_limit()} posts. Upgrade to create more.'
+        }), 403
+    
+    # Check platform limit (2 for free/trial tier)
+    requested_platforms = data.get('platforms', [])
+    if len(requested_platforms) > user.get_platforms_allowed():
+        return jsonify({
+            'success': False,
+            'error': f'Platform limit exceeded. Free tier allows {user.get_platforms_allowed()} platform(s). You selected {len(requested_platforms)}.'
+        }), 403
     
     # Create new post
     post = Post(
+        user_id=user_id,
         title=data.get('title'),
         content=data.get('content'),
-        platforms=json.dumps(data.get('platforms', [])),
+        platforms=json.dumps(requested_platforms),
         status='scheduled' if data.get('scheduled_at') else 'draft',
         scheduled_at=datetime.fromisoformat(data['scheduled_at']) if data.get('scheduled_at') else None
     )
@@ -185,7 +247,8 @@ def create_post():
     return jsonify({
         'success': True,
         'message': 'Post created successfully',
-        'post_id': post.id
+        'post_id': post.id,
+        'posts_remaining': user.get_post_limit() - posts_count - 1
     })
 
 @app.route('/api/youtube/channels')
@@ -256,8 +319,34 @@ def ai_content_ideas():
     platform = request.args.get('platform', 'instagram')
     count = min(int(request.args.get('count', 5)), 10)  # Max 10 ideas
     
-    # Get user tier (from query param for testing, or session in production)
+    # Get user tier and ID (from query param for testing, or session in production)
     user_tier = request.args.get('tier') or session.get('subscription_tier', 'free')
+    user_id = session.get('user_id')
+    
+    # For free tier, check daily AI usage limit (5 per day)
+    if user_tier == 'free':
+        # Get or create usage tracker
+        if user_id:
+            tracker = AIUsageTracker.query.filter_by(user_id=user_id).first()
+            if not tracker:
+                tracker = AIUsageTracker(user_id=user_id)
+                db.session.add(tracker)
+                db.session.commit()
+            
+            allowed, remaining = tracker.check_and_increment(limit=5)
+            if not allowed:
+                return jsonify({
+                    'success': False,
+                    'error': 'Daily AI limit reached. Free tier allows 5 AI ideas per day. Upgrade for unlimited ideas.',
+                    'limit': 5,
+                    'used': tracker.requests_today,
+                    'tier': user_tier
+                }), 429
+        else:
+            # For anonymous users, allow but don't track
+            remaining = None
+    else:
+        remaining = 'unlimited'
     
     try:
         # Generate ideas using AI router (with automatic caching)
@@ -268,6 +357,10 @@ def ai_content_ideas():
             count=count
         )
         
+        # Commit the usage tracker update
+        if user_tier == 'free' and user_id:
+            db.session.commit()
+        
         if result['success']:
             # Add metadata for debugging
             response = {
@@ -276,7 +369,8 @@ def ai_content_ideas():
                 'model_used': result.get('model_used', 'fallback'),
                 'cached': result.get('cached', False),
                 'cost_usd': result.get('cost_usd', 0),
-                'tier': user_tier
+                'tier': user_tier,
+                'ai_remaining_today': remaining
             }
             return jsonify(response)
         else:
@@ -289,6 +383,7 @@ def ai_content_ideas():
                 'cached': False,
                 'cost_usd': 0,
                 'tier': user_tier,
+                'ai_remaining_today': remaining,
                 'note': f'Using fallback ideas - AI error: {error_msg}'
             })
     
@@ -579,12 +674,22 @@ def publish_now(post_id):
 def get_subscription():
     """Get user's subscription details"""
     # In production, get from authenticated user
+    # Trial: 20 posts, 2 platforms, 5 AI ideas/day, basic analytics, email support
     return jsonify({
         'tier': 'free',
         'posts_used': Post.query.count(),
-        'posts_limit': 10,
-        'platforms_allowed': 1,
-        'features': ['Basic scheduling', 'Content calendar', 'AI ideas (5/day)']
+        'posts_limit': 20,
+        'platforms_allowed': 2,
+        'ai_ideas_per_day': 5,
+        'analytics_level': 'basic',
+        'support_level': 'email',
+        'features': [
+            '20 posts per month',
+            '2 social platforms',
+            '5 AI ideas per day',
+            'Basic analytics',
+            'Email support'
+        ]
     })
 
 @app.route('/api/analytics')
