@@ -31,6 +31,22 @@ YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '')
 INSTAGRAM_APP_ID = os.environ.get('INSTAGRAM_APP_ID', '')
 INSTAGRAM_APP_SECRET = os.environ.get('INSTAGRAM_APP_SECRET', '')
 
+# HTTPS Enforcement (for production behind Cloudflare)
+@app.before_request
+def enforce_https():
+    """Redirect HTTP to HTTPS in production"""
+    # Skip if running locally
+    if request.host.startswith('localhost') or request.host.startswith('127.'):
+        return
+    
+    # Check if request came via HTTPS (Cloudflare sets X-Forwarded-Proto)
+    forwarded_proto = request.headers.get('X-Forwarded-Proto', '')
+    
+    # If not HTTPS, redirect
+    if forwarded_proto == 'http':
+        url = request.url.replace('http://', 'https://', 1)
+        return redirect(url, code=301)
+
 # Database Models
 class User(db.Model):
     """User accounts"""
