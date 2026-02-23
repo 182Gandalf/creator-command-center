@@ -338,6 +338,7 @@ def api_signup():
     data = request.json
     email = data.get('email', '').lower().strip()
     password = data.get('password', '')
+    confirm_password = data.get('confirm_password', '')
     
     # Validation
     if not email or not password:
@@ -346,12 +347,17 @@ def api_signup():
     if len(password) < 8:
         return jsonify({'success': False, 'error': 'Password must be at least 8 characters'}), 400
     
+    # Server-side password confirmation check
+    if password != confirm_password:
+        return jsonify({'success': False, 'error': 'Passwords do not match'}), 400
+    
     # Check if user exists
     existing_user = User.query.filter_by(email=email).first()
     if existing_user:
         return jsonify({'success': False, 'error': 'Email already registered'}), 409
     
     # Create new user
+    # TODO: Migrate to werkzeug.security for proper password hashing
     import hashlib
     password_hash = hashlib.sha256(password.encode()).hexdigest()
     
