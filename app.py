@@ -152,6 +152,11 @@ def sitemap():
     """Serve sitemap.xml for SEO"""
     return app.send_static_file('sitemap.xml')
 
+@app.route('/BingSiteAuth.xml')
+def bing_verification():
+    """Serve Bing verification file for SEO"""
+    return app.send_static_file('BingSiteAuth.xml')
+
 @app.route('/api/health')
 def health_check():
     """Health check and API status"""
