@@ -47,6 +47,8 @@ class User(db.Model):
     youtube_token = db.Column(db.Text)  # OAuth token
     instagram_connected = db.Column(db.Boolean, default=False)
     instagram_token = db.Column(db.Text)
+    tiktok_connected = db.Column(db.Boolean, default=False)
+    tiktok_token = db.Column(db.Text)  # OAuth token for TikTok
     posts = db.relationship('Post', backref='author', lazy=True, cascade='all, delete-orphan')
     
     def get_post_limit(self):
@@ -73,6 +75,8 @@ class Post(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     youtube_video_id = db.Column(db.String(50))  # If published to YouTube
     instagram_media_id = db.Column(db.String(50))  # If published to Instagram
+    tiktok_publish_id = db.Column(db.String(100))  # TikTok publish ID (for drafts)
+    tiktok_draft_status = db.Column(db.String(50))  # pending, uploaded, failed
     analytics = db.Column(db.Text)  # JSON with views, likes, etc.
     
 class ContentIdea(db.Model):
@@ -614,6 +618,179 @@ def youtube_disconnect():
         'message': 'YouTube disconnected successfully'
     })
 
+# ==================== TIKTOK OAUTH ROUTES ====================
+
+@app.route('/api/tiktok/auth')
+def tiktok_auth():
+    """
+    Initiate TikTok OAuth flow
+    
+    TikTok Content Posting API requires:
+    - video.upload scope (to upload drafts to inbox)
+    - user.info.basic scope (to get user profile)
+    """
+    client_key = os.environ.get('TIKTOK_CLIENT_KEY', '')
+    if not client_key:
+        return jsonify({'success': False, 'error': 'TikTok OAuth not configured'}), 500
+    
+    # Generate CSRF state token
+    state = secrets.token_urlsafe(32)
+    session['tiktok_oauth_state'] = state
+    
+    # Build authorization URL
+    redirect_uri = request.args.get('redirect_uri', url_for('tiktok_callback', _external=True))
+    
+    # TikTok OAuth endpoints
+    auth_url = (
+        f"https://www.tiktok.com/auth/authorize/?"
+        f"client_key={client_key}&"
+        f"redirect_uri={redirect_uri}&"
+        f"scope=user.info.basic,video.upload&"
+        f"state={state}&"
+        f"response_type=code"
+    )
+    
+    log_token_action('unknown', 'tiktok', 'auth_initiated', {
+        'ip_address': request.remote_addr
+    })
+    
+    return redirect(auth_url)
+
+@app.route('/api/tiktok/callback')
+def tiktok_callback():
+    """Handle TikTok OAuth callback"""
+    # Verify CSRF state
+    state = request.args.get('state')
+    stored_state = session.pop('tiktok_oauth_state', None)
+    
+    if not state or state != stored_state:
+        return jsonify({'success': False, 'error': 'Invalid state parameter'}), 403
+    
+    code = request.args.get('code')
+    error = request.args.get('error')
+    
+    if error:
+        return jsonify({'success': False, 'error': f'Authorization denied: {error}'}), 400
+    
+    if not code:
+        return jsonify({'success': False, 'error': 'No authorization code provided'}), 400
+    
+    # Exchange code for access token
+    client_key = os.environ.get('TIKTOK_CLIENT_KEY', '')
+    client_secret = os.environ.get('TIKTOK_CLIENT_SECRET', '')
+    redirect_uri = url_for('tiktok_callback', _external=True)
+    
+    token_url = "https://open-api.tiktok.com/oauth/access_token/"
+    response = requests.post(token_url, json={
+        'client_key': client_key,
+        'client_secret': client_secret,
+        'code': code,
+        'grant_type': 'authorization_code',
+        'redirect_uri': redirect_uri
+    })
+    
+    if response.status_code != 200:
+        return jsonify({
+            'success': False,
+            'error': 'Failed to obtain access token',
+            'details': response.text
+        }), 400
+    
+    token_data = response.json()
+    access_token = token_data.get('data', {}).get('access_token')
+    
+    if not access_token:
+        return jsonify({
+            'success': False,
+            'error': 'No access token in response'
+        }), 400
+    
+    # Store in session (encrypt in production)
+    session['tiktok_token'] = access_token
+    session['tiktok_connected'] = True
+    
+    log_token_action('session_user', 'tiktok', 'connected', {
+        'ip_address': request.remote_addr
+    })
+    
+    return jsonify({
+        'success': True,
+        'message': 'TikTok account connected successfully'
+    })
+
+@app.route('/api/tiktok/upload', methods=['POST'])
+def tiktok_upload():
+    """
+    Upload video to TikTok as draft (goes to user's inbox)
+    
+    Flow:
+    1. User uploads video to FlowCast
+    2. We call TikTok Content Posting API
+    3. Video goes to user's TikTok inbox as draft
+    4. User gets notification in TikTok app
+    5. User edits and posts manually
+    """
+    if not session.get('tiktok_token'):
+        return jsonify({'success': False, 'error': 'TikTok not connected'}), 401
+    
+    data = request.json
+    video_url = data.get('video_url')  # URL where video is hosted
+    title = data.get('title', '')
+    
+    if not video_url:
+        return jsonify({'success': False, 'error': 'Video URL required'}), 400
+    
+    access_token = session.get('tiktok_token')
+    
+    # Step 1: Initialize upload
+    init_url = "https://open-api.tiktok.com/video/upload/"
+    init_response = requests.post(init_url, json={
+        'source_info': {
+            'source': 'PULL_FROM_URL',
+            'url': video_url
+        },
+        'title': title,
+        'privacy_level': 'SELF_ONLY',  # Upload as draft only
+        'disable_duet': False,
+        'disable_comment': False
+    }, headers={'Authorization': f'Bearer {access_token}'})
+    
+    if init_response.status_code != 200:
+        return jsonify({
+            'success': False,
+            'error': 'Failed to initiate TikTok upload',
+            'details': init_response.text
+        }), 400
+    
+    result = init_response.json()
+    publish_id = result.get('data', {}).get('publish_id')
+    
+    return jsonify({
+        'success': True,
+        'message': 'Video uploaded to TikTok inbox as draft',
+        'publish_id': publish_id,
+        'note': 'User will receive notification in TikTok app to complete the post'
+    })
+
+@app.route('/api/tiktok/disconnect', methods=['POST'])
+def tiktok_disconnect():
+    """Disconnect TikTok account"""
+    user_id = session.get('user_id', 'unknown')
+    
+    session.pop('tiktok_token', None)
+    session.pop('tiktok_connected', None)
+    
+    log_token_action(user_id, 'tiktok', 'disconnected', {
+        'ip_address': request.remote_addr
+    })
+    
+    return jsonify({
+        'success': True,
+        'message': 'TikTok disconnected successfully'
+    })
+
+# ==================== END TIKTOK ROUTES ====================
+
 @app.route('/api/posts/<int:post_id>', methods=['GET', 'PUT', 'DELETE'])
 def manage_post(post_id):
     """Get, update, or delete a specific post"""
@@ -663,6 +840,8 @@ def publish_now(post_id):
                 results.append({'platform': 'youtube', 'status': 'success', 'message': 'Video queued for upload'})
         elif platform == 'instagram':
             results.append({'platform': 'instagram', 'status': 'pending', 'message': 'Instagram publishing coming soon'})
+        elif platform == 'tiktok':
+            results.append({'platform': 'tiktok', 'status': 'pending', 'message': 'TikTok draft upload coming soon'})
     
     post.status = 'published'
     post.published_at = datetime.utcnow()
