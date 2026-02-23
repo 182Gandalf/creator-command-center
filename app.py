@@ -157,6 +157,16 @@ def bing_verification():
     """Serve Bing verification file for SEO"""
     return app.send_static_file('BingSiteAuth.xml')
 
+@app.route('/signup')
+def signup():
+    """Sign up page"""
+    return render_template('signup.html')
+
+@app.route('/login')
+def login():
+    """Login page"""
+    return render_template('login.html')
+
 @app.route('/api/health')
 def health_check():
     """Health check and API status"""
