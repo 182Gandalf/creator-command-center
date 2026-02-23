@@ -161,6 +161,16 @@ def bing_verification():
     """Serve Bing verification file for SEO"""
     return app.send_static_file('BingSiteAuth.xml')
 
+@app.route('/file_28---5d0b287d-0110-44d2-aeb8-8d0024051942.txt')
+def tiktok_verification_1():
+    """Serve TikTok developer site verification file"""
+    return app.send_static_file('file_28---5d0b287d-0110-44d2-aeb8-8d0024051942.txt')
+
+@app.route('/file_29---33f1b90a-a3c2-4fe9-9d60-d1af8491fd6a.txt')
+def tiktok_verification_2():
+    """Serve TikTok developer site verification file"""
+    return app.send_static_file('file_29---33f1b90a-a3c2-4fe9-9d60-d1af8491fd6a.txt')
+
 @app.route('/signup')
 def signup():
     """Sign up page"""
