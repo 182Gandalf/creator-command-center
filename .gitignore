@@ -1,6 +1,33 @@
+# Environment variables - NEVER COMMIT
+.env
+.env.local
+.env.production
+
+# Credentials - NEVER COMMIT
 stripe_integration.py
 api-keys.md
 *.json
+client_secret*.json
+*credentials*.json
+
+# Security
+secrets/
+
+# Python
 __pycache__/
 *.pyc
 venv/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Backup
+*.tar.gz
+*.zip
+backup/

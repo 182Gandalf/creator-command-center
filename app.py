@@ -6,10 +6,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 import os
 import requests
 import json
 import secrets
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Import OAuth manager for secure token handling
 from oauth_manager import (
@@ -43,12 +47,17 @@ INSTAGRAM_APP_ID = os.environ.get('INSTAGRAM_APP_ID', '')
 INSTAGRAM_APP_SECRET = os.environ.get('INSTAGRAM_APP_SECRET', '')
 
 # TikTok Configuration
-TIKTOK_CLIENT_KEY = os.environ.get('TIKTOK_CLIENT_KEY', 'awc9mhr7an8b6m9l')
-TIKTOK_CLIENT_SECRET = os.environ.get('TIKTOK_CLIENT_SECRET', 'EMJrQ6bzOl6ZNeNgqwCxRLxPYr6vUd8N')
+TIKTOK_CLIENT_KEY = os.environ.get('TIKTOK_CLIENT_KEY')
+TIKTOK_CLIENT_SECRET = os.environ.get('TIKTOK_CLIENT_SECRET')
 
 # Google OAuth Configuration
-GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', '')
-GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', '')
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+
+# Validate required configuration
+if not GOOGLE_CLIENT_ID or not GOOGLE_CLIENT_SECRET:
+    import warnings
+    warnings.warn("Google OAuth credentials not configured. Google login will not work.")
 
 # HTTPS Enforcement (for production behind Cloudflare)
 @app.before_request
