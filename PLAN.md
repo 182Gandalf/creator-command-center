@@ -1,7 +1,7 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-02-23 13:45 UTC  
-**Next Update:** 2026-02-24 00:00 UTC
+**Last Updated:** 2026-02-24 00:00 UTC  
+**Next Update:** 2026-02-25 00:00 UTC
 
 ---
 
@@ -29,13 +29,21 @@
 - [x] TikTok API integration (draft upload to inbox)
 - [x] Contact email updated to customersupport@flowcast.space
 - [x] Refund policy set to 14 days
+- [x] **NEW:** Fixed all pricing buttons to say "Get Started" (was "Contact Sales" on Pro)
+- [x] **NEW:** Fixed signup API network error (database schema + server-side validation)
+- [x] **NEW:** Created new GitHub account (182gandalf@gmail.com) after Google ban
+- [x] **NEW:** Forked repository to new GitHub account
+- [x] **NEW:** Configured local git for new account (SSH keys generated)
+- [x] **NEW:** Added server-side password confirmation validation (security fix)
 
 ### 🚧 In Progress
+- [ ] Porkbun domain recovery (support ticket submitted)
+- [ ] Railway account recovery (support ticket submitted)
+- [ ] Git push to new GitHub account (SSH key needs to be added to GitHub)
 - [ ] Paddle payment integration (waiting for approval)
 - [ ] YouTube OAuth testing (credentials configured, needs redirect URI setup)
 - [ ] Meta/Instagram app review preparation
 - [ ] Git history cleanup (API keys in history)
-- [ ] Mobile responsiveness fixes
 
 ### ⏳ Pending
 - [ ] Live deployment with all changes
@@ -62,18 +70,18 @@ The following features are disabled until beta testing begins:
 ## 🎯 Immediate Priorities (Next 48h)
 
 ### Critical (Blockers)
-1. **Deploy current code to production** - All changes ready on GitHub
-2. **Git history cleanup** - Remove API keys from Git history
-3. **Add Gemini API key to Railway** - Required for AI features
-4. **Test AI router functionality** - Verify cost optimization works
+1. **Add SSH key to new GitHub account** - Required for git push (key already generated)
+2. **Porkbun domain recovery** - Can't deploy without domain access
+3. **Railway account recovery OR new account** - Need hosting platform
+4. **Git history cleanup** - Remove exposed API keys before pushing to new repo
 
 ### High Priority
-5. **Mobile responsiveness fixes** - Landing page CTA section formatting
-6. **YouTube OAuth redirect URIs** - Add to Google Cloud Console
-7. **Meta app creation** - Start Instagram Basic Display setup
+5. **Deploy current code to production** - All changes ready locally
+6. **Add Gemini API key to Railway** - Required for AI features
+7. **YouTube OAuth redirect URIs** - Add to Google Cloud Console
 
 ### Medium Priority
-8. **User authentication backend** - Connect signup/login to database
+8. **Meta app creation** - Start Instagram Basic Display setup
 9. **Review system** - Implement "Leave a Review" functionality
 10. **Paddle integration** - Wait for approval, then implement webhooks
 
@@ -142,24 +150,41 @@ The following features are disabled until beta testing begins:
 - Mobile formatting issues identified
 - Ready for production deployment
 
+### 2026-02-24
+- **CRITICAL:** Google account (gandalftheclaw@gmail.com) banned - lost access to GitHub, Railway, Cloudflare
+- Created new GitHub account: 182gandalf@gmail.com / Freya@06082021
+- Forked repository to new account: github.com/182gandalf/creator-command-center
+- Generated SSH keys for new GitHub account
+- Fixed pricing buttons (all now say "Get Started")
+- Fixed signup API network error (database schema issue)
+- Added server-side password confirmation validation
+- Submitted support tickets to Porkbun and Railway for account recovery
+- App running locally on port 5000 with all fixes
+- **BLOCKED:** Cannot deploy until domain/hosting access restored
+
 ---
 
 ## 🚨 Blockers & Risks
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
+| Google account ban | Lost access to GitHub, Railway, Cloudflare | New accounts created, support tickets filed |
+| Porkbun domain access lost | Can't manage DNS | Support ticket submitted, awaiting response |
+| Railway account access lost | No hosting platform | Support ticket submitted, may need new account |
+| Git push authentication | Can't deploy code | SSH key generated, needs manual add to GitHub |
 | Git history cleanup delay | Security vulnerability | Use BFG Repo-Cleaner |
 | Paddle approval delay | No payments | Use free tier longer |
 | Meta app review delay | No Instagram | Focus on YouTube/TikTok |
-| Mobile formatting issues | Poor UX | Fix before launch |
 
 ---
 
 ## 🔗 Important Links
 
-- **Live Site:** https://flowcast.space
-- **GitHub:** https://github.com/gandalftheclaw-alt/creator-command-center
-- **Railway Dashboard:** (project ID: e97ba286-0583-495c-814d-f08ea5065f54)
+- **Live Site:** https://flowcast.space (DOWN - awaiting domain recovery)
+- **GitHub (NEW):** https://github.com/182gandalf/creator-command-center
+- **GitHub (OLD - LOCKED):** https://github.com/gandalftheclaw-alt/creator-command-center
+- **Railway Dashboard:** UNAVAILABLE (account recovery in progress)
+- **Porkbun Domain:** UNAVAILABLE (account recovery in progress)
 - **Google Cloud Console:** YouTube OAuth settings
 - **Meta Developers:** https://developers.facebook.com/ (for Instagram)
 - **TikTok Developers:** https://developers.tiktok.com/ (application pending)
