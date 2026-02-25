@@ -144,20 +144,67 @@ class AIUsageTracker(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, unique=True)
     requests_today = db.Column(db.Integer, default=0)
     last_request_date = db.Column(db.Date, default=datetime.utcnow().date)
+    bonus_credits = db.Column(db.Integer, default=0)  # Purchased AI credits (don't reset daily)
     
     def check_and_increment(self, limit=5):
-        """Check if user has remaining quota and increment if so"""
+        """Check if user has remaining quota and increment if so
+        
+        Priority: bonus_credits > daily_limit
+        Returns: (allowed, remaining_daily, remaining_credits)
+        """
         today = datetime.utcnow().date()
         if self.last_request_date != today:
             # Reset for new day
             self.requests_today = 0
             self.last_request_date = today
         
-        if self.requests_today >= limit:
-            return False, limit - self.requests_today
+        # Check if daily limit reached
+        daily_remaining = limit - self.requests_today
         
-        self.requests_today += 1
-        return True, limit - self.requests_today
+        if daily_remaining > 0:
+            # Still within daily quota
+            self.requests_today += 1
+            return True, daily_remaining - 1, self.bonus_credits
+        elif self.bonus_credits > 0:
+            # Daily limit reached, but have bonus credits
+            self.bonus_credits -= 1
+            db.session.commit()
+            return True, 0, self.bonus_credits
+        else:
+            # No quota left
+            return False, 0, 0
+    
+    def add_credits(self, amount):
+        """Add purchased credits to user's account"""
+        self.bonus_credits += amount
+        db.session.commit()
+        return self.bonus_credits
+    
+    def get_quota_status(self, limit=5):
+        """Get current quota status for display"""
+        today = datetime.utcnow().date()
+        if self.last_request_date != today:
+            return {'daily_used': 0, 'daily_limit': limit, 'daily_remaining': limit, 'bonus_credits': self.bonus_credits}
+        
+        daily_remaining = max(0, limit - self.requests_today)
+        return {
+            'daily_used': self.requests_today,
+            'daily_limit': limit,
+            'daily_remaining': daily_remaining,
+            'bonus_credits': self.bonus_credits
+        }
+
+class AICreditPurchase(db.Model):
+    """Track AI credit purchases"""
+    __tablename__ = 'ai_credit_purchases'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    credits_purchased = db.Column(db.Integer, nullable=False)  # Number of AI ideas purchased
+    amount_paid = db.Column(db.Float, nullable=False)  # Amount paid in EUR
+    paddle_transaction_id = db.Column(db.String(100))  # Payment provider reference
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.String(20), default='completed')  # pending, completed, failed
 
 # Routes
 @app.route('/')
@@ -715,30 +762,45 @@ def ai_content_ideas():
     user_tier = request.args.get('tier') or session.get('subscription_tier', 'free')
     user_id = session.get('user_id')
     
-    # For free tier, check daily AI usage limit (5 per day)
-    if user_tier == 'free':
-        # Get or create usage tracker
-        if user_id:
-            tracker = AIUsageTracker.query.filter_by(user_id=user_id).first()
-            if not tracker:
-                tracker = AIUsageTracker(user_id=user_id)
-                db.session.add(tracker)
-                db.session.commit()
-            
-            allowed, remaining = tracker.check_and_increment(limit=5)
-            if not allowed:
+    # Check AI usage limits based on tier
+    tier_limits = {'free': 5, 'starter': 10, 'creator': 999999, 'pro': 999999}  # unlimited for paid tiers
+    daily_limit = tier_limits.get(user_tier, 5)
+    
+    # Get or create usage tracker
+    if user_id:
+        tracker = AIUsageTracker.query.filter_by(user_id=user_id).first()
+        if not tracker:
+            tracker = AIUsageTracker(user_id=user_id)
+            db.session.add(tracker)
+            db.session.commit()
+        
+        allowed, daily_remaining, bonus_remaining = tracker.check_and_increment(limit=daily_limit)
+        
+        if not allowed:
+            # Check if user can purchase credits (all tiers except pro)
+            if user_tier != 'pro':
                 return jsonify({
                     'success': False,
-                    'error': 'Daily AI limit reached. Free tier allows 5 AI ideas per day. Upgrade for unlimited ideas.',
-                    'limit': 5,
+                    'error': 'Daily AI limit reached. Purchase 10 more AI ideas for €1 or upgrade for unlimited access.',
+                    'limit': daily_limit,
+                    'used': tracker.requests_today,
+                    'tier': user_tier,
+                    'can_purchase_credits': True,
+                    'credit_offer': {'amount': 10, 'price_eur': 1.00}
+                }), 429
+            else:
+                return jsonify({
+                    'success': False,
+                    'error': 'Daily AI limit reached. Contact support if you need more ideas.',
+                    'limit': daily_limit,
                     'used': tracker.requests_today,
                     'tier': user_tier
                 }), 429
-        else:
-            # For anonymous users, allow but don't track
-            remaining = None
+        
+        total_remaining = daily_remaining + bonus_remaining
     else:
-        remaining = 'unlimited'
+        # For anonymous users, allow but don't track
+        total_remaining = None
     
     try:
         # Generate ideas using AI router (with automatic caching)
@@ -762,7 +824,8 @@ def ai_content_ideas():
                 'cached': result.get('cached', False),
                 'cost_usd': result.get('cost_usd', 0),
                 'tier': user_tier,
-                'ai_remaining_today': remaining
+                'ai_remaining_today': total_remaining,
+                'quota_status': tracker.get_quota_status(daily_limit) if user_id else None
             }
             return jsonify(response)
         else:
@@ -775,7 +838,8 @@ def ai_content_ideas():
                 'cached': False,
                 'cost_usd': 0,
                 'tier': user_tier,
-                'ai_remaining_today': remaining,
+                'ai_remaining_today': total_remaining,
+                'quota_status': tracker.get_quota_status(daily_limit) if user_id else None,
                 'note': f'Using fallback ideas - AI error: {error_msg}'
             })
     
@@ -1356,6 +1420,234 @@ def get_analytics():
         'top_performing_post': None if published == 0 else 'Sample Post',
         'growth_rate': '+12% this week'
     })
+
+# ==================== AI CREDITS & USAGE ALERTS ====================
+
+@app.route('/api/ai-quota-status')
+def get_ai_quota_status():
+    """Get current AI usage quota status for the logged-in user"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    # Get or create usage tracker
+    tracker = AIUsageTracker.query.filter_by(user_id=user_id).first()
+    if not tracker:
+        tracker = AIUsageTracker(user_id=user_id)
+        db.session.add(tracker)
+        db.session.commit()
+    
+    # Get tier limits
+    tier_limits = {'free': 5, 'starter': 10, 'creator': 999999, 'pro': 999999}
+    daily_limit = tier_limits.get(user.subscription_tier, 5)
+    
+    quota_status = tracker.get_quota_status(daily_limit)
+    
+    # Calculate usage alerts
+    usage_percentage = (quota_status['daily_used'] / quota_status['daily_limit']) * 100 if quota_status['daily_limit'] < 999999 else 0
+    
+    alerts = []
+    if usage_percentage >= 100:
+        alerts.append({
+            'type': 'limit_reached',
+            'message': 'You\'ve used all your daily AI ideas.',
+            'action': 'purchase_credits' if user.subscription_tier != 'pro' else 'upgrade'
+        })
+    elif usage_percentage >= 80:
+        alerts.append({
+            'type': 'warning',
+            'message': f'You\'ve used {quota_status["daily_used"]}/{quota_status["daily_limit"]} AI ideas today.',
+            'remaining': quota_status['daily_remaining']
+        })
+    
+    # Check if approaching any other limits
+    posts_count = Post.query.filter_by(user_id=user_id).count()
+    post_limit = user.get_post_limit()
+    if posts_count >= post_limit * 0.9 and post_limit < 999999:
+        alerts.append({
+            'type': 'approaching_limit',
+            'resource': 'posts',
+            'message': f'You\'ve used {posts_count}/{post_limit} posts this month.',
+            'action': 'upgrade'
+        })
+    
+    return jsonify({
+        'success': True,
+        'quota': quota_status,
+        'tier': user.subscription_tier,
+        'can_purchase_credits': user.subscription_tier != 'pro',
+        'credit_offer': {'amount': 10, 'price_eur': 1.00} if user.subscription_tier != 'pro' else None,
+        'alerts': alerts,
+        'usage_percentage': round(usage_percentage, 1)
+    })
+
+@app.route('/api/ai-purchase-credits', methods=['POST'])
+def purchase_ai_credits():
+    """Purchase AI credits (€1 for 10 ideas). Available for all tiers except Pro."""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    # Pro users don't need credits (they have unlimited)
+    if user.subscription_tier == 'pro':
+        return jsonify({
+            'success': False,
+            'error': 'Pro users have unlimited AI ideas. No purchase needed.'
+        }), 400
+    
+    data = request.json
+    quantity = data.get('quantity', 1)  # Number of credit packs (1 pack = 10 ideas for €1)
+    
+    if quantity < 1 or quantity > 10:
+        return jsonify({
+            'success': False,
+            'error': 'Quantity must be between 1 and 10'
+        }), 400
+    
+    credits_to_add = quantity * 10  # 10 ideas per pack
+    amount = quantity * 1.00  # €1 per pack
+    
+    # TODO: Integrate with Paddle for actual payment processing
+    # For now, simulate successful purchase (remove this in production)
+    
+    # Get or create usage tracker
+    tracker = AIUsageTracker.query.filter_by(user_id=user_id).first()
+    if not tracker:
+        tracker = AIUsageTracker(user_id=user_id)
+        db.session.add(tracker)
+        db.session.commit()
+    
+    # Add credits
+    new_total = tracker.add_credits(credits_to_add)
+    
+    # Record purchase
+    purchase = AICreditPurchase(
+        user_id=user_id,
+        credits_purchased=credits_to_add,
+        amount_paid=amount,
+        status='completed'  # In production: 'pending' until payment confirmed
+    )
+    db.session.add(purchase)
+    db.session.commit()
+    
+    return jsonify({
+        'success': True,
+        'message': f'Added {credits_to_add} AI ideas to your account',
+        'credits_purchased': credits_to_add,
+        'amount_paid': amount,
+        'total_bonus_credits': new_total,
+        'note': 'Payment integration with Paddle pending - this is a simulated purchase'
+    })
+
+@app.route('/api/usage-alerts')
+def get_usage_alerts():
+    """Get personalized usage alerts and win-back offers for the user"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    alerts = []
+    offers = []
+    
+    # Get AI usage
+    tracker = AIUsageTracker.query.filter_by(user_id=user_id).first()
+    if tracker:
+        tier_limits = {'free': 5, 'starter': 10, 'creator': 999999, 'pro': 999999}
+        daily_limit = tier_limits.get(user.subscription_tier, 5)
+        quota = tracker.get_quota_status(daily_limit)
+        
+        # AI usage alerts
+        if quota['daily_remaining'] == 0 and daily_limit < 999999:
+            alerts.append({
+                'type': 'ai_limit_reached',
+                'title': 'Daily AI Limit Reached',
+                'message': 'You\'ve used all your AI ideas for today.',
+                'action': {
+                    'type': 'purchase_credits',
+                    'button_text': 'Get 10 More for €1',
+                    'description': 'Instantly add 10 AI ideas to your account'
+                }
+            })
+        elif quota['daily_remaining'] <= 2 and daily_limit < 999999:
+            alerts.append({
+                'type': 'ai_limit_warning',
+                'title': 'Running Low on AI Ideas',
+                'message': f'You have {quota["daily_remaining"]} AI ideas left today.',
+                'action': {
+                    'type': 'purchase_credits',
+                    'button_text': 'Top Up (€1 for 10)',
+                    'description': 'Don\'t run out of creative ideas'
+                }
+            })
+    
+    # Post usage alerts
+    posts_count = Post.query.filter_by(user_id=user_id).count()
+    post_limit = user.get_post_limit()
+    
+    if posts_count >= post_limit and post_limit < 999999:
+        alerts.append({
+            'type': 'post_limit_reached',
+            'title': 'Post Limit Reached',
+            'message': f'You\'ve used all {post_limit} posts in your plan.',
+            'action': {
+                'type': 'upgrade',
+                'button_text': 'Upgrade Plan',
+                'description': 'Get unlimited posts with Creator plan'
+            }
+        })
+    elif posts_count >= post_limit * 0.8 and post_limit < 999999:
+        alerts.append({
+            'type': 'post_limit_warning',
+            'title': 'Approaching Post Limit',
+            'message': f'You\'ve used {posts_count}/{post_limit} posts this month.',
+            'action': {
+                'type': 'upgrade',
+                'button_text': 'Upgrade Now',
+                'description': f'Only {post_limit - posts_count} posts remaining'
+            }
+        })
+    
+    # Win-back offers for inactive users (placeholder - would check last activity)
+    # This would be triggered by a scheduled job in production
+    
+    # Tier-specific upgrade prompts
+    if user.subscription_tier == 'free':
+        offers.append({
+            'type': 'upgrade_offer',
+            'title': 'Unlock More with Starter',
+            'message': 'Get 50 posts/month, 3 platforms, and 10 AI ideas daily for just €6/month.',
+            'discount': None,
+            'cta': 'Upgrade to Starter'
+        })
+    elif user.subscription_tier == 'starter':
+        offers.append({
+            'type': 'upgrade_offer',
+            'title': 'Go Unlimited with Creator',
+            'message': 'Remove all limits—unlimited posts, 5 platforms, unlimited AI ideas.',
+            'discount': None,
+            'cta': 'Upgrade to Creator'
+        })
+    
+    return jsonify({
+        'success': True,
+        'alerts': alerts,
+        'offers': offers,
+        'has_urgent_alerts': any(a['type'].endswith('_reached') for a in alerts)
+    })
+
+# ==================== END AI CREDITS & USAGE ALERTS ====================
 
 if __name__ == '__main__':
     with app.app_context():

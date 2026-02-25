@@ -8,22 +8,41 @@ db = SQLAlchemy()
 class User(db.Model):
     """User accounts"""
     __tablename__ = 'users'
-    
+
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
+    # Subscription
+    subscription_tier = db.Column(db.String(50), default='free')
+    trial_started_at = db.Column(db.DateTime)
+    trial_ended_at = db.Column(db.DateTime)
+
     # Social platform connections
     youtube_connected = db.Column(db.Boolean, default=False)
+    youtube_token = db.Column(db.Text)
     instagram_connected = db.Column(db.Boolean, default=False)
-    
+    instagram_token = db.Column(db.Text)
+    tiktok_connected = db.Column(db.Boolean, default=False)
+    tiktok_token = db.Column(db.Text)
+
     # Relationships
     posts = db.relationship('Post', backref='author', lazy=True)
     platforms = db.relationship('PlatformConnection', backref='user', lazy=True)
-    
+
     def __repr__(self):
         return f'<User {self.email}>'
+
+    def get_post_limit(self):
+        """Get monthly post limit based on subscription tier"""
+        limits = {
+            'free': 20,
+            'starter': 50,
+            'creator': float('inf'),
+            'pro': float('inf')
+        }
+        return limits.get(self.subscription_tier, 20)
 
 class PlatformConnection(db.Model):
     """Connected social media platforms"""

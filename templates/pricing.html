@@ -212,6 +212,15 @@
         <section class="hero">
             <h1>Simple, transparent <span>pricing</span></h1>
             <p>Start with a 7-day free trial. Upgrade when you're ready. No hidden fees.</p>
+            
+            <!-- Billing Toggle -->
+            <div class="billing-toggle" style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 2rem;">
+                <span class="toggle-label" id="monthly-label" style="color: var(--text-muted); font-weight: 500;">Monthly</span>
+                <button class="toggle-switch" id="billing-toggle" style="position: relative; width: 60px; height: 32px; background: var(--primary); border: none; border-radius: 16px; cursor: pointer; transition: all 0.3s;">
+                    <span class="toggle-thumb" style="position: absolute; top: 3px; right: 3px; width: 26px; height: 26px; background: white; border-radius: 50%; transition: transform 0.3s;"></span>
+                </button>
+                <span class="toggle-label" id="annual-label" style="color: var(--text); font-weight: 600;">Annual <span style="color: var(--success); font-size: 0.875rem;">(Save 20%)</span></span>
+            </div>
         </section>
 
         <div class="container">
@@ -237,8 +246,12 @@
                 <div class="pricing-card">
                     <div class="plan-name">Starter</div>
                     <div class="plan-description">For growing creators</div>
-                    <div class="price">€6<span>/month</span></div>
-                    <div class="annual-price" style="color: var(--success); font-size: 0.875rem; margin-bottom: 1rem;">or €58/year <span style="color: var(--text-muted);">(save 20%)</span></div>
+                    <div class="price monthly-price" style="display: none;">€6<span>/month</span></div>
+                    <div class="price annual-price">€4.80<span>/month</span></div>
+                    <div class="price-details" style="color: var(--success); font-size: 0.875rem; margin-bottom: 1rem;">
+                        <span class="monthly-details" style="display: none;">€6 billed monthly</span>
+                        <span class="annual-details">€58 billed annually <span style="color: var(--text-muted);">(save €14)</span></span>
+                    </div>
                     <ul class="features">
                         <li>50 posts per month</li>
                         <li>3 social platforms</li>
@@ -256,8 +269,12 @@
                     <div class="badge">Most Popular</div>
                     <div class="plan-name">Creator</div>
                     <div class="plan-description">For serious creators</div>
-                    <div class="price">€15<span>/month</span></div>
-                    <div class="annual-price" style="color: var(--success); font-size: 0.875rem; margin-bottom: 1rem;">or €144/year <span style="color: var(--text-muted);">(save 20%)</span></div>
+                    <div class="price monthly-price" style="display: none;">€15<span>/month</span></div>
+                    <div class="price annual-price">€12<span>/month</span></div>
+                    <div class="price-details" style="color: var(--success); font-size: 0.875rem; margin-bottom: 1rem;">
+                        <span class="monthly-details" style="display: none;">€15 billed monthly</span>
+                        <span class="annual-details">€144 billed annually <span style="color: var(--text-muted);">(save €36)</span></span>
+                    </div>
                     <ul class="features">
                         <li>Unlimited posts</li>
                         <li>5 social platforms</li>
@@ -274,8 +291,12 @@
                 <div class="pricing-card">
                     <div class="plan-name">Pro</div>
                     <div class="plan-description">For teams & agencies</div>
-                    <div class="price">€29<span>/month</span></div>
-                    <div class="annual-price" style="color: var(--success); font-size: 0.875rem; margin-bottom: 1rem;">or €278/year <span style="color: var(--text-muted);">(save 20%)</span></div>
+                    <div class="price monthly-price" style="display: none;">€29<span>/month</span></div>
+                    <div class="price annual-price">€23.20<span>/month</span></div>
+                    <div class="price-details" style="color: var(--success); font-size: 0.875rem; margin-bottom: 1rem;">
+                        <span class="monthly-details" style="display: none;">€29 billed monthly</span>
+                        <span class="annual-details">€278 billed annually <span style="color: var(--text-muted);">(save €70)</span></span>
+                    </div>
                     <ul class="features">
                         <li>Unlimited everything</li>
                         <li>Unlimited platforms</li>
@@ -422,5 +443,60 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Billing Toggle Functionality
+        const billingToggle = document.getElementById('billing-toggle');
+        const monthlyLabel = document.getElementById('monthly-label');
+        const annualLabel = document.getElementById('annual-label');
+        const toggleThumb = billingToggle.querySelector('.toggle-thumb');
+        
+        let isAnnual = true; // Default to annual
+        
+        function updatePricingDisplay() {
+            const monthlyPrices = document.querySelectorAll('.monthly-price');
+            const annualPrices = document.querySelectorAll('.annual-price');
+            const monthlyDetails = document.querySelectorAll('.monthly-details');
+            const annualDetails = document.querySelectorAll('.annual-details');
+            
+            if (isAnnual) {
+                // Show annual prices
+                monthlyPrices.forEach(el => el.style.display = 'none');
+                annualPrices.forEach(el => el.style.display = 'block');
+                monthlyDetails.forEach(el => el.style.display = 'none');
+                annualDetails.forEach(el => el.style.display = 'inline');
+                
+                // Update toggle appearance
+                toggleThumb.style.transform = 'translateX(0)';
+                billingToggle.style.background = 'var(--primary)';
+                monthlyLabel.style.color = 'var(--text-muted)';
+                monthlyLabel.style.fontWeight = '500';
+                annualLabel.style.color = 'var(--text)';
+                annualLabel.style.fontWeight = '600';
+            } else {
+                // Show monthly prices
+                monthlyPrices.forEach(el => el.style.display = 'block');
+                annualPrices.forEach(el => el.style.display = 'none');
+                monthlyDetails.forEach(el => el.style.display = 'inline');
+                annualDetails.forEach(el => el.style.display = 'none');
+                
+                // Update toggle appearance
+                toggleThumb.style.transform = 'translateX(-28px)';
+                billingToggle.style.background = 'var(--bg-hover)';
+                monthlyLabel.style.color = 'var(--text)';
+                monthlyLabel.style.fontWeight = '600';
+                annualLabel.style.color = 'var(--text-muted)';
+                annualLabel.style.fontWeight = '500';
+            }
+        }
+        
+        billingToggle.addEventListener('click', () => {
+            isAnnual = !isAnnual;
+            updatePricingDisplay();
+        });
+        
+        // Initialize with annual pricing
+        updatePricingDisplay();
+    </script>
 </body>
 </html>
