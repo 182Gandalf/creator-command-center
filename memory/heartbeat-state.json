@@ -1,0 +1,17 @@
+{
+  "lastChecks": {
+    "email": null,
+    "calendar": null,
+    "heartbeat": 1709589600
+  },
+  "pendingActions": [
+    "TikTok client secret rotation (exposed in git history - USER ACTION REQUIRED)",
+    "Cloudflare domain transfer (flowcast.space - waiting on Porkbun unlock)",
+    "Porkbun domain unlock (support ticket filed)"
+  ],
+  "completedToday": [
+    "Railway account recovered - connected to GitHub repo",
+    "Code pushed to 182gandalf/creator-command-center",
+    "Railway deployment with latest features"
+  ]
+}
