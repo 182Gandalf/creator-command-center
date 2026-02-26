@@ -1,7 +1,7 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-02-24 00:00 UTC  
-**Next Update:** 2026-02-25 00:00 UTC
+**Last Updated:** 2026-02-26 00:00 UTC  
+**Next Update:** 2026-02-27 00:00 UTC
 
 ---
 
@@ -17,33 +17,33 @@
 
 ## 📊 Current Status
 
-### ✅ Completed (Last 24h)
-- [x] Landing page redesign with 6 sections (Hero, Problem, Preview, Testimonials, CTA)
-- [x] Lightning bolt logo (⚡) across all pages
-- [x] Comprehensive SEO optimization (meta tags, OG, structured data, sitemap)
-- [x] OG image created (1200x630px) for social sharing
-- [x] Bing verification file added
-- [x] Sign up / Login pages created
-- [x] SSL/HTTPS configuration guide (Cloudflare settings)
-- [x] Free trial limits enforced (20 posts, 2 platforms, 5 AI ideas/day)
-- [x] TikTok API integration (draft upload to inbox)
-- [x] Contact email updated to customersupport@flowcast.space
-- [x] Refund policy set to 14 days
-- [x] **NEW:** Fixed all pricing buttons to say "Get Started" (was "Contact Sales" on Pro)
-- [x] **NEW:** Fixed signup API network error (database schema + server-side validation)
-- [x] **NEW:** Created new GitHub account (182gandalf@gmail.com) after Google ban
-- [x] **NEW:** Forked repository to new GitHub account
-- [x] **NEW:** Configured local git for new account (SSH keys generated)
-- [x] **NEW:** Added server-side password confirmation validation (security fix)
+### ✅ Completed (Yesterday - 2026-02-25)
+- [x] **AI Credits System:** €1 for 10 AI ideas (all tiers except Pro)
+- [x] **Usage Alerts:** Real-time warnings at 80% usage, alerts at 100%
+- [x] **Annual Pricing Toggle:** Default to annual with 20% discount, toggle to monthly
+- [x] **AI Quota Tracking:** Enhanced with bonus credits that don't expire
+- [x] **New API Endpoints:** `/api/ai-quota-status`, `/api/ai-purchase-credits`, `/api/usage-alerts`
+- [x] **Verified Gemini 1.5 Flash** for Free, Starter, and Creator tiers
+- [x] **Set Reminder:** Affiliate/referral program reminder for March 15
+- [x] All changes committed to GitHub (commit: e8ea41a)
+- [x] Profitability analysis recommendations implemented
+
+### ✅ Completed (Earlier - 2026-02-24)
+- [x] **MAJOR SECURITY FIX:** Implemented proper environment variable credential management
+- [x] Removed hardcoded TikTok client secret from `app.py`
+- [x] Updated pricing page with competitor comparison table
+- [x] Updated Terms of Service with comprehensive AI Services section
+- [x] Updated Refund policy (removed 48-hour exception clause)
+- [x] Changed Starter plan: 2 platforms → 3 platforms
 
 ### 🚧 In Progress
-- [ ] Porkbun domain recovery (support ticket submitted)
-- [ ] Railway account recovery (support ticket submitted)
-- [ ] Git push to new GitHub account (SSH key needs to be added to GitHub)
+- [ ] Porkbun domain recovery (support ticket submitted - awaiting response)
+- [ ] Railway account recovery (support ticket submitted - awaiting response)
+- [ ] TikTok client secret rotation (CRITICAL - exposed in git history)
+- [ ] Git history cleanup (remove exposed API keys before new repo push)
 - [ ] Paddle payment integration (waiting for approval)
 - [ ] YouTube OAuth testing (credentials configured, needs redirect URI setup)
 - [ ] Meta/Instagram app review preparation
-- [ ] Git history cleanup (API keys in history)
 
 ### ⏳ Pending
 - [ ] Live deployment with all changes
@@ -67,35 +67,35 @@ The following features are disabled until beta testing begins:
 
 ---
 
-## 🎯 Immediate Priorities (Next 48h)
+## 🎯 Today's Priorities (February 26, 2026)
 
-### Critical (Blockers)
-1. **Add SSH key to new GitHub account** - Required for git push (key already generated)
-2. **Porkbun domain recovery** - Can't deploy without domain access
-3. **Railway account recovery OR new account** - Need hosting platform
-4. **Git history cleanup** - Remove exposed API keys before pushing to new repo
+### 🔴 Critical (Must Do Today)
+1. **TikTok client secret rotation** - STILL PENDING - Log into TikTok Developer Portal and regenerate
+2. **Check support ticket status** - Porkbun and Railway account recovery updates
+3. **Git history cleanup** - Use BFG Repo-Cleaner to remove exposed secrets
 
-### High Priority
-5. **Deploy current code to production** - All changes ready locally
-6. **Add Gemini API key to Railway** - Required for AI features
-7. **YouTube OAuth redirect URIs** - Add to Google Cloud Console
+### 🟡 High Priority
+4. **YouTube OAuth redirect URIs** - Add to Google Cloud Console
+5. **Meta app creation** - Start Instagram Basic Display setup
+6. **Paddle integration follow-up** - Check approval status, prepare webhooks
+7. **Test AI credits flow** - Verify purchase and usage works correctly
 
-### Medium Priority
-8. **Meta app creation** - Start Instagram Basic Display setup
-9. **Review system** - Implement "Leave a Review" functionality
-10. **Paddle integration** - Wait for approval, then implement webhooks
+### 🟢 Medium Priority
+8. **Password manager migration** - Move credentials from `TOOLS.md` to secure storage
+9. **Review system planning** - Design "Leave a Review" functionality
+10. **Win-back offer emails** - Draft copy for inactive users
 
 ---
 
 ## 📅 Weekly Roadmap
 
 ### Week of Feb 23 - Mar 1
-- **Monday:** Deploy, Git cleanup, Gemini key
-- **Tuesday:** Mobile fixes, YouTube OAuth testing
-- **Wednesday:** Meta app setup, Instagram integration
-- **Thursday:** Authentication backend
-- **Friday:** Review system, Paddle prep
-- **Weekend:** Testing, bug fixes
+- **Monday (Feb 24):** ✅ Security fixes, credential management, pricing updates, terms update
+- **Tuesday (Feb 25):** ✅ AI credits, usage alerts, annual pricing toggle, Gemini Flash verification
+- **Wednesday (Feb 26):** TikTok rotation, support ticket checks, git cleanup, YouTube OAuth, Meta setup
+- **Thursday (Feb 27):** Authentication backend, deployment if hosting restored
+- **Friday (Feb 28):** Review system, testing, bug fixes
+- **Weekend:** Documentation, final testing
 
 ### Week of Mar 2 - Mar 8
 - Paddle payment integration
@@ -125,10 +125,13 @@ The following features are disabled until beta testing begins:
 
 ## 🔧 Technical Debt
 
-### Security
+### Security (In Progress)
+- [x] Hardcoded secrets removed from `app.py`
+- [x] Environment variables implemented
+- [ ] TikTok client secret rotation (PENDING - DAZ ACTION REQUIRED)
 - [ ] Git history rewrite (remove API keys)
-- [ ] Environment variables audit
-- [ ] SSL certificate verification
+- [ ] Railway token rotation
+- [ ] Password manager migration
 
 ### Performance
 - [ ] Image optimization
@@ -144,37 +147,37 @@ The following features are disabled until beta testing begins:
 
 ## 📝 Daily Notes
 
-### 2026-02-23
-- Major SEO push completed
-- Sign up/login pages created
-- Mobile formatting issues identified
-- Ready for production deployment
+### 2026-02-25
+- **AI Credits System:** Implemented €1 for 10 AI ideas (all tiers except Pro)
+- **Usage Alerts:** Real-time warnings at 80%, alerts at 100% usage
+- **Annual Pricing Toggle:** Default to annual with monthly toggle option
+- **New API Endpoints:** /api/ai-quota-status, /api/ai-purchase-credits, /api/usage-alerts
+- **Verified Gemini 1.5 Flash** is active for Free, Starter, Creator tiers
+- **Set reminder** for affiliate/referral program (March 15)
+- All code changes committed and pushed
+- Profitability improvements implemented (caching, tier optimization)
 
 ### 2026-02-24
 - **CRITICAL:** Google account (gandalftheclaw@gmail.com) banned - lost access to GitHub, Railway, Cloudflare
-- Created new GitHub account: 182gandalf@gmail.com / Freya@06082021
-- Forked repository to new account: github.com/182gandalf/creator-command-center
-- Generated SSH keys for new GitHub account
-- Fixed pricing buttons (all now say "Get Started")
-- Fixed signup API network error (database schema issue)
-- Added server-side password confirmation validation
+- Created new GitHub account: 182gandalf@gmail.com
+- **SECURITY:** Implemented proper .env credential management
+- **SECURITY:** Removed hardcoded TikTok secret from app.py
+- Updated pricing page with annual billing and competitor comparison
+- Updated Terms of Service with AI Services section
 - Submitted support tickets to Porkbun and Railway for account recovery
-- App running locally on port 5000 with all fixes
-- **BLOCKED:** Cannot deploy until domain/hosting access restored
 
 ---
 
 ## 🚨 Blockers & Risks
 
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| Google account ban | Lost access to GitHub, Railway, Cloudflare | New accounts created, support tickets filed |
-| Porkbun domain access lost | Can't manage DNS | Support ticket submitted, awaiting response |
-| Railway account access lost | No hosting platform | Support ticket submitted, may need new account |
-| Git push authentication | Can't deploy code | SSH key generated, needs manual add to GitHub |
-| Git history cleanup delay | Security vulnerability | Use BFG Repo-Cleaner |
-| Paddle approval delay | No payments | Use free tier longer |
-| Meta app review delay | No Instagram | Focus on YouTube/TikTok |
+| Risk | Impact | Status | Mitigation |
+|------|--------|--------|------------|
+| TikTok secret exposed | CRITICAL | 🔴 PENDING | **DAZ ACTION REQUIRED** - Rotate secret in TikTok Developer Portal |
+| Porkbun domain access | HIGH | 🟡 WAITING | Support ticket submitted - check email |
+| Railway account access | HIGH | 🟡 WAITING | Support ticket submitted - check email |
+| Git history cleanup | HIGH | 🔴 PENDING | Use BFG Repo-Cleaner - waiting on TikTok rotation |
+| Paddle approval delay | MEDIUM | ⏳ PENDING | Use free tier longer |
+| Meta app review delay | MEDIUM | ⏳ PENDING | Focus on YouTube/TikTok first |
 
 ---
 
@@ -188,6 +191,23 @@ The following features are disabled until beta testing begins:
 - **Google Cloud Console:** YouTube OAuth settings
 - **Meta Developers:** https://developers.facebook.com/ (for Instagram)
 - **TikTok Developers:** https://developers.tiktok.com/ (application pending)
+- **Paddle Dashboard:** https://sandbox-vendors.paddle.com/ (awaiting approval)
+
+---
+
+## 🎯 Action Items for Today
+
+### Daz - Your Tasks:
+1. [ ] **URGENT:** Log into TikTok Developer Portal → rotate client secret
+2. [ ] Check email for Porkbun/Railway support ticket responses
+3. [ ] Confirm you're okay with BFG Repo-Cleaner for git history cleanup
+4. [ ] Test the new AI credits feature on the site
+
+### Gandalf (Me) - My Tasks:
+1. [ ] Prepare BFG Repo-Cleaner commands for git history cleanup
+2. [ ] Set up Meta Developer app for Instagram integration
+3. [ ] Document YouTube OAuth redirect URI setup steps
+4. [ ] Draft win-back email templates
 
 ---
 
@@ -204,7 +224,7 @@ The following features are disabled until beta testing begins:
 ### Marketing Ideas
 - [ ] Creator testimonials video
 - [ ] Comparison page vs competitors
-- [ ] Affiliate program
+- [ ] Affiliate program (reminder set for March 15)
 - [ ] YouTube tutorial series
 - [ ] Discord community
 
