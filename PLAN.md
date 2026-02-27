@@ -1,7 +1,7 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-02-26 00:00 UTC  
-**Next Update:** 2026-02-27 00:00 UTC
+**Last Updated:** 2026-02-27 00:00 UTC  
+**Next Update:** 2026-02-28 00:00 UTC
 
 ---
 
@@ -17,7 +17,23 @@
 
 ## 📊 Current Status
 
-### ✅ Completed (Yesterday - 2026-02-25)
+### ✅ Completed (Yesterday - 2026-02-26)
+- [x] **Railway Account Recovered:** Full access restored, connected to new GitHub repo
+- [x] **Domain Unlocked:** Porkbun support ticket resolved, flowcast.space accessible
+- [x] **Cloudflare Transfer:** DNS configured, SSL active, site live
+- [x] **Code Repository:** All code pushed to 182gandalf/creator-command-center
+- [x] **Railway Deployment:** Live deployment with all latest features
+- [x] **Pricing Currency:** All plans converted from EUR (€) to USD ($)
+- [x] **Refund Policy:** Updated from 30 days to 14 days across all pages
+- [x] **Billing Email:** Added billing@flowcast.space to refund/contact sections
+- [x] **Landing Page Copy:** Updated stats (2000+ → 1000+), added creator savings highlight
+- [x] **Security Cleanup:** Removed all exposed secrets from GitHub (TOOLS.md, api-keys.md)
+- [x] **Weekend Checklist:** Created comprehensive pre-launch testing checklist
+- [x] **CAC Analysis:** Completed customer acquisition cost analysis (local only)
+- [x] **Saturday Reminder:** Scheduled 9am weekend checklist reminder
+- [x] **Daily Analysis Cron:** Set up automated daily site improvement analysis
+
+### ✅ Completed (Feb 25)
 - [x] **AI Credits System:** €1 for 10 AI ideas (all tiers except Pro)
 - [x] **Usage Alerts:** Real-time warnings at 80% usage, alerts at 100%
 - [x] **Annual Pricing Toggle:** Default to annual with 20% discount, toggle to monthly
@@ -25,7 +41,7 @@
 - [x] **New API Endpoints:** `/api/ai-quota-status`, `/api/ai-purchase-credits`, `/api/usage-alerts`
 - [x] **Verified Gemini 1.5 Flash** for Free, Starter, and Creator tiers
 - [x] **Set Reminder:** Affiliate/referral program reminder for March 15
-- [x] All changes committed to GitHub (commit: e8ea41a)
+- [x] All changes committed to GitHub
 - [x] Profitability analysis recommendations implemented
 
 ### ✅ Completed (Earlier - 2026-02-24)
@@ -37,13 +53,13 @@
 - [x] Changed Starter plan: 2 platforms → 3 platforms
 
 ### 🚧 In Progress
-- [ ] Porkbun domain recovery (support ticket submitted - awaiting response)
-- [ ] Railway account recovery (support ticket submitted - awaiting response)
-- [ ] TikTok client secret rotation (CRITICAL - exposed in git history)
-- [ ] Git history cleanup (remove exposed API keys before new repo push)
+- [ ] TikTok new developer account (OLD account compromised - need NEW account with fresh email)
+- [ ] Git history cleanup (BFG Repo-Cleaner - waiting on TikTok NEW account setup)
 - [ ] Paddle payment integration (waiting for approval)
-- [ ] YouTube OAuth testing (credentials configured, needs redirect URI setup)
-- [ ] Meta/Instagram app review preparation
+- [ ] YouTube OAuth redirect URIs (need to add to Google Cloud Console)
+- [ ] Meta/Instagram app creation (Basic Display API setup)
+- [ ] Post scheduling cron jobs (disabled, need to enable for beta)
+- [ ] Email notification system (billing@flowcast.space routing)
 
 ### ⏳ Pending
 - [ ] Live deployment with all changes
@@ -67,23 +83,28 @@ The following features are disabled until beta testing begins:
 
 ---
 
-## 🎯 Today's Priorities (February 26, 2026)
+## 🎯 Today's Priorities (February 27, 2026) - PRE-LAUNCH DAY
 
-### 🔴 Critical (Must Do Today)
-1. **TikTok client secret rotation** - STILL PENDING - Log into TikTok Developer Portal and regenerate
-2. **Check support ticket status** - Porkbun and Railway account recovery updates
-3. **Git history cleanup** - Use BFG Repo-Cleaner to remove exposed secrets
+### 🔴 Critical (Complete Before Weekend Testing)
+1. **Authentication System** - Test signup, login, password reset flows
+2. **AI Integration** - Verify Gemini API working, quota tracking accurate
+3. **Database** - Confirm PostgreSQL connection, data persistence working
+4. **Security Audit** - Final check for exposed secrets, verify .env config
 
-### 🟡 High Priority
-4. **YouTube OAuth redirect URIs** - Add to Google Cloud Console
-5. **Meta app creation** - Start Instagram Basic Display setup
-6. **Paddle integration follow-up** - Check approval status, prepare webhooks
-7. **Test AI credits flow** - Verify purchase and usage works correctly
+### 🟡 High Priority (Weekend Testing Focus)
+5. **Post Scheduling** - Enable cron jobs, test scheduling functionality
+6. **YouTube OAuth** - Configure redirect URIs in Google Cloud Console
+7. **Payment Flow** - Test Paddle checkout (or disable if not ready)
+8. **Email System** - Set up billing@flowcast.space in Cloudflare Email Routing
 
-### 🟢 Medium Priority
-8. **Password manager migration** - Move credentials from `TOOLS.md` to secure storage
-9. **Review system planning** - Design "Leave a Review" functionality
-10. **Win-back offer emails** - Draft copy for inactive users
+### 🟢 Medium Priority (If Time Permits)
+9. **Meta/Instagram Setup** - Create Basic Display app
+10. **TikTok NEW Account** - Create fresh developer account (old compromised)
+11. **Performance Check** - Page load speed, mobile responsiveness
+12. **Analytics Setup** - Google Analytics 4 configuration
+
+### 🎯 Weekend Goal
+**Complete CRITICAL + HIGH items → Ready for live testing Monday**
 
 ---
 
@@ -92,10 +113,10 @@ The following features are disabled until beta testing begins:
 ### Week of Feb 23 - Mar 1
 - **Monday (Feb 24):** ✅ Security fixes, credential management, pricing updates, terms update
 - **Tuesday (Feb 25):** ✅ AI credits, usage alerts, annual pricing toggle, Gemini Flash verification
-- **Wednesday (Feb 26):** TikTok rotation, support ticket checks, git cleanup, YouTube OAuth, Meta setup
-- **Thursday (Feb 27):** Authentication backend, deployment if hosting restored
-- **Friday (Feb 28):** Review system, testing, bug fixes
-- **Weekend:** Documentation, final testing
+- **Wednesday (Feb 26):** ✅ Railway/domain recovery, USD pricing, billing email, weekend checklist
+- **Thursday (Feb 27):** 🔴 Pre-launch testing: auth, AI, database, security audit
+- **Friday (Feb 28):** 🟡 Post scheduling, YouTube OAuth, payment flow, email setup
+- **Weekend:** 🧪 Live testing, bug fixes, final polish → BETA READY
 
 ### Week of Mar 2 - Mar 8
 - Paddle payment integration
@@ -147,6 +168,20 @@ The following features are disabled until beta testing begins:
 
 ## 📝 Daily Notes
 
+### 2026-02-26 - MAJOR RECOVERIES & SETUP
+- **Railway Account:** Fully recovered! Support ticket worked, deployment live
+- **Domain Access:** Porkbun domain unlocked, Cloudflare transfer complete
+- **Site Live:** https://flowcast.space now working with SSL
+- **GitHub Repo:** All code pushed to 182gandalf/creator-command-center
+- **Pricing Update:** All plans converted from EUR to USD ($6/$15/$29)
+- **Refund Policy:** Updated to 14 days, billing@flowcast.space added
+- **Landing Page:** Stats updated (1000+ creators), added savings highlight
+- **Security:** Removed all exposed secrets from GitHub
+- **Weekend Prep:** Created comprehensive pre-launch checklist
+- **CAC Analysis:** Completed (saved locally, not on GitHub)
+- **Reminders:** Saturday 9am reminder + daily improvement analysis cron jobs set up
+- **Next:** Weekend testing begins - focus on critical path items
+
 ### 2026-02-25
 - **AI Credits System:** Implemented €1 for 10 AI ideas (all tiers except Pro)
 - **Usage Alerts:** Real-time warnings at 80%, alerts at 100% usage
@@ -172,42 +207,45 @@ The following features are disabled until beta testing begins:
 
 | Risk | Impact | Status | Mitigation |
 |------|--------|--------|------------|
-| TikTok secret exposed | CRITICAL | 🔴 PENDING | **DAZ ACTION REQUIRED** - Rotate secret in TikTok Developer Portal |
-| Porkbun domain access | HIGH | 🟡 WAITING | Support ticket submitted - check email |
-| Railway account access | HIGH | 🟡 WAITING | Support ticket submitted - check email |
-| Git history cleanup | HIGH | 🔴 PENDING | Use BFG Repo-Cleaner - waiting on TikTok rotation |
-| Paddle approval delay | MEDIUM | ⏳ PENDING | Use free tier longer |
-| Meta app review delay | MEDIUM | ⏳ PENDING | Focus on YouTube/TikTok first |
+| TikTok NEW account needed | HIGH | 🔴 PENDING | Old account linked to banned email - create fresh account |
+| Git history cleanup | MEDIUM | 🟡 WAITING | BFG Repo-Cleaner ready - waiting on NEW TikTok credentials |
+| Paddle approval delay | MEDIUM | ⏳ PENDING | Can launch with extended free trial |
+| YouTube OAuth setup | MEDIUM | 🟡 IN PROGRESS | Need to add redirect URIs to Google Cloud |
+| Post scheduling disabled | MEDIUM | 🔴 PENDING | Enable cron jobs before beta testing |
+| Meta app creation | LOW | ⏳ PENDING | Can launch without Instagram initially |
 
 ---
 
 ## 🔗 Important Links
 
-- **Live Site:** https://flowcast.space (DOWN - awaiting domain recovery)
+- **Live Site:** https://flowcast.space ✅ LIVE WITH SSL
 - **GitHub (NEW):** https://github.com/182gandalf/creator-command-center
-- **GitHub (OLD - LOCKED):** https://github.com/gandalftheclaw-alt/creator-command-center
-- **Railway Dashboard:** UNAVAILABLE (account recovery in progress)
-- **Porkbun Domain:** UNAVAILABLE (account recovery in progress)
-- **Google Cloud Console:** YouTube OAuth settings
+- **Railway Dashboard:** https://railway.app/dashboard (RESTORED)
+- **Porkbun Domain:** https://porkbun.com (UNLOCKED)
+- **Google Cloud Console:** https://console.cloud.google.com/apis/credentials (YouTube OAuth)
 - **Meta Developers:** https://developers.facebook.com/ (for Instagram)
-- **TikTok Developers:** https://developers.tiktok.com/ (application pending)
+- **TikTok Developers:** https://developers.tiktok.com/ (NEED NEW ACCOUNT)
 - **Paddle Dashboard:** https://sandbox-vendors.paddle.com/ (awaiting approval)
+- **Cloudflare:** https://dash.cloudflare.com (ACTIVE)
+- **Weekend Checklist:** PRE-LAUNCH-CHECKLIST-WEEKEND.md
 
 ---
 
-## 🎯 Action Items for Today
+## 🎯 Action Items for Today (Feb 27)
 
 ### Daz - Your Tasks:
-1. [ ] **URGENT:** Log into TikTok Developer Portal → rotate client secret
-2. [ ] Check email for Porkbun/Railway support ticket responses
-3. [ ] Confirm you're okay with BFG Repo-Cleaner for git history cleanup
-4. [ ] Test the new AI credits feature on the site
+1. [ ] **Test Authentication:** Create test account at flowcast.space/signup, verify login/logout flows
+2. [ ] **Verify AI Working:** Generate content ideas, check quota tracking
+3. [ ] **Create TikTok NEW Account:** Sign up with fresh email (NOT linked to old Google account)
+4. [ ] **Google Cloud Console:** Add YouTube OAuth redirect URIs
+5. [ ] **Paddle Check:** Verify approval status or prepare extended free trial
+6. [ ] **Cloudflare Email:** Set up billing@flowcast.space forwarding
 
 ### Gandalf (Me) - My Tasks:
-1. [ ] Prepare BFG Repo-Cleaner commands for git history cleanup
-2. [ ] Set up Meta Developer app for Instagram integration
-3. [ ] Document YouTube OAuth redirect URI setup steps
-4. [ ] Draft win-back email templates
+1. [ ] **Security Audit:** Final check for any exposed secrets in codebase
+2. [ ] **Enable Cron Jobs:** Prepare to turn on post scheduling for beta
+3. [ ] **Database Check:** Verify PostgreSQL connection and data persistence
+4. [ ] **Documentation:** Update integration guides for weekend testing
 
 ---
 
