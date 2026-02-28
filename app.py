@@ -14,14 +14,13 @@ import secrets
 import base64
 import hashlib
 
-# Debug: Check env vars BEFORE load_dotenv
-print(f"BEFORE load_dotenv - GOOGLE_CLIENT_ID: {os.environ.get('GOOGLE_CLIENT_ID', 'NOT SET')[:20]}..." if os.environ.get('GOOGLE_CLIENT_ID') else "BEFORE load_dotenv - GOOGLE_CLIENT_ID: NOT SET")
-
-# Load environment variables from .env file
-load_dotenv()
-
-# Debug: Check env vars AFTER load_dotenv
-print(f"AFTER load_dotenv - GOOGLE_CLIENT_ID: {os.environ.get('GOOGLE_CLIENT_ID', 'NOT SET')[:20]}..." if os.environ.get('GOOGLE_CLIENT_ID') else "AFTER load_dotenv - GOOGLE_CLIENT_ID: NOT SET")
+# Load environment variables from .env file (development only)
+# On Railway, always use environment variables
+if not os.environ.get('RAILWAY_SERVICE_NAME'):
+    load_dotenv()
+    print("Loaded .env file (development mode)")
+else:
+    print("Running on Railway - using environment variables")
 
 # Import OAuth manager for secure token handling
 from oauth_manager import (
@@ -61,11 +60,6 @@ TIKTOK_CLIENT_SECRET = os.environ.get('TIKTOK_CLIENT_SECRET')
 # Google OAuth Configuration (for Sign-In)
 GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
-
-# Debug: Log environment variables (remove in production)
-print(f"DEBUG: GOOGLE_CLIENT_ID is set: {bool(GOOGLE_CLIENT_ID)}")
-print(f"DEBUG: GOOGLE_CLIENT_SECRET is set: {bool(GOOGLE_CLIENT_SECRET)}")
-print(f"DEBUG: All env vars: {list(os.environ.keys())}")
 
 # YouTube OAuth Configuration (separate from Google Sign-In)
 YOUTUBE_CLIENT_ID = os.environ.get('YOUTUBE_CLIENT_ID') or GOOGLE_CLIENT_ID
