@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - FlowCast</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="manifest" href="/static/site.webmanifest">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -52,8 +57,7 @@
             width: 42px; height: 42px;
             background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
             border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 20px rgba(0, 114, 255, 0.4);
-            font-size: 24px;
+            overflow: hidden;
         }
         .logo-text {
             font-size: 1.75rem; font-weight: 800;
@@ -64,10 +68,13 @@
         .nav { display: flex; align-items: center; gap: 2.5rem; }
         .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
-        .nav-links a:hover { color: var(--primary-light); }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-light); }
         .btn { padding: 0.625rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; cursor: pointer; border: none; }
+        .btn-secondary { color: var(--text); background: transparent; border: 1px solid var(--border); }
+        .btn-secondary:hover { background: var(--bg-card); border-color: var(--primary); }
         .btn-primary { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6); }
+        .nav-cta { display: flex; gap: 1rem; }
         .container { max-width: 800px; margin: 0 auto; padding: 8rem 2rem 4rem; }
         footer { background: rgba(10, 14, 23, 0.95); border-top: 1px solid var(--border); padding: 3rem 2rem; }
         .footer-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
@@ -87,11 +94,7 @@
     <header class="header">
         <div class="header-content">
             <a href="/" class="logo">
-                <div class="logo-icon">
-                    <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
-                        <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="white" stroke="white" stroke-width="2"/>
-                    </svg>
-                </div>
+                <div class="logo-icon"><img src="/static/logo-new.jpg" alt="FlowCast" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;"></div>
                 <span class="logo-text">FlowCast</span>
             </a>
             <nav class="nav">
@@ -99,9 +102,13 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/pricing">Pricing</a></li>
                     <li><a href="/terms">Terms</a></li>
-                    <li><a href="/privacy">Privacy</a></li>
+                    <li><a href="/privacy" class="active">Privacy</a></li>
+                    <li><a href="/refund">Refunds</a></li>
                 </ul>
-                <a href="/pricing" class="btn btn-primary">Get Started</a>
+                <div class="nav-cta">
+                    <a href="/login" class="btn btn-secondary">Log In</a>
+                    <a href="/signup" class="btn btn-primary">Get Started</a>
+                </div>
             </nav>
         </div>
     </header>
@@ -371,11 +378,7 @@
         <div class="footer-content">
             <div class="footer-left">
                 <a href="/" class="logo">
-                    <div class="logo-icon">
-                        <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
-                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="white" stroke="white" stroke-width="2"/>
-                        </svg>
-                    </div>
+                    <div class="logo-icon"><img src="/static/logo-new.jpg" alt="FlowCast" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;"></div>
                     <span class="logo-text">FlowCast</span>
                 </a>
                 <p>&copy; 2026 FlowCast. All rights reserved.</p>
