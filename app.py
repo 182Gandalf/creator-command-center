@@ -52,14 +52,22 @@ INSTAGRAM_APP_SECRET = os.environ.get('INSTAGRAM_APP_SECRET', '')
 TIKTOK_CLIENT_KEY = os.environ.get('TIKTOK_CLIENT_KEY')
 TIKTOK_CLIENT_SECRET = os.environ.get('TIKTOK_CLIENT_SECRET')
 
-# Google OAuth Configuration
+# Google OAuth Configuration (for Sign-In)
 GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+
+# YouTube OAuth Configuration (separate from Google Sign-In)
+YOUTUBE_CLIENT_ID = os.environ.get('YOUTUBE_CLIENT_ID') or GOOGLE_CLIENT_ID
+YOUTUBE_CLIENT_SECRET = os.environ.get('YOUTUBE_CLIENT_SECRET') or GOOGLE_CLIENT_SECRET
 
 # Validate required configuration
 if not GOOGLE_CLIENT_ID or not GOOGLE_CLIENT_SECRET:
     import warnings
     warnings.warn("Google OAuth credentials not configured. Google login will not work.")
+
+if not YOUTUBE_CLIENT_ID or not YOUTUBE_CLIENT_SECRET:
+    import warnings
+    warnings.warn("YouTube OAuth credentials not configured. YouTube integration will not work.")
 
 # HTTPS Enforcement (for production behind Cloudflare)
 @app.before_request
