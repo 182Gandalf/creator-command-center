@@ -2,9 +2,13 @@
 
 ## Quick Start
 
-1. **Add your API key to Railway:**
+1. **Add your API keys to Railway:**
    ```
+   # Choose which ones you want to use:
    GEMINI_API_KEY=your-google-ai-key
+   MOONSHOT_API_KEY=your-moonshot-key  # For Kimi 2.5
+   ANTHROPIC_API_KEY=your-anthropic-key  # For Claude
+   OPENAI_API_KEY=your-openai-key  # For GPT-4
    ```
 
 2. **Import and use in your code:**
@@ -59,6 +63,49 @@ OPENAI_API_KEY=your-openai-key
 Redeploy: `railway up`
 
 **Done!** All AI calls now use the new model automatically.
+
+## Available Models
+
+| Model | Provider | Key | Best For |
+|-------|----------|-----|----------|
+| **Gemini Flash** | `gemini` | `GEMINI_API_KEY` | Fast, cheap, good for most tasks |
+| **Gemini Pro** | `gemini` | `GEMINI_API_KEY` | Higher quality, more tokens |
+| **Kimi K2.5** | `moonshot` | `MOONSHOT_API_KEY` | Long context, great for analysis |
+| **Claude Haiku** | `anthropic` | `ANTHROPIC_API_KEY` | Fast, cheap, simple tasks |
+| **Claude Sonnet** | `anthropic` | `ANTHROPIC_API_KEY` | Better quality, reasoning |
+| **GPT-4o Mini** | `openai` | `OPENAI_API_KEY` | Balanced performance |
+| **GPT-4o** | `openai` | `OPENAI_API_KEY` | Best quality, most expensive |
+
+### Example Configurations
+
+**Use Kimi for everything:**
+```python
+'default': {
+    'provider': 'moonshot',
+    'model': 'kimi-k2.5',
+    'temperature': 0.7,
+    'max_tokens': 2048
+}
+```
+
+**Use Claude Haiku for speed:**
+```python
+'default': {
+    'provider': 'anthropic',
+    'model': 'claude-3-haiku-20240307',
+    'temperature': 0.7,
+    'max_tokens': 2048
+}
+```
+
+**Mix and match by task:**
+```python
+MODEL_CONFIG = {
+    'default': {'provider': 'gemini', 'model': 'gemini-1.5-flash', ...},
+    'premium_content': {'provider': 'anthropic', 'model': 'claude-3-sonnet-20240229', ...},
+    'quick_tasks': {'provider': 'moonshot', 'model': 'kimi-k2.5', ...}
+}
+```
 
 ## Available Task Types
 

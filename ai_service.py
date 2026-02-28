@@ -13,11 +13,19 @@ from typing import Dict, Any, Optional, List
 # MODEL CONFIGURATION - CHANGE THIS TO SWITCH AI PROVIDERS
 # ============================================================================
 
+# Available models:
+# - 'gemini-flash' - Fast, cheap, good for most tasks
+# - 'kimi-k2.5' - Moonshot, great for long context
+# - 'claude-haiku' - Fast, cheap, good for simple tasks  
+# - 'claude-sonnet' - Better quality, more expensive
+# - 'gpt-4o-mini' - OpenAI, balanced
+# - 'gpt-4o' - OpenAI, best quality
+
 MODEL_CONFIG = {
     # Default model for most tasks
     'default': {
         'provider': 'gemini',
-        'model': 'gemini-pro',
+        'model': 'gemini-1.5-flash',
         'temperature': 0.7,
         'max_tokens': 2048
     },
@@ -25,30 +33,38 @@ MODEL_CONFIG = {
     # Specific task configurations
     'content_ideas': {
         'provider': 'gemini',
-        'model': 'gemini-pro',
+        'model': 'gemini-1.5-flash',
         'temperature': 0.8,
         'max_tokens': 1024
     },
     
     'caption_generation': {
         'provider': 'gemini', 
-        'model': 'gemini-pro',
+        'model': 'gemini-1.5-flash',
         'temperature': 0.6,
         'max_tokens': 512
     },
     
     'hashtag_suggestions': {
         'provider': 'gemini',
-        'model': 'gemini-pro', 
+        'model': 'gemini-1.5-flash', 
         'temperature': 0.5,
         'max_tokens': 256
     },
     
     'content_analysis': {
         'provider': 'gemini',
-        'model': 'gemini-pro',
+        'model': 'gemini-1.5-flash',
         'temperature': 0.3,
         'max_tokens': 1024
+    },
+    
+    # Premium tasks (use better models)
+    'premium_content': {
+        'provider': 'gemini',
+        'model': 'gemini-1.5-pro',
+        'temperature': 0.7,
+        'max_tokens': 4096
     },
     
     # Add more task types as needed
@@ -58,6 +74,7 @@ MODEL_CONFIG = {
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
 ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
+MOONSHOT_API_KEY = os.environ.get('MOONSHOT_API_KEY', '')  # For Kimi models
 
 # ============================================================================
 # CENTRAL AI SERVICE FUNCTION
@@ -91,6 +108,8 @@ def call_ai(task_type: str, user_input: str, context: Optional[Dict] = None) -> 
         return _call_openai(config, user_input, context)
     elif provider == 'anthropic':
         return _call_anthropic(config, user_input, context)
+    elif provider == 'moonshot':
+        return _call_moonshot(config, user_input, context)
     else:
         return {
             'success': False,
@@ -295,6 +314,71 @@ def _call_anthropic(config: Dict, user_input: str, context: Optional[Dict]) -> D
             'success': False,
             'response': None,
             'error': f'Exception calling Anthropic: {str(e)}'
+        }
+
+def _call_moonshot(config: Dict, user_input: str, context: Optional[Dict]) -> Dict[str, Any]:
+    """Call Moonshot AI API (Kimi models)"""
+    if not MOONSHOT_API_KEY:
+        return {
+            'success': False,
+            'response': None,
+            'error': 'MOONSHOT_API_KEY not configured'
+        }
+    
+    try:
+        headers = {
+            'Authorization': f'Bearer {MOONSHOT_API_KEY}',
+            'Content-Type': 'application/json'
+        }
+        
+        # Build messages
+        messages = []
+        if context:
+            context_str = json.dumps(context, indent=2)
+            messages.append({
+                'role': 'system',
+                'content': f'Context: {context_str}'
+            })
+        
+        messages.append({
+            'role': 'user',
+            'content': user_input
+        })
+        
+        data = {
+            'model': config['model'],
+            'messages': messages,
+            'temperature': config['temperature'],
+            'max_tokens': config['max_tokens']
+        }
+        
+        response = requests.post(
+            'https://api.moonshot.cn/v1/chat/completions',
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            result = response.json()
+            text = result['choices'][0]['message']['content']
+            return {
+                'success': True,
+                'response': text,
+                'error': None
+            }
+        else:
+            return {
+                'success': False,
+                'response': None,
+                'error': f'Moonshot API error: {response.status_code} - {response.text}'
+            }
+    
+    except Exception as e:
+        return {
+            'success': False,
+            'response': None,
+            'error': f'Exception calling Moonshot: {str(e)}'
         }
 
 # ============================================================================
