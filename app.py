@@ -105,6 +105,27 @@ class User(db.Model):
     tiktok_token = db.Column(db.Text)  # OAuth token for TikTok
     posts = db.relationship('Post', backref='author', lazy=True, cascade='all, delete-orphan')
     
+    # User Profile & Preferences
+    display_name = db.Column(db.String(100))
+    avatar_url = db.Column(db.String(500))
+    timezone = db.Column(db.String(50), default='UTC')
+    language = db.Column(db.String(10), default='en')
+    email_notifications = db.Column(db.Boolean, default=True)
+    marketing_emails = db.Column(db.Boolean, default=False)
+    two_factor_enabled = db.Column(db.Boolean, default=False)
+    two_factor_secret = db.Column(db.String(32))
+    
+    # Content Preferences
+    default_platforms = db.Column(db.String(200))  # JSON array of preferred platforms
+    content_niche = db.Column(db.String(100))  # e.g., 'tech', 'lifestyle', 'fitness'
+    content_tone = db.Column(db.String(50), default='professional')  # professional, casual, humorous
+    
+    # Billing Info
+    billing_name = db.Column(db.String(200))
+    billing_address = db.Column(db.Text)
+    billing_country = db.Column(db.String(100))
+    vat_number = db.Column(db.String(50))
+    
     def get_post_limit(self):
         limits = {'free': 20, 'pro': 100, 'team': 1000}
         return limits.get(self.subscription_tier, 20)
@@ -112,6 +133,26 @@ class User(db.Model):
     def get_platforms_allowed(self):
         platforms = {'free': 2, 'pro': 3, 'team': 5}
         return platforms.get(self.subscription_tier, 2)
+    
+    def to_dict(self):
+        """Convert user to dictionary (safe for API responses)"""
+        return {
+            'id': self.id,
+            'email': self.email,
+            'display_name': self.display_name,
+            'avatar_url': self.avatar_url,
+            'subscription_tier': self.subscription_tier,
+            'timezone': self.timezone,
+            'language': self.language,
+            'email_notifications': self.email_notifications,
+            'marketing_emails': self.marketing_emails,
+            'youtube_connected': self.youtube_connected,
+            'instagram_connected': self.instagram_connected,
+            'tiktok_connected': self.tiktok_connected,
+            'content_niche': self.content_niche,
+            'content_tone': self.content_tone,
+            'created_at': self.created_at.isoformat() if self.created_at else None
+        }
 
 class Post(db.Model):
     """Scheduled and published posts"""
@@ -1676,6 +1717,240 @@ def get_usage_alerts():
     })
 
 # ==================== END AI CREDITS & USAGE ALERTS ====================
+
+# ==================== ACCOUNT SETTINGS API ====================
+
+@app.route('/api/user/profile')
+def get_user_profile():
+    """Get current user's profile"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    return jsonify({'success': True, 'user': user.to_dict()})
+
+@app.route('/api/user/profile', methods=['PUT'])
+def update_user_profile():
+    """Update user profile information"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    data = request.get_json()
+    
+    # Update allowed fields
+    allowed_fields = ['display_name', 'timezone', 'language', 'content_niche', 'content_tone']
+    for field in allowed_fields:
+        if field in data:
+            setattr(user, field, data[field])
+    
+    db.session.commit()
+    
+    return jsonify({'success': True, 'user': user.to_dict()})
+
+@app.route('/api/user/preferences', methods=['GET'])
+def get_user_preferences():
+    """Get user preferences"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    return jsonify({
+        'success': True,
+        'preferences': {
+            'email_notifications': user.email_notifications,
+            'marketing_emails': user.marketing_emails,
+            'default_platforms': json.loads(user.default_platforms) if user.default_platforms else [],
+            'timezone': user.timezone,
+            'language': user.language
+        }
+    })
+
+@app.route('/api/user/preferences', methods=['PUT'])
+def update_user_preferences():
+    """Update user preferences"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    data = request.get_json()
+    
+    # Update notification preferences
+    if 'email_notifications' in data:
+        user.email_notifications = bool(data['email_notifications'])
+    if 'marketing_emails' in data:
+        user.marketing_emails = bool(data['marketing_emails'])
+    if 'timezone' in data:
+        user.timezone = data['timezone']
+    if 'language' in data:
+        user.language = data['language']
+    if 'default_platforms' in data:
+        user.default_platforms = json.dumps(data['default_platforms'])
+    
+    db.session.commit()
+    
+    return jsonify({
+        'success': True,
+        'preferences': {
+            'email_notifications': user.email_notifications,
+            'marketing_emails': user.marketing_emails,
+            'default_platforms': json.loads(user.default_platforms) if user.default_platforms else [],
+            'timezone': user.timezone,
+            'language': user.language
+        }
+    })
+
+@app.route('/api/user/billing', methods=['GET'])
+def get_billing_info():
+    """Get user billing information"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    return jsonify({
+        'success': True,
+        'billing': {
+            'billing_name': user.billing_name,
+            'billing_address': user.billing_address,
+            'billing_country': user.billing_country,
+            'vat_number': user.vat_number
+        }
+    })
+
+@app.route('/api/user/billing', methods=['PUT'])
+def update_billing_info():
+    """Update user billing information"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    data = request.get_json()
+    
+    # Update billing fields
+    if 'billing_name' in data:
+        user.billing_name = data['billing_name']
+    if 'billing_address' in data:
+        user.billing_address = data['billing_address']
+    if 'billing_country' in data:
+        user.billing_country = data['billing_country']
+    if 'vat_number' in data:
+        user.vat_number = data['vat_number']
+    
+    db.session.commit()
+    
+    return jsonify({'success': True, 'message': 'Billing information updated'})
+
+@app.route('/api/user/change-password', methods=['POST'])
+def change_password():
+    """Change user password"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    data = request.get_json()
+    current_password = data.get('current_password')
+    new_password = data.get('new_password')
+    
+    if not current_password or not new_password:
+        return jsonify({'success': False, 'error': 'Missing required fields'}), 400
+    
+    # Verify current password (skip for OAuth users)
+    if user.password_hash != 'google_oauth':
+        from werkzeug.security import check_password_hash, generate_password_hash
+        if not check_password_hash(user.password_hash, current_password):
+            return jsonify({'success': False, 'error': 'Current password is incorrect'}), 400
+    
+    # Update password
+    user.password_hash = generate_password_hash(new_password)
+    db.session.commit()
+    
+    return jsonify({'success': True, 'message': 'Password updated successfully'})
+
+@app.route('/api/user/delete-account', methods=['POST'])
+def delete_account():
+    """Delete user account and all data"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'error': 'Authentication required'}), 401
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({'success': False, 'error': 'User not found'}), 404
+    
+    data = request.get_json()
+    password = data.get('password')
+    
+    # Verify password (skip for OAuth users)
+    if user.password_hash != 'google_oauth':
+        from werkzeug.security import check_password_hash
+        if not check_password_hash(user.password_hash, password):
+            return jsonify({'success': False, 'error': 'Password is incorrect'}), 400
+    
+    # Delete user (cascade will delete posts and ideas)
+    db.session.delete(user)
+    db.session.commit()
+    
+    # Clear session
+    session.clear()
+    
+    return jsonify({'success': True, 'message': 'Account deleted successfully'})
+
+@app.route('/account')
+def account_settings_page():
+    """Render account settings page"""
+    if 'user_id' not in session:
+        return redirect('/login')
+    return render_template('account.html')
+
+@app.route('/settings')
+def preferences_page():
+    """Render preferences page"""
+    if 'user_id' not in session:
+        return redirect('/login')
+    return render_template('settings.html')
+
+@app.route('/billing')
+def billing_page():
+    """Render billing page"""
+    if 'user_id' not in session:
+        return redirect('/login')
+    return render_template('billing.html')
+
+@app.route('/api/logout', methods=['POST'])
+def api_logout():
+    """Handle user logout"""
+    session.clear()
+    return jsonify({'success': True, 'message': 'Logged out successfully'})
+
+# ==================== END ACCOUNT SETTINGS API ====================
 
 if __name__ == '__main__':
     with app.app_context():

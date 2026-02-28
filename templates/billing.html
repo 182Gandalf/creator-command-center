@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing - FlowCast</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #3b82f6;
+            --primary-light: #60a5fa;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --bg: #0a0e17;
+            --bg-card: #111827;
+            --bg-hover: #1f2937;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #1f2937;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #a5f3fc 0%, #60a5fa 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            border-color: var(--primary);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        .sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .sidebar-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu a:hover {
+            background: var(--bg-hover);
+            color: var(--text);
+        }
+        
+        .sidebar-menu a.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        /* Current Plan */
+        .plan-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .plan-badge.free { background: var(--text-muted); color: white; }
+        .plan-badge.starter { background: var(--success); color: white; }
+        .plan-badge.pro { background: var(--secondary); color: white; }
+        .plan-badge.team { background: var(--warning); color: black; }
+        
+        .plan-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+        
+        .plan-detail {
+            text-align: center;
+        }
+        
+        .plan-detail-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+        
+        .plan-detail-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+        
+        .plan-price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        
+        /* Billing Info Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        /* Payment Methods */
+        .payment-method {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .payment-details h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .payment-details p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge.primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Invoice List */
+        .invoice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .invoice-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        
+        .invoice-item:hover {
+            background: var(--bg-hover);
+        }
+        
+        .invoice-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .invoice-date {
+            font-weight: 500;
+        }
+        
+        .invoice-amount {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary-light);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline:hover {
+            background: var(--bg-hover);
+            border-color: var(--primary);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .toast.success { background: var(--success); }
+        .toast.error { background: #ef4444; }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/dashboard" class="logo">
+            <img src="/static/logo-new.jpg" alt="FlowCast" style="width: 36px; height: 36px; object-fit: cover; border-radius: 10px;">
+            <span class="logo-text">FlowCast</span>
+        </a>
+        <nav class="header-nav">
+            <a href="/dashboard" class="btn-secondary">← Back to Dashboard</a>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <h1 class="page-title">Billing</h1>
+        <p class="page-subtitle">Manage your subscription and payment methods</p>
+        
+        <div class="settings-grid">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="/account">👤 Profile</a></li>
+                    <li><a href="/settings">⚙️ Preferences</a></li>
+                    <li><a href="/billing" class="active">💳 Billing</a></li>
+                    <li><a href="/dashboard">📊 Dashboard</a></li>
+                </ul>
+            </aside>
+            
+            <!-- Content -->
+            <div class="content">
+                <!-- Current Plan -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Current Plan</h2>
+                        <span class="plan-badge free" id="plan-badge">Free</span>
+                    </div>
+                    
+                    <div class="plan-price" id="plan-price">
+                        $0<span>/month</span>
+                    </div>
+                    
+                    <div class="plan-details" id="plan-details">
+                        <div class="plan-detail">
+                            <div class="plan-detail-value">20</div>
+                            <div class="plan-detail-label">Posts/Month</div>
+                        </div>
+                        <div class="plan-detail">
+                            <div class="plan-detail-value">2</div>
+                            <div class="plan-detail-label">Platforms</div>
+                        </div>
+                        <div class="plan-detail">
+                            <div class="plan-detail-value">5</div>
+                            <div class="plan-detail-label">AI Ideas/Day</div>
+                        </div>
+                    </div>
+                    
+                    <a href="/pricing" class="btn-primary">Upgrade Plan</a>
+                </div>
+                
+                <!-- Billing Information -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Billing Information</h2>
+                    </div>
+                    
+                    <form id="billing-form">
+                        <div class="form-group">
+                            <label for="billing_name">Full Name / Company Name</label>
+                            <input type="text" id="billing_name" name="billing_name" placeholder="e.g., John Doe or Acme Inc.">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="billing_country">Country</label>
+                                <select id="billing_country" name="billing_country">
+                                    <option value="">Select country...</option>
+                                    <option value="NL">Netherlands</option>
+                                    <option value="BE">Belgium</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="vat_number">VAT Number (Optional)</label>
+                                <input type="text" id="vat_number" name="vat_number" placeholder="e.g., NL123456789B01">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="billing_address">Billing Address</label>
+                            <textarea id="billing_address" name="billing_address" rows="3" placeholder="Street address, City, Postal code"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Save Billing Information</button>
+                    </form>
+                </div>
+                
+                <!-- Payment Methods -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Payment Methods</h2>
+                    </div>
+                    
+                    <div id="payment-methods">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">💳</div>
+                            <p>No payment methods on file</p>
+                            <p style="font-size: 0.875rem; margin-top: 0.5rem;">Add a payment method when you upgrade your plan</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Invoice History -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Invoice History</h2>
+                    </div>
+                    
+                    <div id="invoice-history">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📄</div>
+                            <p>No invoices yet</p>
+                            <p style="font-size: 0.875rem; margin-top: 0.5rem;">Invoices will appear here after your first payment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Plan details
+        const planDetails = {
+            'free': {
+                name: 'Free',
+                price: '$0',
+                posts: '20',
+                platforms: '2',
+                ai: '5',
+                color: 'free'
+            },
+            'starter': {
+                name: 'Starter',
+                price: '$6',
+                posts: '100',
+                platforms: '3',
+                ai: '10',
+                color: 'starter'
+            },
+            'pro': {
+                name: 'Pro',
+                price: '$29',
+                posts: 'Unlimited',
+                platforms: '5',
+                ai: 'Unlimited',
+                color: 'pro'
+            },
+            'team': {
+                name: 'Team',
+                price: '$99',
+                posts: 'Unlimited',
+                platforms: 'Unlimited',
+                ai: 'Unlimited',
+                color: 'team'
+            }
+        };
+        
+        // Load user data
+        async function loadUserData() {
+            try {
+                const response = await fetch('/api/user/profile');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const user = data.user;
+                    const tier = user.subscription_tier || 'free';
+                    const plan = planDetails[tier];
+                    
+                    // Update plan badge
+                    const badge = document.getElementById('plan-badge');
+                    badge.textContent = plan.name;
+                    badge.className = `plan-badge ${plan.color}`;
+                    
+                    // Update price
+                    document.getElementById('plan-price').innerHTML = 
+                        `${plan.price}<span>/month</span>`;
+                    
+                    // Update details
+                    document.getElementById('plan-details').innerHTML = `
+                        <div class="plan-detail">
+                            <div class="plan-detail-value">${plan.posts}</div>
+                            <div class="plan-detail-label">Posts/Month</div>
+                        </div>
+                        <div class="plan-detail">
+                            <div class="plan-detail-value">${plan.platforms}</div>
+                            <div class="plan-detail-label">Platforms</div>
+                        </div>
+                        <div class="plan-detail">
+                            <div class="plan-detail-value">${plan.ai}</div>
+                            <div class="plan-detail-label">AI Ideas/Day</div>
+                        </div>
+                    `;
+                }
+                
+                // Load billing info
+                loadBillingInfo();
+            } catch (error) {
+                showToast('Failed to load billing data', 'error');
+            }
+        }
+        
+        // Load billing info
+        async function loadBillingInfo() {
+            try {
+                const response = await fetch('/api/user/billing');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const billing = data.billing;
+                    document.getElementById('billing_name').value = billing.billing_name || '';
+                    document.getElementById('billing_country').value = billing.billing_country || '';
+                    document.getElementById('vat_number').value = billing.vat_number || '';
+                    document.getElementById('billing_address').value = billing.billing_address || '';
+                }
+            } catch (error) {
+                console.error('Failed to load billing info:', error);
+            }
+        }
+        
+        // Billing form
+        document.getElementById('billing-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                billing_name: document.getElementById('billing_name').value,
+                billing_country: document.getElementById('billing_country').value,
+                vat_number: document.getElementById('vat_number').value,
+                billing_address: document.getElementById('billing_address').value
+            };
+            
+            try {
+                const response = await fetch('/api/user/billing', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Billing information saved!', 'success');
+                } else {
+                    showToast(data.error || 'Failed to save billing info', 'error');
+                }
+            } catch (error) {
+                showToast('Network error', 'error');
+            }
+        });
+        
+        // Toast notifications
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+        
+        // Load on page load
+        loadUserData();
+    </script>
+</body>
+</html>

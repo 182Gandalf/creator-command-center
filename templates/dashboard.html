@@ -105,6 +105,16 @@
             box-shadow: 0 8px 25px rgba(249, 115, 22, 0.6);
         }
         
+        /* User Dropdown Styles */
+        .user-dropdown a:hover,
+        .user-dropdown button:hover {
+            background: var(--bg-hover);
+        }
+        
+        .user-menu-btn:hover {
+            background: var(--bg-hover);
+        }
+        
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -606,7 +616,46 @@
                 <a href="/refund" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s;">Refunds</a>
             </nav>
         </div>
-        <button class="btn-primary" id="create-post-btn">+ New Post</button>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <button class="btn-primary" id="create-post-btn">+ New Post</button>
+            
+            <!-- User Dropdown Menu -->
+            <div class="user-menu" id="user-menu" style="position: relative;">
+                <button class="user-menu-btn" id="user-menu-btn" style="display: flex; align-items: center; gap: 0.5rem; background: transparent; border: 1px solid var(--border); padding: 0.5rem 0.75rem; border-radius: 8px; cursor: pointer; color: var(--text);">
+                    <div class="user-avatar" id="user-avatar-small" style="width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600;">--</div>
+                    <span id="user-name-short" style="font-size: 0.875rem; max-width: 100px; overflow: hidden; text-overflow: ellipsis;">Loading...</span>
+                    <span style="font-size: 0.75rem;">▼</span>
+                </button>
+                
+                <div class="user-dropdown" id="user-dropdown" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 0.5rem; min-width: 200px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); z-index: 200;">
+                    <div class="dropdown-header" style="padding: 0.75rem; border-bottom: 1px solid var(--border); margin-bottom: 0.5rem;">
+                        <div id="dropdown-name" style="font-weight: 600;">Loading...</div>
+                        <div id="dropdown-email" style="font-size: 0.75rem; color: var(--text-muted);">loading...</div>
+                        <div id="dropdown-tier" style="font-size: 0.75rem; margin-top: 0.25rem; color: var(--primary-light);">FREE</div>
+                    </div>
+                    
+                    <a href="/account" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 0.9rem; transition: background 0.2s;">
+                        <span>👤</span> Account Settings
+                    </a>
+                    <a href="/settings" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 0.9rem; transition: background 0.2s;">
+                        <span>⚙️</span> Preferences
+                    </a>
+                    <a href="/billing" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 0.9rem; transition: background 0.2s;">
+                        <span>💳</span> Billing
+                    </a>
+                    
+                    <div style="border-top: 1px solid var(--border); margin: 0.5rem 0;"></div>
+                    
+                    <a href="/help" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--text-muted); text-decoration: none; border-radius: 8px; font-size: 0.9rem; transition: background 0.2s;">
+                        <span>❓</span> Help & Support
+                    </a>
+                    
+                    <button onclick="logout()" style="display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.75rem; background: transparent; border: none; color: var(--danger); text-decoration: none; border-radius: 8px; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; text-align: left;">
+                        <span>🚪</span> Log Out
+                    </button>
+                </div>
+            </div>
+        </div>
     </header>
     
     <main class="container">
@@ -1037,6 +1086,59 @@
             const modal = document.querySelector('.modal');
             if (modal) modal.remove();
         }
+
+        // User Menu Dropdown
+        const userMenuBtn = document.getElementById('user-menu-btn');
+        const userDropdown = document.getElementById('user-dropdown');
+        
+        userMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.style.display = userDropdown.style.display === 'none' ? 'block' : 'none';
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.style.display = 'none';
+            }
+        });
+        
+        // Load user data for dropdown
+        async function loadUserMenuData() {
+            try {
+                const response = await fetch('/api/user/profile');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const user = data.user;
+                    const displayName = user.display_name || user.email.split('@')[0];
+                    const initials = displayName.substring(0, 2).toUpperCase();
+                    
+                    // Update header
+                    document.getElementById('user-name-short').textContent = displayName;
+                    document.getElementById('user-avatar-small').textContent = initials;
+                    
+                    // Update dropdown
+                    document.getElementById('dropdown-name').textContent = displayName;
+                    document.getElementById('dropdown-email').textContent = user.email;
+                    document.getElementById('dropdown-tier').textContent = (user.subscription_tier || 'FREE').toUpperCase() + ' PLAN';
+                }
+            } catch (error) {
+                console.error('Failed to load user data:', error);
+            }
+        }
+        
+        // Logout function
+        async function logout() {
+            try {
+                await fetch('/api/logout', { method: 'POST' });
+                window.location.href = '/';
+            } catch (error) {
+                window.location.href = '/';
+            }
+        }
+        
+        // Load user data on page load
+        loadUserMenuData();
 
         function showLoading(show) {
             // Add loading overlay if needed
