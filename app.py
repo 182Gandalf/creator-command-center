@@ -56,6 +56,11 @@ TIKTOK_CLIENT_SECRET = os.environ.get('TIKTOK_CLIENT_SECRET')
 GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
 
+# Debug: Log environment variables (remove in production)
+print(f"DEBUG: GOOGLE_CLIENT_ID is set: {bool(GOOGLE_CLIENT_ID)}")
+print(f"DEBUG: GOOGLE_CLIENT_SECRET is set: {bool(GOOGLE_CLIENT_SECRET)}")
+print(f"DEBUG: All env vars: {list(os.environ.keys())}")
+
 # YouTube OAuth Configuration (separate from Google Sign-In)
 YOUTUBE_CLIENT_ID = os.environ.get('YOUTUBE_CLIENT_ID') or GOOGLE_CLIENT_ID
 YOUTUBE_CLIENT_SECRET = os.environ.get('YOUTUBE_CLIENT_SECRET') or GOOGLE_CLIENT_SECRET
