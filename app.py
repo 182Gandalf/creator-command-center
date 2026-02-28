@@ -486,6 +486,12 @@ def api_login():
     # Verify password
     import hashlib
     password_hash = hashlib.sha256(password.encode()).hexdigest()
+    
+    # Debug logging (remove in production)
+    print(f"DEBUG: Email: {email}")
+    print(f"DEBUG: Computed hash: {password_hash[:20]}...")
+    print(f"DEBUG: Stored hash: {user.password_hash[:20] if user.password_hash else 'NONE'}...")
+    
     if password_hash != user.password_hash:
         return jsonify({'success': False, 'error': 'Invalid credentials'}), 401
     
