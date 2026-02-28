@@ -14,8 +14,14 @@ import secrets
 import base64
 import hashlib
 
+# Debug: Check env vars BEFORE load_dotenv
+print(f"BEFORE load_dotenv - GOOGLE_CLIENT_ID: {os.environ.get('GOOGLE_CLIENT_ID', 'NOT SET')[:20]}..." if os.environ.get('GOOGLE_CLIENT_ID') else "BEFORE load_dotenv - GOOGLE_CLIENT_ID: NOT SET")
+
 # Load environment variables from .env file
 load_dotenv()
+
+# Debug: Check env vars AFTER load_dotenv
+print(f"AFTER load_dotenv - GOOGLE_CLIENT_ID: {os.environ.get('GOOGLE_CLIENT_ID', 'NOT SET')[:20]}..." if os.environ.get('GOOGLE_CLIENT_ID') else "AFTER load_dotenv - GOOGLE_CLIENT_ID: NOT SET")
 
 # Import OAuth manager for secure token handling
 from oauth_manager import (
