@@ -11,6 +11,8 @@ import os
 import requests
 import json
 import secrets
+import base64
+import hashlib
 
 # Load environment variables from .env file
 load_dotenv()
@@ -1302,7 +1304,7 @@ def get_subscription():
 
 @app.route('/api/google/auth')
 def google_auth():
-    """Initiate Google OAuth flow for sign-in"""
+    """Initiate Google OAuth flow for sign-in with PKCE (secure flow)"""
     if not GOOGLE_CLIENT_ID:
         return jsonify({'success': False, 'error': 'Google OAuth not configured'}), 500
     
@@ -1310,7 +1312,17 @@ def google_auth():
     state = secrets.token_urlsafe(32)
     session['google_oauth_state'] = state
     
-    # Build Google OAuth URL
+    # Generate PKCE code verifier and challenge (secure flow)
+    code_verifier = secrets.token_urlsafe(64)
+    session['google_code_verifier'] = code_verifier
+    
+    # Create code challenge (SHA256 hash of verifier, base64url encoded)
+    import hashlib
+    code_challenge = base64.urlsafe_b64encode(
+        hashlib.sha256(code_verifier.encode()).digest()
+    ).decode().rstrip('=')
+    
+    # Build Google OAuth URL with PKCE
     redirect_uri = url_for('google_callback', _external=True, _scheme='https')
     if redirect_uri.startswith('http://'):
         redirect_uri = redirect_uri.replace('http://', 'https://', 1)
@@ -1323,14 +1335,16 @@ def google_auth():
         f"scope=openid%20email%20profile&"
         f"state={state}&"
         f"access_type=offline&"
-        f"prompt=select_account"
+        f"prompt=select_account&"
+        f"code_challenge={code_challenge}&"
+        f"code_challenge_method=S256"
     )
     
     return redirect(auth_url)
 
 @app.route('/api/google/callback')
 def google_callback():
-    """Handle Google OAuth callback"""
+    """Handle Google OAuth callback with PKCE"""
     # Verify state
     state = request.args.get('state')
     stored_state = session.pop('google_oauth_state', None)
@@ -1347,7 +1361,12 @@ def google_callback():
     if not code:
         return jsonify({'success': False, 'error': 'No authorization code'}), 400
     
-    # Exchange code for tokens
+    # Get PKCE code verifier from session
+    code_verifier = session.pop('google_code_verifier', None)
+    if not code_verifier:
+        return jsonify({'success': False, 'error': 'PKCE verification failed'}), 400
+    
+    # Exchange code for tokens with PKCE
     redirect_uri = url_for('google_callback', _external=True, _scheme='https')
     if redirect_uri.startswith('http://'):
         redirect_uri = redirect_uri.replace('http://', 'https://', 1)
@@ -1358,7 +1377,8 @@ def google_callback():
         'client_id': GOOGLE_CLIENT_ID,
         'client_secret': GOOGLE_CLIENT_SECRET,
         'redirect_uri': redirect_uri,
-        'grant_type': 'authorization_code'
+        'grant_type': 'authorization_code',
+        'code_verifier': code_verifier  # PKCE parameter
     })
     
     if response.status_code != 200:
