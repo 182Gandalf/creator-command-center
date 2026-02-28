@@ -1944,12 +1944,6 @@ def billing_page():
         return redirect('/login')
     return render_template('billing.html')
 
-@app.route('/api/logout', methods=['POST'])
-def api_logout():
-    """Handle user logout"""
-    session.clear()
-    return jsonify({'success': True, 'message': 'Logged out successfully'})
-
 # ==================== END ACCOUNT SETTINGS API ====================
 
 if __name__ == '__main__':
