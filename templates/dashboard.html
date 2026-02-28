@@ -1110,17 +1110,17 @@
                 
                 if (data.success) {
                     const user = data.user;
-                    const displayName = user.display_name || user.email.split('@')[0];
-                    const initials = displayName.substring(0, 2).toUpperCase();
+                    const emailName = user.email.split('@')[0];
+                    const initials = emailName.substring(0, 2).toUpperCase();
                     
                     // Update header
-                    document.getElementById('user-name-short').textContent = displayName;
+                    document.getElementById('user-name-short').textContent = emailName;
                     document.getElementById('user-avatar-small').textContent = initials;
                     
                     // Update dropdown
-                    document.getElementById('dropdown-name').textContent = displayName;
+                    document.getElementById('dropdown-name').textContent = emailName;
                     document.getElementById('dropdown-email').textContent = user.email;
-                    document.getElementById('dropdown-tier').textContent = (user.subscription_tier || 'FREE').toUpperCase() + ' PLAN';
+                    document.getElementById('dropdown-tier').textContent = (user.subscription_tier || 'free').toUpperCase() + ' PLAN';
                 }
             } catch (error) {
                 console.error('Failed to load user data:', error);
