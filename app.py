@@ -61,6 +61,10 @@ TIKTOK_CLIENT_SECRET = os.environ.get('TIKTOK_CLIENT_SECRET')
 GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
 
+# Debug: Show actual values (first 20 chars only)
+print(f"GOOGLE_CLIENT_ID value: {GOOGLE_CLIENT_ID[:25] if GOOGLE_CLIENT_ID else 'EMPTY/NONE'}...")
+print(f"GOOGLE_CLIENT_SECRET value: {'SET' if GOOGLE_CLIENT_SECRET else 'EMPTY/NONE'}")
+
 # YouTube OAuth Configuration (separate from Google Sign-In)
 YOUTUBE_CLIENT_ID = os.environ.get('YOUTUBE_CLIENT_ID') or GOOGLE_CLIENT_ID
 YOUTUBE_CLIENT_SECRET = os.environ.get('YOUTUBE_CLIENT_SECRET') or GOOGLE_CLIENT_SECRET
