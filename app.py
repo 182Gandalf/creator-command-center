@@ -32,7 +32,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Enable CORS for API endpoints
 CORS(app, resources={
     r"/api/*": {
-        "origins": ["https://flowcast.space", "http://localhost:5000"],
+        "origins": ["https://flowcast.space", "https://www.flowcast.space", "http://localhost:5000"],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"],
         "supports_credentials": True

@@ -205,12 +205,13 @@
                     alert(data.error || 'Invalid credentials');
                 }
             } catch (error) {
-                alert('Network error. Please try again.');
+                console.error('Login error:', error);
+                alert('Network error: ' + error.message);
             }
         });
 
         function loginWithGoogle() {
-            alert('Google OAuth integration coming soon!');
+            window.location.href = '/api/google/auth';
         }
     </script>
 </body>
