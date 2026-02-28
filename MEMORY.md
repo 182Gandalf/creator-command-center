@@ -34,6 +34,14 @@ Before suggesting any solution, check if it requires payment:
 - User is non-technical - keep explanations simple
 - Security audits are on HOLD - don't spawn them
 
+### ALWAYS Commit and Push Code Changes
+**Rule:** After ANY code change, immediately:
+1. `git add <file>`
+2. `git commit -m "descriptive message"`
+3. `git push origin main`
+
+**Never** tell user "I've updated the file" without committing and pushing. The change doesn't exist until it's in GitHub.
+
 ### Self-Improvement & Subagent Results — COMPLETE SILENCE
 - **NEVER share self-improvement summaries in Telegram/chat**
 - **NEVER mention self-improvement work, subagents, or reviews in chat**
