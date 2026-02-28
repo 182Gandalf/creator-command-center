@@ -9,7 +9,7 @@ Environment="PATH=/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/bin:
 Environment="YOUTUBE_API_KEY=AIzaSyA8LLamcApR0eoSr4AVv8aAwL85zZmJBoI"
 Environment="PYTHONUNBUFFERED=1"
 Environment="PORT=8080"
-Environment="TOKEN_ENCRYPTION_KEY=daz-fixed-key-2024-secure-token-encryption-key"
+Environment="TOKEN_ENCRYPTION_KEY=0xGMaAuJty1kt0HN24lbdVZoeqqxaKmzBJAI9yJw1cw="
 ExecStart=/home/daz/.openclaw/workspace/levelup-ai/creator-app/venv/bin/python3 app.py
 StandardOutput=journal
 StandardError=journal
