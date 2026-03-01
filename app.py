@@ -13,6 +13,7 @@ import json
 import secrets
 import base64
 import hashlib
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Load environment variables from .env file (development only)
 # On Railway, always use environment variables
@@ -21,6 +22,32 @@ if not os.environ.get('RAILWAY_SERVICE_NAME'):
     print("Loaded .env file (development mode)")
 else:
     print("Running on Railway - using environment variables")
+
+# Password hashing utilities (migrated from SHA256 to bcrypt via werkzeug)
+def hash_password(password):
+    """Hash password using werkzeug's generate_password_hash (pbkdf2:sha256)"""
+    return generate_password_hash(password, method='pbkdf2:sha256')
+
+def verify_password(password, password_hash):
+    """Verify password against hash. Supports both new (bcrypt) and legacy (SHA256) hashes.
+    
+    Returns True if password matches, False otherwise.
+    """
+    if not password_hash:
+        return False
+    
+    # Check if it's a werkzeug hash (starts with 'pbkdf2' or similar)
+    if password_hash.startswith('pbkdf2') or password_hash.startswith('scrypt'):
+        return check_password_hash(password_hash, password)
+    
+    # Legacy SHA256 hash (hex string of exactly 64 characters)
+    if len(password_hash) == 64:
+        import hashlib
+        legacy_hash = hashlib.sha256(password.encode()).hexdigest()
+        return legacy_hash == password_hash
+    
+    # Unknown hash format
+    return False
 
 # Import OAuth manager for secure token handling
 from oauth_manager import (
@@ -439,14 +466,10 @@ def api_signup():
     if existing_user:
         return jsonify({'success': False, 'error': 'Email already registered'}), 409
     
-    # Create new user
-    # TODO: Migrate to werkzeug.security for proper password hashing
-    import hashlib
-    password_hash = hashlib.sha256(password.encode()).hexdigest()
-    
+    # Create new user with secure password hashing
     user = User(
         email=email,
-        password_hash=password_hash,
+        password_hash=hash_password(password),
         subscription_tier='free',
         trial_started_at=datetime.utcnow()
     )
@@ -483,16 +506,8 @@ def api_login():
     if not user:
         return jsonify({'success': False, 'error': 'Invalid credentials'}), 401
     
-    # Verify password
-    import hashlib
-    password_hash = hashlib.sha256(password.encode()).hexdigest()
-    
-    # Debug logging (remove in production)
-    print(f"DEBUG: Email: {email}")
-    print(f"DEBUG: Computed hash: {password_hash[:20]}...")
-    print(f"DEBUG: Stored hash: {user.password_hash[:20] if user.password_hash else 'NONE'}...")
-    
-    if password_hash != user.password_hash:
+    # Verify password (supports both new hashes and legacy SHA256)
+    if not verify_password(password, user.password_hash):
         return jsonify({'success': False, 'error': 'Invalid credentials'}), 401
     
     # Create session
