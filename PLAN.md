@@ -1,7 +1,7 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-02-28 00:00 UTC  
-**Next Update:** 2026-03-01 00:00 UTC
+**Last Updated:** 2026-03-01 00:00 UTC  
+**Next Update:** 2026-03-02 00:00 UTC
 
 ---
 
@@ -17,7 +17,18 @@
 
 ## 📊 Current Status
 
-### ✅ Completed (Yesterday - 2026-02-27)
+### ✅ Completed (Yesterday - 2026-02-28)
+- [x] **Paddle Compliance:** Provisionally approved, fixed 3 items (footer, enterprise pricing, refund policy)
+- [x] **Google OAuth Fixed:** Environment variables working, login functional
+- [x] **Email/Password Login:** Working after database schema fixes
+- [x] **Account Settings:** Profile, preferences, billing pages created and working
+- [x] **Password Eye Toggle:** Added to login page for better UX
+- [x] **AI Service:** Centralized AI service built with multi-model support (Gemini, Kimi, Claude, GPT)
+- [x] **Instagram/Meta Reminder:** Scheduled for 9am today
+- [x] **Daily Automation:** Daily Brief and FlowCast improvement suggestions working
+- [x] **Security:** Removed debug logging, cleaned up app.py
+
+### ✅ Completed (Feb 27)
 - [x] **Hero Typo Fixed:** Added space before `<br>` tag to fix "aboutwhat" rendering issue
 - [x] **Daily Automation:** Daily Brief and FlowCast improvement suggestions delivered successfully
 - [x] **PLAN.md Review:** Daily planning session completed with priority alignment
@@ -88,28 +99,28 @@ The following features are disabled until beta testing begins:
 
 ---
 
-## 🎯 Today's Priorities (February 28, 2026) - WEEKEND PRE-LAUNCH SPRINT
+## 🎯 Today's Priorities (March 1, 2026) - SUNDAY SETUP DAY
 
 ### 🔴 Critical (Complete Today)
-1. **Authentication System** - Test signup, login, password reset flows at flowcast.space
-2. **AI Integration** - Verify Gemini API working, generate test content ideas
-3. **Database** - Confirm PostgreSQL connection, data persistence working
-4. **Security Audit** - Final check for exposed secrets, verify .env config
+1. **Instagram/Meta API Application** - 9am reminder set, apply for Basic Display API
+2. **AI API Keys Setup** - Get keys for: Gemini, Kimi 2.5, Claude Haiku/Sonnet
+3. **Test Full Login Flow** - Verify Google OAuth and email login both working
+4. **Paddle Final Review** - Check if approval complete after identity verification
 
-### 🟡 High Priority (Weekend Focus)
-5. **Post Scheduling** - Enable cron jobs, test scheduling functionality
-6. **YouTube OAuth** - Configure redirect URIs in Google Cloud Console
-7. **Payment Flow** - Test Paddle checkout (or disable if not ready)
-8. **Email System** - Set up billing@flowcast.space in Cloudflare Email Routing
+### 🟡 High Priority (Today)
+5. **YouTube OAuth** - Configure redirect URIs in Google Cloud Console
+6. **Account Settings Test** - Verify profile, billing, password change all work
+7. **AI Service Test** - Generate test content ideas with new service
+8. **TikTok NEW Account** - Create fresh developer account (old compromised)
 
-### 🟢 Medium Priority (Sunday)
-9. **Meta/Instagram Setup** - Create Basic Display app
-10. **TikTok NEW Account** - Create fresh developer account (old compromised)
-11. **Performance Check** - Page load speed, mobile responsiveness
-12. **Analytics Setup** - Google Analytics 4 configuration
+### 🟢 Medium Priority (If Time)
+9. **Post Scheduling** - Enable cron jobs, test scheduling functionality
+10. **Email System** - Set up billing@flowcast.space in Cloudflare Email Routing
+11. **Analytics Setup** - Google Analytics 4 configuration
+12. **Performance Check** - Page load speed, mobile responsiveness
 
-### 🎯 Weekend Goal
-**Complete CRITICAL + HIGH items → Ready for live testing Monday**
+### 🎯 Sunday Goal
+**Complete API applications and AI setup → Ready for beta testing Monday**
 
 ---
 
@@ -173,6 +184,23 @@ The following features are disabled until beta testing begins:
 
 ## 📝 Daily Notes
 
+### 2026-03-01 - SUNDAY SETUP DAY
+- **PLAN.md Updated:** Reviewed Feb 28 progress, set Mar 1 priorities
+- **Yesterday's Wins:** Google OAuth working, email login fixed, AI service built, account settings pages created
+- **Today Focus:** Instagram/Meta API application (9am), AI API keys setup, final testing
+- **Reminder Set:** 9am for Instagram/Meta API application
+- **Next:** Complete API applications → Beta testing Monday
+
+### 2026-02-28 - MAJOR FIXES & FEATURES
+- **Paddle Compliance:** Provisionally approved, fixed 3 items, enterprise pricing created
+- **Google OAuth:** Fixed environment variable loading on Railway, login now working
+- **Email Login:** Fixed after removing incompatible User model fields
+- **Account Settings:** Complete profile, preferences, billing pages with working forms
+- **Password Toggle:** Eye button added to login for better UX
+- **AI Service:** Built centralized AI service supporting Gemini, Kimi, Claude, GPT
+- **Instagram Reminder:** Scheduled for 9am Sunday (today)
+- **Security:** Cleaned up debug logging, removed test code
+
 ### 2026-02-27 - TYPO FIX & AUTOMATION
 - **Hero Headline:** Fixed "aboutwhat" typo by adding space before `<br>` tag
 - **Daily Automation:** Daily Brief and FlowCast improvement analysis working correctly
@@ -220,10 +248,11 @@ The following features are disabled until beta testing begins:
 |------|--------|--------|------------|
 | TikTok NEW account needed | HIGH | 🔴 PENDING | Old account linked to banned email - create fresh account |
 | Git history cleanup | MEDIUM | 🟡 WAITING | BFG Repo-Cleaner ready - waiting on NEW TikTok credentials |
-| Paddle approval delay | MEDIUM | ⏳ PENDING | Can launch with extended free trial |
+| Paddle approval | MEDIUM | 🟡 IN PROGRESS | Identity check complete, awaiting final approval |
 | YouTube OAuth setup | MEDIUM | 🟡 IN PROGRESS | Need to add redirect URIs to Google Cloud |
 | Post scheduling disabled | MEDIUM | 🔴 PENDING | Enable cron jobs before beta testing |
-| Meta app creation | LOW | ⏳ PENDING | Can launch without Instagram initially |
+| Meta app creation | MEDIUM | ⏳ SCHEDULED | 9am reminder set - apply today |
+| AI API keys | LOW | ⏳ SCHEDULED | Set up today (Gemini, Kimi, Claude) |
 
 ---
 
@@ -242,21 +271,22 @@ The following features are disabled until beta testing begins:
 
 ---
 
-## 🎯 Action Items for Today (Feb 28)
+## 🎯 Action Items for Today (Mar 1)
 
 ### Daz - Your Tasks:
-1. [ ] **Test Authentication:** Create test account at flowcast.space/signup, verify login/logout flows
-2. [ ] **Verify AI Working:** Generate content ideas, check quota tracking
-3. [ ] **Create TikTok NEW Account:** Sign up with fresh email (NOT linked to old Google account)
-4. [ ] **Google Cloud Console:** Add YouTube OAuth redirect URIs
-5. [ ] **Paddle Check:** Verify approval status or prepare extended free trial
-6. [ ] **Cloudflare Email:** Set up billing@flowcast.space forwarding
+1. [ ] **Instagram/Meta API (9am):** Apply at https://developers.facebook.com/ for Basic Display API
+2. [ ] **AI API Keys:** Get keys for Gemini, Kimi 2.5, Claude (Haiku + Sonnet)
+3. [ ] **Test Login:** Verify both Google OAuth and email login work end-to-end
+4. [ ] **Paddle Status:** Check if final review approved after identity verification
+5. [ ] **Account Settings:** Test profile, billing, and password change pages
+6. [ ] **TikTok NEW Account:** Create fresh developer account (avoid old email)
+7. [ ] **YouTube OAuth:** Add redirect URIs to Google Cloud Console
 
 ### Gandalf (Me) - My Tasks:
-1. [ ] **Security Audit:** Final check for any exposed secrets in codebase
-2. [ ] **Enable Cron Jobs:** Prepare to turn on post scheduling for beta
-3. [ ] **Database Check:** Verify PostgreSQL connection and data persistence
-4. [ ] **Documentation:** Update integration guides for weekend testing
+1. [x] **PLAN.md Updated:** Reviewed yesterday's progress, set today's priorities
+2. [ ] **AI Service Test:** Verify multi-model service works when keys added
+3. [ ] **Login Debugging:** Remove debug logging if login stable
+4. [ ] **Documentation:** Create API setup guides for Instagram, YouTube, TikTok
 
 ---
 
