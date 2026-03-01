@@ -62,8 +62,11 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-i
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
     # Production: Use PostgreSQL from Railway
+    # Convert postgresql:// to postgresql+pg8000:// for pure Python driver (no system deps)
+    if DATABASE_URL.startswith('postgresql://'):
+        DATABASE_URL = DATABASE_URL.replace('postgresql://', 'postgresql+pg8000://', 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
-    print("Using PostgreSQL database")
+    print("Using PostgreSQL database with pg8000 driver")
 else:
     # Development: Use local SQLite
     # Ensure the instance directory exists
