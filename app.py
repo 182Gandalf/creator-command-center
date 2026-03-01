@@ -66,6 +66,9 @@ if DATABASE_URL:
     print("Using PostgreSQL database")
 else:
     # Development: Use local SQLite
+    # Ensure the instance directory exists
+    import os
+    os.makedirs('instance', exist_ok=True)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/creator_command_center.db'
     print("Using SQLite database (development)")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
