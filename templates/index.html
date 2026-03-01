@@ -101,6 +101,7 @@
         .footer-links { display: flex; gap: 2rem; }
         .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.3s; }
         .footer-links a:hover { color: var(--primary-light); }
+        .mobile-menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; padding: 0.5rem; }
         @media (max-width: 1024px) {
             .hero h1 { font-size: 3.5rem; }
             .pillars { grid-template-columns: repeat(2, 1fr); }
@@ -110,12 +111,81 @@
         }
         @media (max-width: 768px) {
             .header { padding: 0.75rem 1rem; }
-            .hero h1 { font-size: 2.75rem; }
-            .pillars { grid-template-columns: 1fr; }
-            .features-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-            .cta-content { padding: 2.5rem 1.5rem; }
-            .footer-content { flex-direction: column; gap: 1.5rem; text-align: center; }
+            .logo-text { font-size: 1.5rem; }
+            .logo-icon { width: 36px; height: 36px; font-size: 1.25rem; }
+            .nav { gap: 1rem; }
+            .btn { padding: 0.625rem 1.25rem; font-size: 0.875rem; }
+            
+            .hero { padding: 3rem 1rem 4rem; }
+            .hero h1 { font-size: 2.25rem; line-height: 1.1; }
+            .hero-badge { font-size: 0.8rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem; }
+            .hero-subtitle { font-size: 1rem; line-height: 1.6; }
+            .hero-supporting { font-size: 0.95rem; }
+            .hero-cta { flex-direction: column; align-items: center; gap: 0.75rem; }
+            .btn-large { padding: 0.875rem 1.5rem; font-size: 1rem; width: 100%; max-width: 300px; }
+            .platform-pills { flex-direction: column; align-items: center; gap: 0.5rem; }
+            .platform-pill { width: 100%; max-width: 220px; justify-content: center; }
+            
+            .problem { padding: 3rem 1rem; }
+            .problem h2 { font-size: 1.75rem; }
+            .problem-statement { font-size: 1rem; }
+            .pain-points { gap: 1rem; }
+            .pain-point { padding: 1.5rem; }
+            .pain-point h3 { font-size: 1.1rem; }
+            .pain-point p { font-size: 0.9rem; }
+            
+            .solution { padding: 3rem 1rem; }
+            .solution h2 { font-size: 1.75rem; }
+            .solution-intro { font-size: 1rem; }
+            .pillars { grid-template-columns: 1fr; gap: 1rem; }
+            .pillar { padding: 1.5rem; }
+            .pillar-icon { width: 48px; height: 48px; font-size: 1.5rem; margin-bottom: 1rem; }
+            .pillar h3 { font-size: 1.1rem; }
+            
+            .comparison { padding: 3rem 1rem; }
+            .comparison h2 { font-size: 1.75rem; }
+            .workflow-map { gap: 0.5rem; }
+            .workflow-step { padding: 0.625rem 1rem; font-size: 0.8rem; }
+            .workflow-arrow { font-size: 1rem; }
+            .comparison-tagline { font-size: 1.1rem; }
+            
+            .features-preview { padding: 3rem 1rem; }
+            .features-header h2 { font-size: 1.75rem; }
+            .features-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .feature-card { padding: 1.5rem; }
+            .feature-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+            .feature-card h3 { font-size: 1.1rem; }
+            
+            .personas { padding: 3rem 1rem; }
+            .personas-header h2 { font-size: 1.75rem; }
+            .personas-grid { gap: 1rem; }
+            .persona-card { padding: 1.5rem; }
+            .persona-card h3 { font-size: 1.1rem; }
+            .persona-subtitle { font-size: 0.85rem; }
+            .persona-card p { font-size: 0.9rem; line-height: 1.6; }
+            
+            .cta { padding: 3rem 1rem; }
+            .cta-content { padding: 2rem 1.5rem; border-radius: 16px; }
+            .cta h2 { font-size: 1.75rem; }
+            .cta p { font-size: 1rem; }
+            
+            .mobile-menu-toggle { display: block; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border); border-top: none; flex-direction: column; padding: 1rem; gap: 0; }
+            .nav-links.active { display: flex; }
+            .nav-links li { padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+            .nav-links li:last-child { border-bottom: none; }
+            .footer-content { flex-direction: column; gap: 1.5rem; text-align: center; padding: 0 1rem; }
+            .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.875rem; }
+            .problem h2 { font-size: 1.5rem; }
+            .solution h2 { font-size: 1.5rem; }
+            .comparison h2 { font-size: 1.5rem; }
+            .features-header h2 { font-size: 1.5rem; }
+            .personas-header h2 { font-size: 1.5rem; }
+            .cta h2 { font-size: 1.5rem; }
+            .workflow-step { padding: 0.5rem 0.75rem; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -134,6 +204,7 @@
                     <li><a href="/privacy">Privacy</a></li>
                 </ul>
                 <a href="/signup" class="btn btn-primary">Start Free</a>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
             </nav>
         </div>
     </header>
@@ -358,5 +429,18 @@
             </div>
         </div>
     </footer>
+    <script>
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+        document.addEventListener('click', function(e) {
+            const nav = document.querySelector('.nav');
+            const navLinks = document.querySelector('.nav-links');
+            if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
