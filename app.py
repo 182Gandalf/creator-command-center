@@ -58,7 +58,16 @@ from oauth_manager import (
 # Initialize Flask app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///creator_command_center.db'
+# Database configuration - PostgreSQL in production, SQLite for local dev
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    # Production: Use PostgreSQL from Railway
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+    print("Using PostgreSQL database")
+else:
+    # Development: Use local SQLite
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/creator_command_center.db'
+    print("Using SQLite database (development)")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Enable CORS for API endpoints
