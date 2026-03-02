@@ -1,4 +1,4 @@
-# Critical Context & Lessons Learned - Updated March 1, 2026
+# Critical Context & Lessons Learned - Updated March 2, 2026
 
 ## User Context - DO NOT FORGET
 
@@ -143,6 +143,14 @@ Before suggesting any solution, check if it requires payment:
 
 **Golden Rule:** User corrections are a SIGNAL that my context is stale. Refresh immediately.
 
+### Self-Improvement Review Cadence
+**Diminishing returns on overlapping reviews.**
+- **Comprehensive review:** Weekly (Sundays) — full pattern analysis
+- **Security check:** Daily — credentials/exposures only, silent
+- **Incident review:** Triggered by errors only — focused, immediate action
+- **Rule:** Reviews must generate unique insights — if findings repeat, frequency is too high
+- **Golden Rule:** One deep review beats three overlapping ones
+
 ### ALWAYS Commit and Push Code Changes
 **Rule:** After ANY code change, immediately:
 1. `git add <file>`
@@ -157,9 +165,12 @@ When blocked on user action:
 - Day 1: Initial notification
 - Day 3: Gentle reminder
 - Day 7: Urgent reminder
+- Day 10: Follow-up
 - Day 14: Final reminder
 
 Never let user-action items age without proactive follow-up.
+
+**Escalation Schedule:** Day 1, 3, 7, 10, 14 (not 13-day gaps)
 
 ### Self-Improvement & Subagent Results — COMPLETE SILENCE
 - **NEVER share self-improvement summaries in Telegram/chat**
@@ -180,6 +191,14 @@ Never let user-action items age without proactive follow-up.
 
 ---
 
+## Pending Automation
+| Item | Status | Priority | Notes |
+|------|--------|----------|-------|
+| Heartbeat reminder system | ⏳ Not started | P1 | Auto-check DASHBOARD.md for due reminders |
+| TikTok secret rotation | ⏳ Blocked (user) | P0 | Reminder Mar 15 |
+
+---
+
 ## Active Operations
 See `DASHBOARD.md` for single source of truth on all blockers.
 
@@ -188,7 +207,7 @@ See `DASHBOARD.md` for single source of truth on all blockers.
 ---
 
 ## Infrastructure Blockers
-- TikTok secret rotation (P0 - user action required, 5 days old)
+- TikTok secret rotation (P0 - user action required, 6 days old, reminder scheduled Mar 15)
 
 ---
 
