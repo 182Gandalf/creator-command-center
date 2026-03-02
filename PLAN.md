@@ -1,7 +1,7 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-01 00:00 UTC  
-**Next Update:** 2026-03-02 00:00 UTC
+**Last Updated:** 2026-03-02 00:00 UTC  
+**Next Update:** 2026-03-03 00:00 UTC
 
 ---
 
@@ -17,228 +17,90 @@
 
 ## 📊 Current Status
 
-### ✅ Completed (Yesterday - 2026-02-28)
+### ✅ Completed (Yesterday - 2026-03-01) - MAJOR PIVOT DAY
+- [x] **Brand Pivot LIVE:** Complete repositioning - "Know what to film. Before you film it."
+- [x] **New Backend Structure:** FastAPI app with PostgreSQL, SQLAlchemy, Alembic
+- [x] **Authentication System:** JWT-based auth with /auth/register, /auth/login, /auth/me
+- [x] **Database Models:** User, CreatorProfile, ContentIdea, Trend, CalendarEntry
+- [x] **GitHub Repository:** Pushed to 182Gandalf/FlowCast (private)
+- [x] **Railway Deployment:** Backend live with database connection working
+- [x] **Alembic Migrations:** Database migration system ready
+- [x] **Environment Setup:** SECRET_KEY, DATABASE_URL configured
+- [x] **Health Check Endpoints:** /health and /health/db for monitoring
+
+### ✅ Completed (Feb 28)
 - [x] **Paddle Compliance:** Provisionally approved, fixed 3 items (footer, enterprise pricing, refund policy)
 - [x] **Google OAuth Fixed:** Environment variables working, login functional
 - [x] **Email/Password Login:** Working after database schema fixes
 - [x] **Account Settings:** Profile, preferences, billing pages created and working
-- [x] **Password Eye Toggle:** Added to login page for better UX
 - [x] **AI Service:** Centralized AI service built with multi-model support (Gemini, Kimi, Claude, GPT)
-- [x] **Instagram/Meta Reminder:** Scheduled for 9am today
-- [x] **Daily Automation:** Daily Brief and FlowCast improvement suggestions working
-- [x] **Security:** Removed debug logging, cleaned up app.py
 
 ### ✅ Completed (Feb 27)
-- [x] **Hero Typo Fixed:** Added space before `<br>` tag to fix "aboutwhat" rendering issue
-- [x] **Daily Automation:** Daily Brief and FlowCast improvement suggestions delivered successfully
-- [x] **PLAN.md Review:** Daily planning session completed with priority alignment
+- [x] **Hero Typo Fixed:** Added space before `<br>` tag
+- [x] **Daily Automation:** Daily Brief and FlowCast improvement suggestions working
 
 ### ✅ Completed (Feb 26)
-- [x] **Railway Account Recovered:** Full access restored, connected to new GitHub repo
-- [x] **Domain Unlocked:** Porkbun support ticket resolved, flowcast.space accessible
-- [x] **Cloudflare Transfer:** DNS configured, SSL active, site live
-- [x] **Code Repository:** All code pushed to 182gandalf/creator-command-center
-- [x] **Railway Deployment:** Live deployment with all latest features
-- [x] **Pricing Currency:** All plans converted from EUR (€) to USD ($)
-- [x] **Refund Policy:** Updated from 30 days to 14 days across all pages
-- [x] **Billing Email:** Added billing@flowcast.space to refund/contact sections
-- [x] **Landing Page Copy:** Updated stats (2000+ → 1000+), added creator savings highlight
-- [x] **Security Cleanup:** Removed all exposed secrets from GitHub (TOOLS.md, api-keys.md)
+- [x] **Railway Account Recovered:** Full access restored
+- [x] **Domain Unlocked:** Porkbun support ticket resolved
+- [x] **Cloudflare Transfer:** DNS configured, SSL active
+- [x] **Pricing Currency:** All plans converted to USD ($)
 - [x] **Weekend Checklist:** Created comprehensive pre-launch testing checklist
-- [x] **CAC Analysis:** Completed customer acquisition cost analysis (local only)
-- [x] **Saturday Reminder:** Scheduled 9am weekend checklist reminder
-- [x] **Daily Analysis Cron:** Set up automated daily site improvement analysis
-
-### ✅ Completed (Feb 25)
-- [x] **AI Credits System:** €1 for 10 AI ideas (all tiers except Pro)
-- [x] **Usage Alerts:** Real-time warnings at 80% usage, alerts at 100%
-- [x] **Annual Pricing Toggle:** Default to annual with 20% discount, toggle to monthly
-- [x] **AI Quota Tracking:** Enhanced with bonus credits that don't expire
-- [x] **New API Endpoints:** `/api/ai-quota-status`, `/api/ai-purchase-credits`, `/api/usage-alerts`
-- [x] **Verified Gemini 1.5 Flash** for Free, Starter, and Creator tiers
-- [x] **Set Reminder:** Affiliate/referral program reminder for March 15
-- [x] All changes committed to GitHub
-- [x] Profitability analysis recommendations implemented
-
-### ✅ Completed (Earlier - 2026-02-24)
-- [x] **MAJOR SECURITY FIX:** Implemented proper environment variable credential management
-- [x] Removed hardcoded TikTok client secret from `app.py`
-- [x] Updated pricing page with competitor comparison table
-- [x] Updated Terms of Service with comprehensive AI Services section
-- [x] Updated Refund policy (removed 48-hour exception clause)
-- [x] Changed Starter plan: 2 platforms → 3 platforms
 
 ### 🚧 In Progress
-- [ ] TikTok new developer account (OLD account compromised - need NEW account with fresh email)
-- [ ] Git history cleanup (BFG Repo-Cleaner - waiting on TikTok NEW account setup)
-- [ ] Paddle payment integration (waiting for approval)
-- [ ] YouTube OAuth redirect URIs (need to add to Google Cloud Console)
-- [ ] Meta/Instagram app creation (Basic Display API setup)
-- [ ] Post scheduling cron jobs (disabled, need to enable for beta)
-- [ ] Email notification system (billing@flowcast.space routing)
+- [ ] **TikTok Secret Rotation:** Deferred until backend complete - reminder set for Mar 15
+- [ ] **Frontend Integration:** Connect new backend API to frontend
+- [ ] **AI Service Integration:** Connect ai.py service to new backend
+- [ ] **Database Migration:** Run initial migration on production DB
 
 ### ⏳ Pending
-- [ ] Live deployment with all changes
-- [ ] AI router testing with Gemini API
-- [ ] User authentication backend implementation
-- [ ] Review submission system
-- [ ] Email notification system
+- [ ] TikTok new developer account (P0 - security)
+- [ ] Paddle payment integration
+- [ ] YouTube OAuth redirect URIs
+- [ ] Meta/Instagram app creation
+- [ ] Post scheduling system (new backend)
 
 ---
 
-## ⏸️ Temporarily Disabled (Pre-Beta)
-
-The following features are disabled until beta testing begins:
-
-| Feature | Status | Re-enable When |
-|---------|--------|----------------|
-| FlowCast Post Scheduler (Every Minute) | ⏸️ Disabled | Beta testing starts |
-| Creator Command Center - Daily AI Content Ideas | ⏸️ Disabled | Beta testing starts |
-
-**Note:** These are disabled to prevent automated actions during development. Re-enable before inviting beta users.
-
----
-
-## 🎯 Today's Priorities (March 1, 2026) - SUNDAY SETUP DAY
+## 🎯 Today's Priorities (March 2, 2026) - BACKEND INTEGRATION DAY
 
 ### 🔴 Critical (Complete Today)
-1. **Instagram/Meta API Application** - 9am reminder set, apply for Basic Display API
-2. **AI API Keys Setup** - Get keys for: Gemini, Kimi 2.5, Claude Haiku/Sonnet
-3. **Test Full Login Flow** - Verify Google OAuth and email login both working
-4. **Paddle Final Review** - Check if approval complete after identity verification
+1. **Run Database Migration:** `alembic upgrade head` on Railway PostgreSQL
+2. **Test Auth Endpoints:** Verify /auth/register and /auth/login work via API
+3. **Frontend Connection:** Update frontend to use new backend API endpoints
+4. **AI Service Hookup:** Integrate existing ai.py service with new FastAPI backend
 
 ### 🟡 High Priority (Today)
-5. **YouTube OAuth** - Configure redirect URIs in Google Cloud Console
-6. **Account Settings Test** - Verify profile, billing, password change all work
-7. **AI Service Test** - Generate test content ideas with new service
-8. **TikTok NEW Account** - Create fresh developer account (old compromised)
+5. **Create Protected Routes:** Add JWT dependency to content generation endpoints
+6. **Creator Profile API:** Build /api/profile endpoints for onboarding flow
+7. **Content Ideas API:** Build /api/ideas endpoints for AI generation
+8. **Environment Variables:** Ensure all API keys (OpenAI, etc.) are in Railway
 
 ### 🟢 Medium Priority (If Time)
-9. **Post Scheduling** - Enable cron jobs, test scheduling functionality
-10. **Email System** - Set up billing@flowcast.space in Cloudflare Email Routing
-11. **Analytics Setup** - Google Analytics 4 configuration
-12. **Performance Check** - Page load speed, mobile responsiveness
+9. **Frontend State Management:** Set up auth token storage (localStorage/cookies)
+10. **Logout Functionality:** Add /auth/logout endpoint and frontend handling
+11. **Error Handling:** Standardize API error responses
+12. **API Documentation:** Auto-generate Swagger docs (FastAPI provides this)
 
-### 🎯 Sunday Goal
-**Complete API applications and AI setup → Ready for beta testing Monday**
+### 🎯 Tuesday Goal
+**Backend fully functional with frontend integration → Test complete user journey**
 
 ---
 
 ## 📅 Weekly Roadmap
 
-### Week of Feb 23 - Mar 1
-- **Monday (Feb 24):** ✅ Security fixes, credential management, pricing updates, terms update
-- **Tuesday (Feb 25):** ✅ AI credits, usage alerts, annual pricing toggle, Gemini Flash verification
-- **Wednesday (Feb 26):** ✅ Railway/domain recovery, USD pricing, billing email, weekend checklist
-- **Thursday (Feb 27):** ✅ Hero typo fix, daily automation confirmed working
-- **Friday (Feb 28):** 🔴 Weekend pre-launch sprint: auth, AI, database, security testing
-- **Weekend:** 🧪 Live testing, bug fixes, final polish → BETA READY
-
 ### Week of Mar 2 - Mar 8
-- Paddle payment integration
-- TikTok API approval process
-- Beta user onboarding
-- Analytics setup
+- **Monday (Mar 2):** 🔴 Backend integration, database migrations, auth testing
+- **Tuesday (Mar 3):** Frontend API connection, AI service hookup
+- **Wednesday (Mar 4):** Content generation API, creator profiles
+- **Thursday (Mar 5):** TikTok API (new account), post scheduling
+- **Friday (Mar 6):** Testing, bug fixes, beta prep
+- **Weekend:** Beta user onboarding
 
 ### Week of Mar 9 - Mar 15
+- Paddle payment integration
 - Full platform launch
 - Marketing campaign
 - User feedback collection
-- Iteration based on feedback
-
----
-
-## 📈 Key Metrics to Track
-
-| Metric | Current | Target |
-|--------|---------|--------|
-| Sign ups | 0 | 100 (Week 1) |
-| Active users | 0 | 50 (Week 1) |
-| Posts scheduled | 0 | 500 (Week 1) |
-| Conversion rate | N/A | 5% |
-| Churn rate | N/A | <10% |
-
----
-
-## 🔧 Technical Debt
-
-### Security (In Progress)
-- [x] Hardcoded secrets removed from `app.py`
-- [x] Environment variables implemented
-- [ ] TikTok client secret rotation (PENDING - DAZ ACTION REQUIRED)
-- [ ] Git history rewrite (remove API keys)
-- [ ] Railway token rotation
-- [ ] Password manager migration
-
-### Performance
-- [ ] Image optimization
-- [ ] CSS minification
-- [ ] Database indexing
-
-### Code Quality
-- [ ] Test coverage for AI router
-- [ ] Error handling improvements
-- [ ] Logging standardization
-
----
-
-## 📝 Daily Notes
-
-### 2026-03-01 - SUNDAY SETUP DAY
-- **PLAN.md Updated:** Reviewed Feb 28 progress, set Mar 1 priorities
-- **Yesterday's Wins:** Google OAuth working, email login fixed, AI service built, account settings pages created
-- **Today Focus:** Instagram/Meta API application (9am), AI API keys setup, final testing
-- **Reminder Set:** 9am for Instagram/Meta API application
-- **Next:** Complete API applications → Beta testing Monday
-
-### 2026-02-28 - MAJOR FIXES & FEATURES
-- **Paddle Compliance:** Provisionally approved, fixed 3 items, enterprise pricing created
-- **Google OAuth:** Fixed environment variable loading on Railway, login now working
-- **Email Login:** Fixed after removing incompatible User model fields
-- **Account Settings:** Complete profile, preferences, billing pages with working forms
-- **Password Toggle:** Eye button added to login for better UX
-- **AI Service:** Built centralized AI service supporting Gemini, Kimi, Claude, GPT
-- **Instagram Reminder:** Scheduled for 9am Sunday (today)
-- **Security:** Cleaned up debug logging, removed test code
-
-### 2026-02-27 - TYPO FIX & AUTOMATION
-- **Hero Headline:** Fixed "aboutwhat" typo by adding space before `<br>` tag
-- **Daily Automation:** Daily Brief and FlowCast improvement analysis working correctly
-- **Self-Improvement:** Multiple subagent reviews completed for pattern analysis
-- **Next:** Weekend pre-launch sprint begins - focus on critical path items
-
-### 2026-02-26 - MAJOR RECOVERIES & SETUP
-- **Railway Account:** Fully recovered! Support ticket worked, deployment live
-- **Domain Access:** Porkbun domain unlocked, Cloudflare transfer complete
-- **Site Live:** https://flowcast.space now working with SSL
-- **GitHub Repo:** All code pushed to 182gandalf/creator-command-center
-- **Pricing Update:** All plans converted from EUR to USD ($6/$15/$29)
-- **Refund Policy:** Updated to 14 days, billing@flowcast.space added
-- **Landing Page:** Stats updated (1000+ creators), added savings highlight
-- **Security:** Removed all exposed secrets from GitHub
-- **Weekend Prep:** Created comprehensive pre-launch checklist
-- **CAC Analysis:** Completed (saved locally, not on GitHub)
-- **Reminders:** Saturday 9am reminder + daily improvement analysis cron jobs set up
-- **Next:** Weekend testing begins - focus on critical path items
-
-### 2026-02-25
-- **AI Credits System:** Implemented €1 for 10 AI ideas (all tiers except Pro)
-- **Usage Alerts:** Real-time warnings at 80%, alerts at 100% usage
-- **Annual Pricing Toggle:** Default to annual with monthly toggle option
-- **New API Endpoints:** /api/ai-quota-status, /api/ai-purchase-credits, /api/usage-alerts
-- **Verified Gemini 1.5 Flash** is active for Free, Starter, Creator tiers
-- **Set reminder** for affiliate/referral program (March 15)
-- All code changes committed and pushed
-- Profitability improvements implemented (caching, tier optimization)
-
-### 2026-02-24
-- **CRITICAL:** Google account (gandalftheclaw@gmail.com) banned - lost access to GitHub, Railway, Cloudflare
-- Created new GitHub account: 182gandalf@gmail.com
-- **SECURITY:** Implemented proper .env credential management
-- **SECURITY:** Removed hardcoded TikTok secret from app.py
-- Updated pricing page with annual billing and competitor comparison
-- Updated Terms of Service with AI Services section
-- Submitted support tickets to Porkbun and Railway for account recovery
 
 ---
 
@@ -246,67 +108,83 @@ The following features are disabled until beta testing begins:
 
 | Risk | Impact | Status | Mitigation |
 |------|--------|--------|------------|
-| TikTok NEW account needed | HIGH | 🔴 PENDING | Old account linked to banned email - create fresh account |
-| Git history cleanup | MEDIUM | 🟡 WAITING | BFG Repo-Cleaner ready - waiting on NEW TikTok credentials |
-| Paddle approval | MEDIUM | 🟡 IN PROGRESS | Identity check complete, awaiting final approval |
-| YouTube OAuth setup | MEDIUM | 🟡 IN PROGRESS | Need to add redirect URIs to Google Cloud |
-| Post scheduling disabled | MEDIUM | 🔴 PENDING | Enable cron jobs before beta testing |
-| Meta app creation | MEDIUM | ⏳ SCHEDULED | 9am reminder set - apply today |
-| AI API keys | LOW | ⏳ SCHEDULED | Set up today (Gemini, Kimi, Claude) |
+| TikTok NEW account needed | HIGH | ⏸️ Deferred | Reminder set Mar 15, focus on backend first |
+| Frontend-Backend Integration | HIGH | 🟡 In Progress | Today's priority |
+| Database Migration | MEDIUM | 🟡 Pending | Run today on Railway |
+| AI API Keys in Railway | MEDIUM | 🟡 Pending | Add OpenAI/Gemini keys today |
+| Paddle approval | MEDIUM | ⏳ Waiting | Follow up if not approved by Wed |
+
+---
+
+## 🔧 Technical Debt
+
+### Backend (New - Priority)
+- [ ] Run initial Alembic migration
+- [ ] Test all auth endpoints
+- [ ] Build content generation API
+- [ ] Build creator profile API
+- [ ] Build calendar/scheduling API
+- [ ] Integrate existing AI service
+
+### Security
+- [ ] TikTok client secret rotation (Mar 15)
+- [ ] Git history rewrite (after TikTok)
+- [ ] API key rotation for new backend
+
+---
+
+## 📝 Daily Notes
+
+### 2026-03-02 - BACKEND INTEGRATION DAY
+- **PLAN.md Updated:** March 1 progress logged, March 2 priorities set
+- **Yesterday's Wins:** Brand pivot complete, new FastAPI backend live, auth working, database connected
+- **Today Focus:** Database migrations, frontend API connection, AI service integration
+- **Reminder Active:** TikTok rotation set for March 15
+- **Next:** Complete backend-frontend integration → Test user journey
+
+### 2026-03-01 - MAJOR PIVOT & BACKEND DAY
+- **Brand Pivot LIVE:** "Know what to film. Before you film it." - new positioning deployed
+- **New Backend:** FastAPI + PostgreSQL + SQLAlchemy + Alembic structure created
+- **Authentication:** JWT auth system with register/login/me endpoints
+- **Database Models:** User, CreatorProfile, ContentIdea, Trend, CalendarEntry
+- **GitHub:** Pushed to 182Gandalf/FlowCast (private repo)
+- **Railway:** Backend deployed, database connection verified
+- **Deferred:** TikTok secret rotation (reminder set for 2 weeks)
+
+### 2026-02-28 - MAJOR FIXES & FEATURES
+- **Paddle Compliance:** Provisionally approved, fixed 3 items
+- **Google OAuth:** Fixed environment variables, login working
+- **Email Login:** Fixed after database schema changes
+- **Account Settings:** Profile, preferences, billing pages created
+- **AI Service:** Built centralized AI service (Gemini, Kimi, Claude, GPT)
+
+---
+
+## 🎯 Action Items for Today (Mar 2)
+
+### Daz - Your Tasks:
+1. [ ] **Database Migration:** Run `alembic upgrade head` in Railway console
+2. [ ] **Test Auth:** Try registering and logging in via API
+3. [ ] **API Keys:** Add OpenAI/Gemini keys to Railway environment variables
+4. [ ] **Frontend:** Update frontend code to call new backend endpoints
+5. [ ] **Integration Test:** Complete user journey (register → login → generate idea)
+
+### Gandalf (Me) - My Tasks:
+1. [x] **PLAN.md Updated:** Reviewed March 1, set March 2 priorities
+2. [ ] **API Documentation:** Ensure Swagger UI is accessible (/docs)
+3. [ ] **Error Handling:** Review and standardize error responses
+4. [ ] **Testing Support:** Help debug any integration issues
 
 ---
 
 ## 🔗 Important Links
 
-- **Live Site:** https://flowcast.space ✅ LIVE WITH SSL
-- **GitHub (NEW):** https://github.com/182gandalf/creator-command-center
-- **Railway Dashboard:** https://railway.app/dashboard (RESTORED)
-- **Porkbun Domain:** https://porkbun.com (UNLOCKED)
-- **Google Cloud Console:** https://console.cloud.google.com/apis/credentials (YouTube OAuth)
-- **Meta Developers:** https://developers.facebook.com/ (for Instagram)
-- **TikTok Developers:** https://developers.tiktok.com/ (NEED NEW ACCOUNT)
-- **Paddle Dashboard:** https://sandbox-vendors.paddle.com/ (awaiting approval)
-- **Cloudflare:** https://dash.cloudflare.com (ACTIVE)
-- **Weekend Checklist:** PRE-LAUNCH-CHECKLIST-WEEKEND.md
+- **Live Site:** https://flowcast.space
+- **GitHub (Backend):** https://github.com/182Gandalf/FlowCast
+- **Railway Dashboard:** https://railway.app/dashboard
+- **API Docs (Swagger):** https://your-app.railway.app/docs
+- **API Health Check:** https://your-app.railway.app/health/db
 
 ---
 
-## 🎯 Action Items for Today (Mar 1)
-
-### Daz - Your Tasks:
-1. [ ] **Instagram/Meta API (9am):** Apply at https://developers.facebook.com/ for Basic Display API
-2. [ ] **AI API Keys:** Get keys for Gemini, Kimi 2.5, Claude (Haiku + Sonnet)
-3. [ ] **Test Login:** Verify both Google OAuth and email login work end-to-end
-4. [ ] **Paddle Status:** Check if final review approved after identity verification
-5. [ ] **Account Settings:** Test profile, billing, and password change pages
-6. [ ] **TikTok NEW Account:** Create fresh developer account (avoid old email)
-7. [ ] **YouTube OAuth:** Add redirect URIs to Google Cloud Console
-
-### Gandalf (Me) - My Tasks:
-1. [x] **PLAN.md Updated:** Reviewed yesterday's progress, set today's priorities
-2. [ ] **AI Service Test:** Verify multi-model service works when keys added
-3. [ ] **Login Debugging:** Remove debug logging if login stable
-4. [ ] **Documentation:** Create API setup guides for Instagram, YouTube, TikTok
-
----
-
-## 💡 Ideas & Backlog
-
-### Future Features
-- [ ] Analytics dashboard
-- [ ] Team collaboration
-- [ ] Content templates
-- [ ] Bulk scheduling
-- [ ] RSS feed import
-- [ ] AI content generation (beyond ideas)
-
-### Marketing Ideas
-- [ ] Creator testimonials video
-- [ ] Comparison page vs competitors
-- [ ] Affiliate program (reminder set for March 15)
-- [ ] YouTube tutorial series
-- [ ] Discord community
-
----
-
-*This document is updated automatically every day at midnight UTC and reviewed at 8am UTC.*
+*This document is updated automatically every day at midnight UTC.*
