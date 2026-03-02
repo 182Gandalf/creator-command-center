@@ -1,4 +1,10 @@
-# Critical Context & Lessons Learned - Updated March 2, 2026
+# Critical Context & Lessons Learned - Updated March 2, 2026 (18:00 UTC)
+
+## Current Status Snapshot
+- **Active P0 Blockers:** 1 (SEC-001: TikTok secret rotation, 6 days, awaiting user action)
+- **Review Cadence:** Validated weekly comprehensive reviews sufficient
+- **Last Significant Work:** Brand pivot LIVE (March 1, 2026)
+- **Today's Focus:** System validation, no new feature work
 
 ## User Context - DO NOT FORGET
 
@@ -195,7 +201,7 @@ Never let user-action items age without proactive follow-up.
 | Item | Status | Priority | Notes |
 |------|--------|----------|-------|
 | Heartbeat reminder system | ⏳ Not started | P1 | Auto-check DASHBOARD.md for due reminders |
-| TikTok secret rotation | ⏳ Blocked (user) | P0 | Reminder Mar 15 |
+| TikTok secret rotation | ⏳ Blocked (user) | P0 | Reminder Mar 15 (6 days old) |
 
 ---
 
@@ -207,7 +213,7 @@ See `DASHBOARD.md` for single source of truth on all blockers.
 ---
 
 ## Infrastructure Blockers
-- TikTok secret rotation (P0 - user action required, 6 days old, reminder scheduled Mar 15)
+- TikTok secret rotation (P0 - user action required, 6 days old, reminder scheduled Mar 15 per escalation schedule)
 
 ---
 
