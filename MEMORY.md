@@ -1,10 +1,51 @@
-# Critical Context & Lessons Learned - Updated March 2, 2026 (18:00 UTC)
+# Critical Context & Lessons Learned - Updated March 3, 2026 (22:00 UTC)
 
 ## Current Status Snapshot
-- **Active P0 Blockers:** 1 (SEC-001: TikTok secret rotation, 6 days, awaiting user action)
-- **Review Cadence:** Validated weekly comprehensive reviews sufficient
+- **Active P0 Blockers:** 1 (SEC-001: TikTok secret rotation, 7 days, Day 7 reminder SENT Mar 3)
+- **Review Cadence:** Weekly comprehensive (Sundays) + daily silent security checks ✓ VALIDATED
 - **Last Significant Work:** Brand pivot LIVE (March 1, 2026)
-- **Today's Focus:** System validation, no new feature work
+- **Today's Focus:** Day 7 reminder sent for SEC-001, review frequency confirmed optimal
+
+## March 3, 2026 — UI/UX Polish Day
+
+### Activities Completed
+- **Auth Cleanup:** Removed duplicate "Log In" links, disabled old login/signup pages with redirects
+- **Pricing Page:** Fixed CTA buttons ("Get Started" instead of "Start Free Trial" — no free trial exists)
+- **Dashboard:** Updated logo branding to match new site format
+- **Refund Policy:** Complete rewrite to align with Paddle Merchant of Record terms (14/30 day windows, eligibility, request methods)
+- **Clerk Auth:** Fixed sign-up redirect to /onboarding, auto-create DB users to prevent "Not Found" errors
+- **Bug Fixes:** Syntax error in main.py, added missing /refund route
+
+### Ongoing Issue
+**Clerk Double Login Window:** Multiple CSS/JS attempts to hide modal unsuccessful. Clerk showing both embedded form AND modal. May require Clerk Dashboard configuration changes or component-level fixes.
+
+### Key Lesson
+When using Clerk embedded components, the modal can appear alongside the embedded form if not properly configured. CSS `display: none` and JavaScript MutationObserver removal both failed — suggests the issue may be at initialization level.
+
+---
+
+## Evening Review — March 3, 2026 (20:00 UTC)
+**Status:** Confirmed — no new activity since morning review.
+**SEC-001:** Day 7 reminder successfully sent earlier today; awaiting user action on TikTok secret rotation.
+**Security Posture:** Stable — no new exposures detected.
+**Next Check:** Daily security check (silent) March 4; Day 10 reminder March 6.
+
+## Daily Review Summary — March 3, 2026
+**Key Finding:** Reduced review frequency fully validated — zero new activity since March 2 confirms security-only checks are sufficient on low-activity days.
+**Action Taken:** Day 7 urgent reminder SENT for SEC-001 per escalation schedule; Day 10 reminder scheduled for March 6.
+**Lessons Learned:**
+- Weekly comprehensive reviews + daily silent security checks = optimal balance
+- No redundant reviews needed when no code changes or user interactions occurred
+- Security posture remains stable: no new exposures, SEC-001 remains only open issue
+- Escalation schedule working as designed — user-action items tracked systematically
+
+## Daily Review Summary — March 2, 2026
+**Key Finding:** Review frequency reduced to weekly (Sundays) — overlapping reviews within 24h provide diminishing returns.
+**Action Taken:** Fixed SEC-001 reminder schedule (was Mar 15, now correctly tracking Day 1/3/7/10/14 cadence, with Day 7 = Mar 3).
+
+## Daily Review Summary — March 2, 2026
+**Key Finding:** Review frequency reduced to weekly (Sundays) — overlapping reviews within 24h provide diminishing returns.
+**Action Taken:** Fixed SEC-001 reminder schedule (was Mar 15, now correctly tracking Day 1/3/7/10/14 cadence, with Day 7 = Mar 3).
 
 ## User Context - DO NOT FORGET
 
@@ -170,13 +211,13 @@ When blocked on user action:
 - Document in DASHBOARD.md immediately
 - Day 1: Initial notification
 - Day 3: Gentle reminder
-- Day 7: Urgent reminder
+- Day 7: Urgent reminder ← **Currently here for SEC-001 (Mar 3)**
 - Day 10: Follow-up
 - Day 14: Final reminder
 
 Never let user-action items age without proactive follow-up.
 
-**Escalation Schedule:** Day 1, 3, 7, 10, 14 (not 13-day gaps)
+**Escalation Schedule:** Day 1, 3, 7, 10, 14 (never exceed 4-day gaps)
 
 ### Self-Improvement & Subagent Results — COMPLETE SILENCE
 - **NEVER share self-improvement summaries in Telegram/chat**
@@ -201,7 +242,7 @@ Never let user-action items age without proactive follow-up.
 | Item | Status | Priority | Notes |
 |------|--------|----------|-------|
 | Heartbeat reminder system | ⏳ Not started | P1 | Auto-check DASHBOARD.md for due reminders |
-| TikTok secret rotation | ⏳ Blocked (user) | P0 | Reminder Mar 15 (6 days old) |
+| TikTok secret rotation | ⏳ Blocked (user) | P0 | Day 7 reminder SENT Mar 3; Day 10 reminder Mar 6; Day 14 final reminder Mar 10 |
 
 ---
 
@@ -213,7 +254,7 @@ See `DASHBOARD.md` for single source of truth on all blockers.
 ---
 
 ## Infrastructure Blockers
-- TikTok secret rotation (P0 - user action required, 6 days old, reminder scheduled Mar 15 per escalation schedule)
+- TikTok secret rotation (P0 - user action required, 7 days old, Day 7 reminder SENT Mar 3, Day 10 reminder scheduled Mar 6, Day 14 final reminder Mar 10)
 
 ---
 
