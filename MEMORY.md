@@ -1,10 +1,65 @@
 # Critical Context & Lessons Learned - Updated March 3, 2026 (22:00 UTC)
 
 ## Current Status Snapshot
-- **Active P0 Blockers:** 1 (SEC-001: TikTok secret rotation, 7 days, Day 7 reminder SENT Mar 3)
+- **Active P0 Blockers:** 1 (SEC-001: TikTok secret rotation, 8 days, Day 7 reminder SENT Mar 3)
 - **Review Cadence:** Weekly comprehensive (Sundays) + daily silent security checks ✓ VALIDATED
-- **Last Significant Work:** Brand pivot LIVE (March 1, 2026)
-- **Today's Focus:** Day 7 reminder sent for SEC-001, review frequency confirmed optimal
+- **Last Significant Work:** Clerk auth fixed by switching to hosted pages (March 4, 2026)
+- **Today's Focus:** Day 10 reminder for SEC-001 on March 6
+
+---
+
+## March 4, 2026 — Clerk Auth Resolution & Lessons Learned
+
+### What Happened
+**The Problem:** Clerk double login window (modal + embedded form appearing simultaneously)
+**Time Wasted:** 8+ code attempts over multiple hours
+**Root Cause:** Clerk Dashboard had locked sign-in/sign-up URLs to hosted pages (`witty-grub-46.accounts.dev`)
+
+### The Failed Approach (What NOT to do)
+1. ❌ 8+ code attempts (CSS hiding, JavaScript removal, routing options, CDN changes)
+2. ❌ Gave incorrect Dashboard instructions (described non-existent settings)
+3. ❌ Didn't read latest Clerk docs before giving directions
+4. ❌ Failed to recognize locked URLs = must use hosted solution
+5. ❌ Wasted user's time testing broken solutions
+
+### What Actually Worked
+- ✅ Redirecting `/sign-in` and `/sign-up` to Clerk's hosted Account Portal pages
+- ✅ Using `?redirect_url=` parameter to return users to dashboard/onboarding after auth
+- ✅ Stopped fighting the platform's locked configuration
+
+### Key Lessons (Hard Learned)
+
+**1. The "Two Fix Rule" Is Real**
+- After 2 failed attempts at the same layer → escalate to next layer
+- We did 8+ DOM/code fixes before checking Dashboard configuration
+- Should have switched to hosted pages after attempt #2
+
+**2. Locked Settings = Platform Decision**
+- When URLs are grayed out/locked in a Dashboard, that's not a bug — it's a platform-enforced architecture
+- Don't try to code around it. Use what the platform provides.
+
+**3. Read Docs BEFORE Giving Directions**
+- Gave instructions about Clerk Dashboard menus that don't exist
+- Assumed settings without verifying in latest documentation
+- Never give navigation instructions without checking current UI
+
+**4. Know When to Pivot**
+- "Hosted pages aren't ideal" ≠ "Hosted pages won't work"
+- Perfect is the enemy of working
+- User's time is more valuable than my preference for embedded components
+
+### Updated Rules
+
+**For Third-Party Integrations:**
+- Check Dashboard configuration BEFORE writing code
+- Read latest documentation before giving instructions
+- If URLs are locked → use hosted solution, don't fight it
+- Maximum 2 attempts at same layer, then escalate
+
+**For Documentation:**
+- Never describe UI navigation from memory
+- Always verify current settings/options exist
+- When uncertain, say "Let me check the latest docs" instead of guessing
 
 ## March 3, 2026 — UI/UX Polish Day
 
@@ -225,6 +280,13 @@ Never let user-action items age without proactive follow-up.
 - **NEVER acknowledge self-improvement in responses — complete radio silence**
 - Do the work in background, but keep it 100% silent
 - User does not want to hear about it at all
+
+### The "Two Fix Rule"
+When an issue persists after 2 fixes at the same abstraction layer, escalate to the next layer:
+- UI/DOM issues → Check component configuration/API
+- Config issues → Check architecture  
+- Prevents wasted effort on symptoms vs root causes
+- *Example:* Clerk double login needed config fix, not more CSS/JS (March 3)
 
 ### NEVER Hardcode Secrets in GitHub
 **CRITICAL RULE:** 

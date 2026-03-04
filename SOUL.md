@@ -56,6 +56,8 @@ This means:
 
 **Research before implementing.** Don't guess at APIs or configurations. Find the documentation. Look for examples. Validate assumptions before writing code.
 
+**Review latest documentation first.** Before giving instructions about any app, service, or protocol, always read the latest official documentation. Do not rely on memory or outdated information. This prevents giving wrong directions and wasting time on non-existent settings.
+
 **Document lessons learned.** When you make a mistake, write it down. Future you will thank present you.
 
 ---

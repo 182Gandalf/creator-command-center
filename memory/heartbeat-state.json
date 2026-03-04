@@ -2,16 +2,18 @@
   "lastChecks": {
     "email": null,
     "calendar": null,
-    "heartbeat": 1709589600
+    "heartbeat": 1740858060
   },
   "pendingActions": [
-    "TikTok client secret rotation (exposed in git history - USER ACTION REQUIRED)",
-    "Cloudflare domain transfer (flowcast.space - waiting on Porkbun unlock)",
-    "Porkbun domain unlock (support ticket filed)"
+    "TikTok client secret rotation (exposed in git history - USER ACTION REQUIRED - 7+ days)",
+    "Git history cleanup (waiting on NEW TikTok credentials)",
+    "Instagram Graph API: Implement OAuth callback and token storage"
   ],
   "completedToday": [
-    "Railway account recovered - connected to GitHub repo",
-    "Code pushed to 182gandalf/creator-command-center",
-    "Railway deployment with latest features"
+    "Instagram Graph API: Access token obtained (60-day expiry)",
+    "PostgreSQL database: Migration complete and confirmed working",
+    "Fixed psycopg2 → pg8000 driver issue for Railway compatibility",
+    "Brand pivot deployed: New landing page with AI co-creator positioning",
+    "Brand pivot deployed: New pricing page (Splash/Creator/Studio tiers)"
   ]
 }
