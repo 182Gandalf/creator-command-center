@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to FlowCast</title>
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0e17; margin: 0; padding: 20px; color: #f8fafc; }
+        .container { max-width: 600px; margin: 0 auto; background: #111827; border-radius: 16px; overflow: hidden; border: 1px solid #1f2937; }
+        .header { background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); padding: 40px 30px; text-align: center; }
+        .header h1 { margin: 0; font-size: 28px; font-weight: 800; }
+        .header p { margin: 10px 0 0; opacity: 0.9; font-size: 16px; }
+        .content { padding: 40px 30px; }
+        .welcome-text { font-size: 18px; line-height: 1.6; margin-bottom: 30px; }
+        .checklist { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 25px; margin: 30px 0; }
+        .checklist h3 { margin: 0 0 20px; color: #60a5fa; font-size: 16px; }
+        .checklist-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; }
+        .checklist-item:last-child { margin-bottom: 0; }
+        .check-number { width: 24px; height: 24px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); color: white; text-decoration: none; padding: 16px 32px; border-radius: 10px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+        .tip-box { background: rgba(16, 185, 129, 0.1); border-left: 4px solid #10b981; padding: 20px; margin: 30px 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: #10b981; }
+        .footer { padding: 30px; text-align: center; border-top: 1px solid #1f2937; color: #94a3b8; font-size: 14px; }
+        .social-links { margin-top: 20px; }
+        .social-links a { color: #60a5fa; text-decoration: none; margin: 0 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Welcome to FlowCast!</h1>
+            <p>The blank screen ends here</p>
+        </div>
+        
+        <div class="content">
+            <p class="welcome-text">
+                Hey {{user_name}},<br><br>
+                Welcome to FlowCast! You're now part of 2,000+ creators who never run out of ideas.
+            </p>
+            
+            <div class="checklist">
+                <h3>🎯 Complete your setup (takes 3 minutes):</h3>
+                
+                <div class="checklist-item">
+                    <span class="check-number">1</span>
+                    <div>
+                        <strong>Complete your creator profile</strong>
+                        <p style="margin: 5px 0 0; color: #94a3b8; font-size: 14px;">Tell us about your niche so we can personalize your ideas</p>
+                    </div>
+                </div>
+                
+                <div class="checklist-item">
+                    <span class="check-number">2</span>
+                    <div>
+                        <strong>Connect your first platform</strong>
+                        <p style="margin: 5px 0 0; color: #94a3b8; font-size: 14px;">Link YouTube, Instagram, or TikTok to start scheduling</p>
+                    </div>
+                </div>
+                
+                <div class="checklist-item">
+                    <span class="check-number">3</span>
+                    <div>
+                        <strong>Generate your first AI idea</strong>
+                        <p style="margin: 5px 0 0; color: #94a3b8; font-size: 14px;">See how personalized content ideation works</p>
+                    </div>
+                </div>
+            </div>
+            
+            <center>
+                <a href="{{dashboard_url}}" class="cta-button">Complete Setup →</a>
+            </center>
+            
+            <div class="tip-box">
+                <strong>💡 Pro Tip:</strong> The more feedback you give (thumbs up/down on ideas), the smarter FlowCast gets. After 10-15 ratings, your ideas will feel like they came from a creative director who knows your brand inside and out.
+            </div>
+            
+            <p style="font-size: 16px; line-height: 1.6;">
+                <strong>What's included in your free trial:</strong><br>
+                ✓ Unlimited AI content ideas<br>
+                ✓ All 3 platforms (TikTok, Reels, Shorts)<br>
+                ✓ 10 hook variations per idea<br>
+                ✓ 30-day content calendar<br>
+                ✓ Hook scoring and feedback
+            </p>
+            
+            <p style="font-size: 16px; line-height: 1.6; margin-top: 30px;">
+                Questions? Just reply to this email—I read every one personally.<br><br>
+                Excited to see what you create!<br>
+                <strong>— The FlowCast Team</strong>
+            </p>
+            
+            <p style="font-size: 14px; color: #94a3b8; margin-top: 30px;">
+                P.S. Your free trial includes full Creator features for 7 days. No credit card required. No tricks. Just ideas waiting for you. 😉
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 FlowCast. All rights reserved.</p>
+            <div class="social-links">
+                <a href="{{twitter_url}}">Twitter</a>
+                <a href="{{linkedin_url}}">LinkedIn</a>
+                <a href="{{instagram_url}}">Instagram</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 12px;">
+                You're receiving this because you signed up for FlowCast.<br>
+                <a href="{{unsubscribe_url}}" style="color: #64748b;">Unsubscribe</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

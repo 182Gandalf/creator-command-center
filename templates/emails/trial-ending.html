@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Trial Ends Tomorrow</title>
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0e17; margin: 0; padding: 20px; color: #f8fafc; }
+        .container { max-width: 600px; margin: 0 auto; background: #111827; border-radius: 16px; overflow: hidden; border: 1px solid #1f2937; }
+        .header { background: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%); padding: 40px 30px; text-align: center; }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 800; }
+        .header p { margin: 10px 0 0; opacity: 0.9; font-size: 16px; }
+        .content { padding: 40px 30px; }
+        .main-text { font-size: 16px; line-height: 1.7; margin-bottom: 30px; }
+        .stats-box { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 25px; margin: 30px 0; }
+        .stats-box h3 { margin: 0 0 20px; color: #60a5fa; font-size: 16px; }
+        .stat-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .stat-row:last-child { border-bottom: none; }
+        .stat-label { color: #94a3b8; }
+        .stat-value { font-weight: 600; }
+        .loss-box { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 25px; margin: 30px 0; }
+        .loss-box h3 { margin: 0 0 15px; color: #ef4444; font-size: 16px; }
+        .loss-item { padding: 8px 0; color: #fca5a5; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; text-decoration: none; padding: 16px 32px; border-radius: 10px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+        .secondary-cta { display: inline-block; background: transparent; color: #94a3b8; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-weight: 500; font-size: 14px; margin: 10px 0; border: 1px solid #374151; }
+        .testimonial { background: rgba(255,255,255,0.03); border-left: 4px solid #8b5cf6; padding: 20px; margin: 30px 0; border-radius: 0 8px 8px 0; font-style: italic; }
+        .testimonial-author { margin-top: 10px; font-style: normal; font-weight: 600; color: #8b5cf6; }
+        .footer { padding: 30px; text-align: center; border-top: 1px solid #1f2937; color: #94a3b8; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⏰ Your Trial Ends Tomorrow</h1>
+            <p>Here's what happens next</p>
+        </div>
+        
+        <div class="content">
+            <p class="main-text">
+                Hey {{user_name}},<br><br>
+                Your 7-day free trial ends tomorrow at {{trial_end_time}}.
+            </p>
+            
+            <div class="stats-box">
+                <h3>📊 Your FlowCast journey so far:</h3>
+                <div class="stat-row">
+                    <span class="stat-label">AI ideas generated:</span>
+                    <span class="stat-value">{{ideas_generated}}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Posts scheduled:</span>
+                    <span class="stat-value">{{posts_scheduled}}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Time saved:</span>
+                    <span class="stat-value">~{{hours_saved}} hours</span>
+                </div>
+            </div>
+            
+            <div class="loss-box">
+                <h3>⚠️ If you don't upgrade, you'll lose:</h3>
+                <div class="loss-item">✗ Unlimited AI ideas (back to 20/month)</div>
+                <div class="loss-item">✗ Multi-platform support (TikTok only)</div>
+                <div class="loss-item">✗ Hook scoring and feedback</div>
+                <div class="loss-item">✗ 30-day content calendar</div>
+                <div class="loss-item">✗ All your scheduled posts</div>
+            </div>
+            
+            <div class="testimonial">
+                "I was skeptical about AI content ideas, but FlowCast has saved me 5+ hours every week. My engagement is up 40% since I started posting consistently."
+                <div class="testimonial-author">— Sarah K., Fitness Creator, 145K followers</div>
+            </div>
+            
+            <p class="main-text">
+                <strong>Upgrade now and keep creating without limits.</strong>
+            </p>
+            
+            <center>
+                <a href="{{upgrade_url}}?plan=creator" class="cta-button">Upgrade to Creator — $12/month</a>
+                <br>
+                <a href="{{upgrade_url}}" class="secondary-cta">View all plans</a>
+            </center>
+            
+            <p class="main-text" style="text-align: center; margin-top: 30px;">
+                <strong>30-day money-back guarantee.</strong><br>
+                Not satisfied? Full refund, no questions asked.
+            </p>
+            
+            <p class="main-text">
+                Rather not upgrade? No hard feelings. Your data stays safe for 30 days if you change your mind.
+            </p>
+            
+            <p class="main-text">
+                Questions? Just reply to this email.<br><br>
+                Thanks for trying FlowCast!<br>
+                <strong>— The FlowCast Team</strong>
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 FlowCast. All rights reserved.</p>
+            <p style="margin-top: 20px; font-size: 12px;">
+                You're receiving this because you signed up for a FlowCast trial.<br>
+                <a href="{{unsubscribe_url}}" style="color: #64748b;">Unsubscribe</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

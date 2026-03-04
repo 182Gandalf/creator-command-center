@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your First AI Ideas Are Waiting</title>
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0e17; margin: 0; padding: 20px; color: #f8fafc; }
+        .container { max-width: 600px; margin: 0 auto; background: #111827; border-radius: 16px; overflow: hidden; border: 1px solid #1f2937; }
+        .header { background: #111827; padding: 40px 30px; text-align: center; border-bottom: 1px solid #1f2937; }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 700; color: #f8fafc; }
+        .content { padding: 40px 30px; }
+        .main-text { font-size: 16px; line-height: 1.7; margin-bottom: 30px; }
+        .idea-preview { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 25px; margin: 30px 0; }
+        .idea-preview h3 { margin: 0 0 15px; color: #10b981; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .idea-card { background: rgba(255,255,255,0.03); border-radius: 8px; padding: 20px; margin-bottom: 15px; }
+        .idea-card:last-child { margin-bottom: 0; }
+        .idea-title { font-weight: 600; margin-bottom: 8px; }
+        .idea-meta { font-size: 13px; color: #94a3b8; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); color: white; text-decoration: none; padding: 16px 32px; border-radius: 10px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+        .urgency-box { background: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b; padding: 20px; margin: 30px 0; border-radius: 0 8px 8px 0; }
+        .urgency-box strong { color: #f59e0b; }
+        .footer { padding: 30px; text-align: center; border-top: 1px solid #1f2937; color: #94a3b8; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👋 Still planning content the hard way?</h1>
+        </div>
+        
+        <div class="content">
+            <p class="main-text">
+                Hey {{user_name}},<br><br>
+                I noticed you haven't generated your first AI idea yet.
+            </p>
+            
+            <p class="main-text">
+                Here's what creators in your niche are doing right now:
+            </p>
+            
+            <div class="idea-preview">
+                <h3>🔥 Trending in {{user_nice}}:</h3>
+                
+                <div class="idea-card">
+                    <div class="idea-title">"3 Things I Wish I Knew Before..."</div>
+                    <div class="idea-meta">Format: Educational • Estimated engagement: High</div>
+                </div>
+                
+                <div class="idea-card">
+                    <div class="idea-title">"POV: [Relatable scenario in your niche]"</div>
+                    <div class="idea-meta">Format: Storytelling • Estimated engagement: Very High</div>
+                </div>
+                
+                <div class="idea-card">
+                    <div class="idea-title">"Stop Doing [Common Mistake]. Do This Instead."</div>
+                    <div class="idea-meta">Format: Contrarian • Estimated engagement: High</div>
+                </div>
+            </div>
+            
+            <p class="main-text">
+                These aren't generic ideas. They're calibrated to your niche and personalized to your voice.
+            </p>
+            
+            <center>
+                <a href="{{dashboard_url}}?action=generate" class="cta-button">Generate My First Idea →</a>
+            </center>
+            
+            <div class="urgency-box">
+                <strong>⏰ Takes 30 seconds.</strong><br>
+                Could save you 3 hours this week.
+            </div>
+            
+            <p class="main-text">
+                The blank screen is optional. The ideas are waiting.<br><br>
+                See you in the dashboard!<br>
+                <strong>— The FlowCast Team</strong>
+            </p>
+            
+            <p style="font-size: 14px; color: #94a3b8; margin-top: 30px;">
+                P.S. If you're stuck on setup, just reply to this email. I'm here to help!
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 FlowCast. All rights reserved.</p>
+            <p style="margin-top: 20px; font-size: 12px;">
+                You're receiving this because you signed up for FlowCast.<br>
+                <a href="{{unsubscribe_url}}" style="color: #64748b;">Unsubscribe</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

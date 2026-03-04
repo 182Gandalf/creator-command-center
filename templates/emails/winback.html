@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We Miss You at FlowCast</title>
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0e17; margin: 0; padding: 20px; color: #f8fafc; }
+        .container { max-width: 600px; margin: 0 auto; background: #111827; border-radius: 16px; overflow: hidden; border: 1px solid #1f2937; }
+        .header { background: #111827; padding: 40px 30px; text-align: center; border-bottom: 1px solid #1f2937; }
+        .header h1 { margin: 0; font-size: 24px; font-weight: 700; }
+        .content { padding: 40px 30px; }
+        .main-text { font-size: 16px; line-height: 1.7; margin-bottom: 30px; }
+        .personal-note { background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 25px; margin: 30px 0; }
+        .personal-note h3 { margin: 0 0 15px; color: #a78bfa; font-size: 16px; }
+        .offer-box { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 25px; margin: 30px 0; text-align: center; }
+        .offer-box h3 { margin: 0 0 15px; color: #10b981; font-size: 18px; }
+        .offer-code { background: rgba(16, 185, 129, 0.2); border: 2px dashed #10b981; border-radius: 8px; padding: 15px; font-size: 24px; font-weight: 700; letter-spacing: 2px; color: #10b981; margin: 20px 0; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; text-decoration: none; padding: 16px 32px; border-radius: 10px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+        .feedback-section { background: rgba(255,255,255,0.03); border-radius: 12px; padding: 25px; margin: 30px 0; }
+        .feedback-section h3 { margin: 0 0 15px; color: #f8fafc; font-size: 16px; }
+        .feedback-link { display: block; padding: 12px 0; color: #60a5fa; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .feedback-link:last-child { border-bottom: none; }
+        .footer { padding: 30px; text-align: center; border-top: 1px solid #1f2937; color: #94a3b8; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>We miss you, {{user_name}}</h1>
+        </div>
+        
+        <div class="content">
+            <p class="main-text">
+                Hey {{user_name}},
+            </p>
+            
+            <p class="main-text">
+                I noticed you cancelled your FlowCast subscription a few days ago.
+            </p>
+            
+            <div class="personal-note">
+                <h3>📝 A personal note from Daz, founder:</h3>
+                <p style="margin: 0; line-height: 1.7;">
+                    I'm not going to pretend that's not a bummer for us. But more importantly: <strong>what made you leave?</strong>
+                </p>
+                <p style="margin: 15px 0 0; line-height: 1.7;">
+                    Was it the price? Missing features? Something else entirely?
+                </p>
+                <p style="margin: 15px 0 0; line-height: 1.7;">
+                    Hit reply and let me know—I read every email personally. Your feedback directly shapes what we build next.
+                </p>
+            </div>
+            
+            <p class="main-text">
+                Either way, no hard feelings. Creating content is hard enough without software that doesn't fit your workflow.
+            </p>
+            
+            <p class="main-text">
+                If it was just the price, I want to make it work:
+            </p>
+            
+            <div class="offer-box">
+                <h3>🎁 Come Back for 50% Off</h3>
+                <p>Get 3 months at 50% off when you reactivate today</p>
+                <div class="offer-code">COMEBACK50</div>
+                <a href="{{reactivate_url}}?code=COMEBACK50" class="cta-button">Reactivate with 50% Off</a>
+                <p style="font-size: 14px; color: #94a3b8; margin-top: 15px;">Valid for the next 7 days</p>
+            </div>
+            
+            <div class="feedback-section">
+                <h3>Help us improve (30 seconds):</h3>
+                <a href="{{feedback_url}}?reason=price" class="feedback-link">💰 It was too expensive</a>
+                <a href="{{feedback_url}}?reason=features" class="feedback-link">✨ Missing features I needed</a>
+                <a href="{{feedback_url}}?reason=quality" class="feedback-link">🤖 AI ideas weren't good enough</a>
+                <a href="{{feedback_url}}?reason=other" class="feedback-link">📝 Something else (tell us more)</a>
+            </div>
+            
+            <p class="main-text">
+                Keep creating,<br>
+                <strong>Daz</strong><br>
+                Founder, FlowCast
+            </p>
+            
+            <p style="font-size: 14px; color: #94a3b8; margin-top: 30px;">
+                P.S. Your account data is safe for 30 days. If you change your mind, everything will be exactly as you left it.
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 FlowCast. All rights reserved.</p>
+            <p style="margin-top: 20px; font-size: 12px;">
+                You're receiving this because you previously had a FlowCast subscription.<br>
+                <a href="{{unsubscribe_url}}" style="color: #64748b;">Unsubscribe</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
