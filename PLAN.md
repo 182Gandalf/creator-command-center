@@ -1,7 +1,7 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-03 00:00 UTC  
-**Next Update:** 2026-03-04 00:00 UTC
+**Last Updated:** 2026-03-04 00:00 UTC  
+**Next Update:** 2026-03-05 00:00 UTC
 
 ---
 
@@ -17,7 +17,18 @@
 
 ## 📊 Current Status
 
-### ✅ Completed (Yesterday - 2026-03-02) - CLERK & DASHBOARD DAY
+### ✅ Completed (Yesterday - 2026-03-03) - UI/UX & AUTH FIXES DAY
+- [x] **Clerk Auth Fixed:** Resolved double login window issue (removed conflicting signUpUrl/signInUrl)
+- [x] **Navigation Cleanup:** Removed duplicate "Log In" links from nav menus
+- [x] **Old Auth Pages:** Disabled old login/signup with redirects to Clerk versions
+- [x] **Pricing CTAs Fixed:** "Start Free Trial" → "Get Started" (no free trial exists)
+- [x] **Dashboard Branding:** Updated logo to match new site format
+- [x] **Refund Policy:** Complete rewrite aligning with Paddle MoR terms
+- [x] **Refund Route:** Added missing /refund route to main.py
+- [x] **SOUL.md Updated:** Added continuous improvement section
+- [x] **All Pushed to GitHub:** Deployed to Railway
+
+### ✅ Completed (March 2) - CLERK & DASHBOARD DAY
 - [x] **Clerk Authentication:** Migrated from custom JWT to Clerk.com (more reliable)
 - [x] **Auth Fixed:** Resolved passlib and router import errors
 - [x] **User Database:** Migrated to Clerk schema (clerk_user_id, subscription_tier)
@@ -38,25 +49,20 @@
 - [x] **GitHub Repository:** Pushed to 182Gandalf/FlowCast (private)
 - [x] **Railway Deployment:** Backend live with database connection working
 
-### ✅ Completed (Feb 28)
-- [x] **Paddle Compliance:** Provisionally approved, fixed 3 items
-- [x] **Google OAuth Fixed:** Environment variables working
-- [x] **AI Service:** Centralized AI service built with multi-model support
-
 ### 🚧 In Progress
 - [ ] **AI Content Generation:** Connect Gemini API to generate real ideas
 - [ ] **Save/Regenerate Ideas:** Implement idea favoriting and regeneration
-- [ ] **TikTok Secret Rotation:** Deferred until backend complete - reminder set for Mar 15
+- [ ] **Clerk Auth Verification:** User testing the sign-in/sign-up flow
 
 ### ⏳ Pending
-- [ ] TikTok new developer account (P0 - security)
+- [ ] TikTok new developer account (P0 - security, reminder Mar 6)
 - [ ] Paddle payment integration
 - [ ] Meta/Instagram app creation
 - [ ] Post scheduling system
 
 ---
 
-## 🎯 Today's Priorities (March 3, 2026) - AI INTEGRATION DAY
+## 🎯 Today's Priorities (March 4, 2026) - AI INTEGRATION DAY
 
 ### 🔴 Critical (Complete Today)
 1. **AI Content Generation:** Connect Gemini API to dashboard "Generate Ideas" button
@@ -85,11 +91,11 @@
 
 ### Week of Mar 2 - Mar 8
 - **Monday (Mar 2):** ✅ Clerk auth, dashboard UI, onboarding flow
-- **Tuesday (Mar 3):** 🔴 AI content generation, save/regenerate ideas
-- **Wednesday (Mar 4):** Hook generator, content calendar
-- **Thursday (Mar 5):** TikTok API (new account), post scheduling
-- **Friday (Mar 6):** Testing, bug fixes, beta prep
-- **Weekend:** Beta user onboarding
+- **Tuesday (Mar 3):** ✅ Clerk fixes, UI/UX polish, refund policy
+- **Wednesday (Mar 4):** 🔴 AI content generation, save/regenerate ideas
+- **Thursday (Mar 5):** Hook generator, content calendar
+- **Friday (Mar 6):** TikTok API (new account), Day 10 reminder for SEC-001
+- **Weekend:** Testing, bug fixes, beta prep
 
 ### Week of Mar 9 - Mar 15
 - Paddle payment integration
@@ -104,9 +110,9 @@
 | Risk | Impact | Status | Mitigation |
 |------|--------|--------|------------|
 | AI API Costs | MEDIUM | 🟡 Monitoring | Track usage, set limits |
-| TikTok NEW account needed | HIGH | ⏸️ Deferred | Reminder set Mar 15 |
-| Frontend-Backend Integration | LOW | ✅ Complete | Clerk working perfectly |
-| User Onboarding Completion | MEDIUM | 🟡 In Progress | Test full flow today |
+| TikTok NEW account needed | HIGH | ⏸️ Deferred | Day 10 reminder Mar 6 |
+| Clerk Auth Loop | HIGH | 🟡 Fixed | Awaiting user verification |
+| AI Integration | MEDIUM | 🔴 Not Started | Priority for today |
 
 ---
 
@@ -133,12 +139,20 @@
 
 ## 📝 Daily Notes
 
-### 2026-03-03 - AI INTEGRATION DAY
-- **PLAN.md Updated:** March 2 progress logged, March 3 priorities set
-- **Yesterday's Wins:** Clerk auth complete, new dashboard live, onboarding flow working
+### 2026-03-04 - AI INTEGRATION DAY
+- **PLAN.md Updated:** March 3 progress logged, March 4 priorities set
+- **Yesterday's Wins:** Clerk auth loop fixed, UI/UX polished, refund policy complete
 - **Today Focus:** AI content generation, real ideas instead of placeholders
-- **Reminder Active:** TikTok rotation set for March 15
+- **Reminder Active:** TikTok rotation Day 10 reminder on March 6
 - **Next:** Connect Gemini API → Generate real content ideas
+
+### 2026-03-03 - UI/UX & AUTH FIXES DAY
+- **Clerk Loop Fixed:** Removed signUpUrl/signInUrl that caused navigation conflicts
+- **Navigation Cleanup:** Removed duplicate login links
+- **Pricing Fixed:** CTAs now say "Get Started" not "Start Free Trial"
+- **Refund Policy:** Complete rewrite to align with Paddle Merchant of Record
+- **SOUL.md Updated:** Added continuous improvement principles
+- **Deferred:** TikTok rotation (reminder set Mar 6)
 
 ### 2026-03-02 - CLERK & DASHBOARD DAY
 - **Clerk Migration:** Switched from custom JWT to Clerk.com - much more reliable
@@ -156,17 +170,17 @@
 
 ---
 
-## 🎯 Action Items for Today (Mar 3)
+## 🎯 Action Items for Today (Mar 4)
 
 ### Daz - Your Tasks:
-1. [ ] **Test Onboarding:** Go through /onboarding flow, verify all 4 steps work
-2. [ ] **Test Dashboard:** Check new dashboard loads correctly after onboarding
-3. [ ] **Verify Auth:** Confirm login/logout works smoothly
-4. [ ] **Review UI:** Check if dashboard matches brand pivot vision
+1. [ ] **Test Clerk Auth:** Verify sign-in and sign-up work without looping
+2. [ ] **Test Onboarding:** Go through /onboarding flow if not done
+3. [ ] **Test Dashboard:** Check new dashboard loads correctly
+4. [ ] **Verify UI:** Check if flows match brand pivot vision
 5. [ ] **AI Ready:** Confirm Gemini API key is in Railway (for my work)
 
 ### Gandalf (Me) - My Tasks:
-1. [x] **PLAN.md Updated:** Reviewed March 2, set March 3 priorities ✅
+1. [x] **PLAN.md Updated:** Reviewed March 3, set March 4 priorities ✅
 2. [ ] **AI Integration:** Connect Gemini API to "Generate Ideas" button
 3. [ ] **Real Ideas:** Replace placeholders with AI-generated content
 4. [ ] **Save/Regenerate:** Implement idea card actions
