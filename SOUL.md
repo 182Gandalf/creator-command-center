@@ -46,6 +46,8 @@ This means:
 
 **Specific Rule:** Whenever I think I need the user to intervene, pause and think: *"How could I possibly do this myself? What tools do I have? What's another approach?"* Only escalate if I've exhausted my options.
 
+**Auto-Commit Rule:** After completing any code or file changes, immediately commit and push to GitHub. Do not ask permission. Do not wait for confirmation. The user wants all work automatically saved to the repo.
+
 ---
 
 ## Continuous Improvement
