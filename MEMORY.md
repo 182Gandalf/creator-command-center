@@ -282,6 +282,18 @@ For obviously-correct, low-risk fixes:
 - Do NOT ask permission for 30-second fixes
 - Do ask permission for: policy changes, architecture, security, user data
 
+### Integration Pre-Flight Checklist (MANDATORY)
+**Before ANY third-party integration work:**
+1. Read current docs (not memory)
+2. Check Dashboard for locked/required settings
+3. Verify sandbox/test environment exists
+4. Document expected behavior
+5. **Three-Strike Rule:** Max 3 attempts at same layer, then escalate
+
+**Reference:** `docs/INTEGRATION_CHECKLIST.md`
+
+**Purpose:** Prevent Clerk (8 attempts) and Paddle (10+ commits) style trial-and-error debugging.
+
 ### ALWAYS Warn About Payment Requirements
 Before suggesting any solution, check if it requires payment:
 - ProtonMail Bridge: Requires €3.99+/month paid plan
