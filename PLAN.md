@@ -1,7 +1,7 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-04 00:00 UTC  
-**Next Update:** 2026-03-05 00:00 UTC
+**Last Updated:** 2026-03-05 00:00 UTC  
+**Next Update:** 2026-03-06 00:00 UTC
 
 ---
 
@@ -17,73 +17,69 @@
 
 ## 📊 Current Status
 
-### ✅ Completed (Yesterday - 2026-03-03) - UI/UX & AUTH FIXES DAY
-- [x] **Clerk Auth Fixed:** Resolved double login window issue (removed conflicting signUpUrl/signInUrl)
-- [x] **Navigation Cleanup:** Removed duplicate "Log In" links from nav menus
-- [x] **Old Auth Pages:** Disabled old login/signup with redirects to Clerk versions
-- [x] **Pricing CTAs Fixed:** "Start Free Trial" → "Get Started" (no free trial exists)
-- [x] **Dashboard Branding:** Updated logo to match new site format
-- [x] **Refund Policy:** Complete rewrite aligning with Paddle MoR terms
-- [x] **Refund Route:** Added missing /refund route to main.py
-- [x] **SOUL.md Updated:** Added continuous improvement section
+### ✅ Completed (Yesterday - 2026-03-04) - PADDLE & AUTH PRODUCTION DAY
+- [x] **Paddle Billing Integration:** Complete subscription system with Paddle.js overlay
+- [x] **Database Migration:** Added paddle_customer_id, paddle_subscription_id, subscription_ends_at
+- [x] **Checkout API:** /subscribe/* endpoints for Creator/Studio monthly/annual
+- [x] **Paddle Webhooks:** transaction.completed, subscription.canceled, subscription.updated handlers
+- [x] **Tier Checking:** require_tier() dependency for protected routes
+- [x] **Pricing Page:** Updated with Paddle.js and checkout buttons
+- [x] **Clerk Production:** Switched from dev to production (accounts.flowcast.space)
+- [x] **Clerk DNS:** Configured Cloudflare CNAME records for custom domain
+- [x] **Google OAuth:** Fixed scopes (openid email profile)
+- [x] **Auth Flow Fixed:** Sign-in/sign-out working, no more redirect loops
+- [x] **Mobile Header CSS:** Fixed button spacing across ALL pages (index, pricing, dashboard, etc.)
 - [x] **All Pushed to GitHub:** Deployed to Railway
 
+### ✅ Completed (March 3) - UI/UX & AUTH FIXES DAY
+- [x] **Clerk Auth Fixed:** Resolved double login window issue
+- [x] **Navigation Cleanup:** Removed duplicate "Log In" links from nav menus
+- [x] **Pricing CTAs Fixed:** "Start Free Trial" → "Get Started"
+- [x] **Dashboard Branding:** Updated logo to match new site format
+- [x] **Refund Policy:** Complete rewrite aligning with Paddle MoR terms
+
 ### ✅ Completed (March 2) - CLERK & DASHBOARD DAY
-- [x] **Clerk Authentication:** Migrated from custom JWT to Clerk.com (more reliable)
-- [x] **Auth Fixed:** Resolved passlib and router import errors
-- [x] **User Database:** Migrated to Clerk schema (clerk_user_id, subscription_tier)
-- [x] **Webhook Integration:** Clerk user.created webhook auto-creates users
-- [x] **Dynamic Navigation:** Header shows "Log Out" when logged in, "Log In/Sign Up" when not
-- [x] **New Dashboard UI:** Modern app-like interface with sidebar, quick actions, content grid
-- [x] **Onboarding Flow:** 4-step creator setup (niche, platforms, tone, frequency)
-- [x] **Taste Profile:** Progress bar starting at 25%, visible in header
-- [x] **Platform Tabs:** TikTok active, Reels/Shorts locked for free tier
-- [x] **Trending Section:** Top trends with growth indicators
-- [x] **Calendar Preview:** Weekly content calendar view
-- [x] **Creator Profile API:** POST/GET endpoints for onboarding data
-- [x] **All Pushed to GitHub:** Latest code deployed to Railway
+- [x] **Clerk Authentication:** Migrated from custom JWT to Clerk.com
+- [x] **New Dashboard UI:** Modern app-like interface
+- [x] **Onboarding Flow:** 4-step creator setup
 
 ### ✅ Completed (March 1) - MAJOR PIVOT DAY
-- [x] **Brand Pivot LIVE:** Complete repositioning - "Know what to film. Before you film it."
-- [x] **New Backend Structure:** FastAPI app with PostgreSQL, SQLAlchemy, Alembic
-- [x] **GitHub Repository:** Pushed to 182Gandalf/FlowCast (private)
-- [x] **Railway Deployment:** Backend live with database connection working
+- [x] **Brand Pivot LIVE:** "Know what to film. Before you film it."
+- [x] **New Backend:** FastAPI + PostgreSQL + SQLAlchemy
 
 ### 🚧 In Progress
-- [ ] **AI Content Generation:** Connect Gemini API to generate real ideas
-- [ ] **Save/Regenerate Ideas:** Implement idea favoriting and regeneration
-- [ ] **Clerk Auth Verification:** User testing the sign-in/sign-up flow
+- [ ] **Paddle Checkout:** Overlay not opening (debugging Clerk session detection)
+- [ ] **AI Content Generation:** Connect Gemini API
+- [ ] **TikTok Secret Rotation:** Day 10 reminder TODAY (March 5)
 
 ### ⏳ Pending
-- [ ] TikTok new developer account (P0 - security, reminder Mar 6)
-- [ ] Paddle payment integration
+- [ ] TikTok NEW developer account (P0 - security, reminder TODAY Mar 5)
 - [ ] Meta/Instagram app creation
 - [ ] Post scheduling system
 
 ---
 
-## 🎯 Today's Priorities (March 4, 2026) - AI INTEGRATION DAY
+## 🎯 Today's Priorities (March 5, 2026) - AI INTEGRATION & CHECKOUT DAY
 
 ### 🔴 Critical (Complete Today)
-1. **AI Content Generation:** Connect Gemini API to dashboard "Generate Ideas" button
-2. **Real Idea Cards:** Replace placeholder ideas with AI-generated content
-3. **Save Ideas:** Implement ⭐ save functionality for idea cards
-4. **Regenerate:** Implement 🔄 regenerate functionality
+1. **TikTok Secret Rotation:** Day 10 reminder - MUST complete today
+2. **Paddle Checkout Fix:** Debug why overlay doesn't open (Clerk session issue)
+3. **AI Content Generation:** Connect Gemini API to dashboard "Generate Ideas" button
+4. **Real Idea Cards:** Replace placeholder ideas with AI-generated content
 
 ### 🟡 High Priority (Today)
-5. **Hook Generator:** Build UI and API for 10 hook variations with scoring
-6. **Tone Calibration:** Ensure AI respects user's selected tone from onboarding
-7. **Platform-Native Output:** Generate different versions for TikTok/Reels/Shorts
-8. **Feedback System:** Thumbs up/down on ideas to improve Taste Profile
+5. **Save Ideas:** Implement ⭐ save functionality for idea cards
+6. **Regenerate:** Implement 🔄 regenerate functionality
+7. **Hook Generator:** Build UI and API for 10 hook variations with scoring
+8. **Tone Calibration:** Ensure AI respects user's selected tone from onboarding
 
 ### 🟢 Medium Priority (If Time)
-9. **Content Calendar:** Connect calendar to saved ideas
-10. **Trend Integration:** Use trending topics in AI prompts
+9. **Platform-Native Output:** Generate different versions for TikTok/Reels/Shorts
+10. **Content Calendar:** Connect calendar to saved ideas
 11. **API Rate Limiting:** Prevent abuse on free tier (20 ideas/month)
-12. **Error Handling:** Graceful failures when AI is unavailable
 
-### 🎯 Wednesday Goal
-**AI content generation fully working → Users can generate, save, and regenerate ideas**
+### 🎯 Friday Goal
+**Paddle checkout working + AI generating real ideas + TikTok secret rotated**
 
 ---
 
@@ -92,13 +88,12 @@
 ### Week of Mar 2 - Mar 8
 - **Monday (Mar 2):** ✅ Clerk auth, dashboard UI, onboarding flow
 - **Tuesday (Mar 3):** ✅ Clerk fixes, UI/UX polish, refund policy
-- **Wednesday (Mar 4):** 🔴 AI content generation, save/regenerate ideas
-- **Thursday (Mar 5):** Hook generator, content calendar
-- **Friday (Mar 6):** TikTok API (new account), Day 10 reminder for SEC-001
+- **Wednesday (Mar 4):** ✅ Paddle integration, Clerk production, mobile CSS fixes
+- **Thursday (Mar 5):** 🔴 TikTok rotation (Day 10), Paddle checkout fix, AI integration
+- **Friday (Mar 6):** Hook generator, content calendar
 - **Weekend:** Testing, bug fixes, beta prep
 
 ### Week of Mar 9 - Mar 15
-- Paddle payment integration
 - Full platform launch
 - Marketing campaign
 - User feedback collection
@@ -109,9 +104,9 @@
 
 | Risk | Impact | Status | Mitigation |
 |------|--------|--------|------------|
+| TikTok Secret Rotation | HIGH | 🔴 Day 10 TODAY | User action required |
+| Paddle Checkout | HIGH | 🟡 Debugging | Clerk session detection |
 | AI API Costs | MEDIUM | 🟡 Monitoring | Track usage, set limits |
-| TikTok NEW account needed | HIGH | ⏸️ Deferred | Day 10 reminder Mar 6 |
-| Clerk Auth Loop | HIGH | 🟡 Fixed | Awaiting user verification |
 | AI Integration | MEDIUM | 🔴 Not Started | Priority for today |
 
 ---
@@ -119,72 +114,65 @@
 ## 🔧 Technical Debt
 
 ### Backend
-- [x] Clerk authentication ✅
+- [x] Paddle billing integration ✅
+- [x] Clerk production auth ✅
 - [x] Database migrations ✅
-- [x] Creator profile API ✅
 - [ ] AI content generation API (today)
-- [ ] Save/regenerate endpoints (today)
-- [ ] Hook generator API (today)
-- [ ] Content calendar API
+- [ ] Paddle checkout fix (today)
+- [ ] Save/regenerate endpoints
 
 ### Frontend
-- [x] Dynamic navigation ✅
-- [x] Onboarding flow ✅
-- [x] Dashboard UI ✅
+- [x] Paddle.js checkout ✅
+- [x] Mobile header CSS ✅
 - [ ] AI integration (today)
 - [ ] Real-time idea generation
-- [ ] Loading states
 
 ---
 
 ## 📝 Daily Notes
 
-### 2026-03-04 - AI INTEGRATION DAY
-- **PLAN.md Updated:** March 3 progress logged, March 4 priorities set
-- **Yesterday's Wins:** Clerk auth loop fixed, UI/UX polished, refund policy complete
-- **Today Focus:** AI content generation, real ideas instead of placeholders
-- **Reminder Active:** TikTok rotation Day 10 reminder on March 6
-- **Next:** Connect Gemini API → Generate real content ideas
+### 2026-03-05 - AI INTEGRATION & CHECKOUT DAY
+- **PLAN.md Updated:** March 4 progress logged, March 5 priorities set
+- **Yesterday's Wins:** Paddle integrated, Clerk production working, mobile CSS fixed
+- **Today Focus:** TikTok rotation (Day 10), Paddle checkout debug, AI integration
+- **Reminder CRITICAL:** TikTok rotation Day 10 reminder TODAY
+- **Next:** Fix Paddle overlay → AI content generation
+
+### 2026-03-04 - PADDLE & AUTH PRODUCTION DAY
+- **Paddle Billing:** Complete integration with checkout, webhooks, tier checking
+- **Clerk Production:** Migrated from dev to production, DNS configured
+- **Mobile CSS:** Fixed header button spacing across all pages
+- **Auth Flow:** Sign-in/sign-out working perfectly
+- **Deferred:** TikTok rotation (reminder today Mar 5)
 
 ### 2026-03-03 - UI/UX & AUTH FIXES DAY
-- **Clerk Loop Fixed:** Removed signUpUrl/signInUrl that caused navigation conflicts
+- **Clerk Loop Fixed:** Resolved navigation conflicts
 - **Navigation Cleanup:** Removed duplicate login links
-- **Pricing Fixed:** CTAs now say "Get Started" not "Start Free Trial"
-- **Refund Policy:** Complete rewrite to align with Paddle Merchant of Record
-- **SOUL.md Updated:** Added continuous improvement principles
-- **Deferred:** TikTok rotation (reminder set Mar 6)
+- **Refund Policy:** Complete rewrite for Paddle MoR
 
 ### 2026-03-02 - CLERK & DASHBOARD DAY
-- **Clerk Migration:** Switched from custom JWT to Clerk.com - much more reliable
-- **New Dashboard:** Modern app interface with sidebar, quick actions, trending
-- **Onboarding Flow:** 4-step creator setup (niche, platforms, tone, frequency)
-- **Taste Profile:** Progress bar starting at 25%, refines with user feedback
-- **Platform Locking:** Free tier = TikTok only, Creator = all platforms
-- **Dynamic Nav:** Shows "Log Out" when logged in
-- **Fixed:** Multiple deployment issues (passlib, routers, CORS)
+- **Clerk Migration:** Switched from custom JWT to Clerk.com
+- **New Dashboard:** Modern app interface
+- **Onboarding Flow:** 4-step creator setup
 
 ### 2026-03-01 - MAJOR PIVOT & BACKEND DAY
 - **Brand Pivot LIVE:** "Know what to film. Before you film it."
-- **New Backend:** FastAPI + PostgreSQL + SQLAlchemy + Alembic
-- **Deferred:** TikTok secret rotation (reminder set for 2 weeks)
 
 ---
 
-## 🎯 Action Items for Today (Mar 4)
+## 🎯 Action Items for Today (Mar 5)
 
 ### Daz - Your Tasks:
-1. [ ] **Test Clerk Auth:** Verify sign-in and sign-up work without looping
-2. [ ] **Test Onboarding:** Go through /onboarding flow if not done
-3. [ ] **Test Dashboard:** Check new dashboard loads correctly
-4. [ ] **Verify UI:** Check if flows match brand pivot vision
-5. [ ] **AI Ready:** Confirm Gemini API key is in Railway (for my work)
+1. [ ] **TikTok Secret Rotation:** Log into TikTok Developer Portal, generate new secret
+2. [ ] **Test Paddle Checkout:** Try clicking upgrade on pricing page after I fix it
+3. [ ] **Verify Auth Flow:** Confirm sign-in/sign-out working smoothly
+4. [ ] **AI Ready:** Confirm Gemini API key is in Railway (for my work)
 
 ### Gandalf (Me) - My Tasks:
-1. [x] **PLAN.md Updated:** Reviewed March 3, set March 4 priorities ✅
-2. [ ] **AI Integration:** Connect Gemini API to "Generate Ideas" button
-3. [ ] **Real Ideas:** Replace placeholders with AI-generated content
-4. [ ] **Save/Regenerate:** Implement idea card actions
-5. [ ] **Hook Generator:** Build UI and API for hook generation
+1. [x] **PLAN.md Updated:** Reviewed March 4, set March 5 priorities ✅
+2. [ ] **Paddle Fix:** Debug why checkout overlay doesn't open
+3. [ ] **AI Integration:** Connect Gemini API to "Generate Ideas" button
+4. [ ] **TikTok Follow-up:** Send Day 10 reminder if not completed
 
 ---
 
@@ -193,6 +181,7 @@
 - **Live Site:** https://flowcast.space
 - **Onboarding:** https://flowcast.space/onboarding
 - **Dashboard:** https://flowcast.space/dashboard
+- **Pricing:** https://flowcast.space/pricing
 - **GitHub:** https://github.com/182Gandalf/FlowCast
 - **Railway Dashboard:** https://railway.app/dashboard
 
