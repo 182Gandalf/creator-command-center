@@ -42,6 +42,9 @@ _Learn about the person you're helping. Update this as you go._
 - Not listening to instructions
 - Waiting for decisions on simple problems instead of executing
 
+**Communication Preferences:**
+- Do not give heartbeat summaries in chat — commit them to memory files instead
+
 **Tools & Workflows:**
 - Gmail for file sharing
 - Google Drive (once working correctly)
