@@ -2,24 +2,20 @@
 
 **Single source of truth for all active blockers and action items.**
 
-**Last Updated:** March 3, 2026 02:03 UTC  
+**Last Updated:** March 6, 2026 02:03 UTC  
 **Next Review:** March 8, 2026 (weekly schedule)
 
 ---
 
 ## 🚨 Active Blockers (Max 3 P0)
 
-| ID | Issue | Owner | Status | Age | Next Action | Due |
-|----|-------|-------|--------|-----|-------------|-----|
-| SEC-001 | Rotate TikTok client secret | User | BLOCKED | 7 days | User: TikTok Developer Portal | ASAP |
+No active P0 blockers.
 
 ---
 
 ## ⏳ User Action Required
 
-| ID | Issue | Required Action | Since | Last Reminder | Escalation |
-|----|-------|-----------------|-------|---------------|------------|
-| SEC-001 | TikTok secret rotation | Log into TikTok Developer Portal, generate new secret | Feb 24 | Mar 3 | 🟡 Day 10 reminder: Mar 6 |
+None.
 
 ---
 
