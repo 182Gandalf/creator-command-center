@@ -1,3 +1,38 @@
+# Critical Context & Lessons Learned - Updated March 9, 2026 (22:30 UTC)
+
+## March 9, 2026 — Full Day Build: Dashboard Polish + Mobile UX
+
+### Status: Phase 2 Features 1–3 COMPLETE + Major Mobile Polish
+
+**Commits today:** 20+ commits, all pushed to `github.com/182Gandalf/FlowCast`
+**Full log:** `memory/2026-03-09.md` (evening section)
+
+### Key Completions
+- Orange "✦ Selected" state works on saved hooks AND ideas (not just generated)
+- Download .txt button on scripts (live + saved) — pure JS, no backend
+- Hook scorer: 1 rewrite → 3 distinct rewrites (`improved_versions: List[str]`)
+- Hook generation: 10 → 5 per batch; Splash sees 2, last 3 blurred; unique on regenerate (history in localStorage)
+- Scripts context: SVG platform icons replace emojis; platform icon dynamic
+- "Upgrade to Creator" CTA hidden for non-Splash users
+- Saved ideas counter: Splash limited to 1 with pill counter
+- Mobile footer: slim single-line, properly anchored, no content overlap
+- Mobile: `html { font-size: 14px }` scales whole app; section headers stack; 160px bottom padding per section
+- Generate Scripts: `alert()` → `showToast()` (mobile browsers block alert); Clerk null check added
+
+### Current State
+- **Active P0 Blockers:** TikTok secret rotation (Day 14 — escalation past due)
+- **Next session priority:** Phase 2 Feature 4 (Content Calendar) OR beta testing polish before Friday March 13 launch
+- **Migration head:** `2024_03_08_ideas_platform`
+
+### Technical Lessons Learned Today
+- `JSON.stringify` in HTML `onclick=""` breaks when text contains double quotes → use stored JS object + index reference
+- `padding-bottom` on `flex:1 overflow-y:auto` containers is unreliable → use real DOM spacer element
+- CSS media query overridden by later base styles → `!important` or restructure CSS order
+- `alert()` silently blocked on mobile browsers → always use `showToast()` instead
+- `position:static` removes containing block for `position:absolute` children → lock overlays escape their container
+
+---
+
 # Critical Context & Lessons Learned - Updated March 7, 2026 (20:00 UTC)
 
 ## March 7, 2026 — Phase 1 Complete: Paddle Foundation
