@@ -1,7 +1,7 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-08 00:00 UTC  
-**Next Update:** 2026-03-09 00:00 UTC
+**Last Updated:** 2026-03-09 00:00 UTC  
+**Next Update:** 2026-03-10 00:00 UTC
 
 ---
 
@@ -16,6 +16,24 @@
 ---
 
 ## 📊 Current Status
+
+### ✅ Completed (March 8) - AI INTEGRATION DAY - HUGE PROGRESS!
+- [x] **Multi-Provider AI Service:** Built services/ai.py supporting Anthropic, OpenAI, Gemini, Moonshot
+- [x] **Moonshot Integration:** Set as default provider with Kimi K2.5 model
+- [x] **AI Idea Generation:** POST /generate/ideas endpoint working with real AI responses
+- [x] **5 Ideas Per Generation:** Always returns exactly 5 ideas with auto-padding if AI returns fewer
+- [x] **Platform-Native Output:** Each idea includes TikTok, Reels, and Shorts versions
+- [x] **Dashboard UI:** New dashboard-new.html with modern AI Co-Creator design
+- [x] **Tier Gating:** Splash users see TikTok only; Reels/Shorts blurred with upgrade CTA
+- [x] **Copy Functionality:** Copy buttons for each platform's content
+- [x] **Bold Remix Section:** Shows alternative angle for each idea
+- [x] **Idea Counter:** Shows "Unlimited" for paid users, countdown (20→0) for Splash
+- [x] **Next Steps Card:** Appears after generation with guidance text
+- [x] **Example Ideas:** Updated to match generated format with platform tabs
+- [x] **Error Handling:** Better JSON parsing, AI provider fallback, detailed logging
+- [x] **3-Column Layout:** Widened dashboard to fit 3 idea cards per row
+- [x] **Brand Icons:** Replaced emojis with SVG icons for TikTok, Reels, Shorts
+- [x] **Loading States:** "This may take a minute" message during generation
 
 ### ✅ Completed (March 7) - ONBOARDING & CREATOR PROFILES DAY
 - [x] **10-Question Onboarding Quiz:** Expanded from 5 to 10 questions with AI personalization
@@ -49,9 +67,10 @@
 - [x] **Mobile Header CSS:** Fixed button spacing across ALL pages
 
 ### 🚧 In Progress
-- [ ] **AI Content Generation:** Connect Gemini API (next priority)
+- [ ] **Save Ideas:** ⭐ button functionality to save ideas to database
+- [ ] **Regenerate Ideas:** 🔄 button to regenerate individual ideas
 - [ ] **TikTok Secret Rotation:** Still pending user action
-- [ ] **Real Idea Cards:** Replace placeholders with AI-generated content
+- [ ] **Hook Generator:** Build 10-hook generator with scoring UI
 
 ### ⏳ Pending
 - [ ] TikTok NEW developer account (P0 - security)
@@ -61,26 +80,26 @@
 
 ---
 
-## 🎯 Today's Priorities (March 8, 2026) - SUNDAY FUNDAY
+## 🎯 Today's Priorities (March 9, 2026) - MONDAY MOMENTUM
 
 ### 🔴 Critical (Complete Today)
-1. **AI Content Generation:** Connect Gemini API to "Generate Ideas" button
-2. **Real Idea Cards:** Replace placeholder ideas with AI-generated content
-3. **Save Ideas:** Implement ⭐ save functionality for idea cards
-4. **Regenerate:** Implement 🔄 regenerate functionality
+1. **Save Ideas:** Implement ⭐ button to save ideas to user's profile
+2. **Regenerate Ideas:** Implement 🔄 button to regenerate individual ideas
+3. **Saved Ideas Page:** Create page to view all saved ideas
+4. **Idea Feedback:** Thumbs up/down to improve AI personalization
 
 ### 🟡 High Priority (Today)
-5. **Hook Generator:** Build UI and API for 10 hook variations with scoring
-6. **Tone Calibration:** Ensure AI respects user's selected tone from onboarding
-7. **Platform-Native Output:** Generate different versions for TikTok/Reels/Shorts
+5. **Hook Generator:** Build UI for 10 hook variations with 1-10 scoring
+6. **Content Calendar:** Connect saved ideas to calendar view
+7. **Taste Profile:** Display and update taste profile percentage based on feedback
 
 ### 🟢 Medium Priority (If Time)
-8. **Content Calendar:** Connect calendar to saved ideas
-9. **API Rate Limiting:** Prevent abuse on free tier (20 ideas/month)
-10. **User Profile Display:** Show creator profile info on dashboard
+8. **Trending Intelligence:** Show what's trending in user's niche
+9. **Quick Actions:** Generate Hooks, Plan Content buttons functional
+10. **Beta Testing Prep:** Final polish before launch week
 
-### 🎯 Sunday Goal
-**AI generating real ideas + save/regenerate working + hook generator UI**
+### 🎯 Monday Goal
+**Save/regenerate working + hook generator functional + content calendar connected**
 
 ---
 
@@ -139,12 +158,21 @@
 
 ## 📝 Daily Notes
 
-### 2026-03-08 - SUNDAY FUNDAY - AI INTEGRATION DAY
-- **PLAN.md Updated:** March 7 progress logged, March 8 priorities set
-- **Yesterday's Wins:** 10-question onboarding complete, dashboard fixed, enhanced profiles
-- **Today Focus:** AI content generation, real ideas, save/regenerate, hook generator
-- **Status:** Ready for AI integration - Gemini API key needed in Railway
-- **Next:** Connect Gemini → Generate real ideas → Save/regenerate
+### 2026-03-09 - MONDAY MOMENTUM - SAVE & REGENERATE DAY
+- **PLAN.md Updated:** March 8 AI integration logged, March 9 priorities set
+- **Yesterday's Wins:** AI idea generation LIVE! 5 ideas per click, platform-native output, tier gating working
+- **Today Focus:** Save ideas (⭐), regenerate (🔄), hook generator, content calendar
+- **Status:** Core AI feature working - now building user interaction features
+- **Next:** Save/regenerate → Hook generator → Content calendar → LAUNCH WEEK
+
+### 2026-03-08 - SUNDAY FUNDAY - AI INTEGRATION DAY - MASSIVE SUCCESS!
+- **AI Service:** Multi-provider support (Moonshot, Anthropic, Gemini, OpenAI)
+- **Idea Generation:** Working end-to-end with real AI responses
+- **Dashboard:** New modern UI with 3-column layout
+- **Tier Gating:** Splash users see TikTok only, Creator/Studio see all platforms
+- **Always 5 Ideas:** Auto-padding if AI returns fewer than 5
+- **User Testing:** Daz beta testing live, feedback incorporated
+- **Polish:** Brand icons, loading states, idea counter, next steps card
 
 ### 2026-03-07 - ONBOARDING & CREATOR PROFILES DAY
 - **10-Question Onboarding:** Expanded from 5 to 10 questions
@@ -171,20 +199,22 @@
 
 ---
 
-## 🎯 Action Items for Today (Mar 8)
+## 🎯 Action Items for Today (Mar 9)
 
 ### Daz - Your Tasks:
-1. [ ] **Test Onboarding:** Go through new 10-question onboarding flow
-2. [ ] **Verify Dashboard:** Confirm dashboard loads after onboarding
-3. [ ] **Gemini API Key:** Add to Railway environment variables
-4. [ ] **TikTok Rotation:** When ready, rotate the secret (still pending)
+1. [ ] **Beta Test Save Ideas:** Click ⭐ on generated ideas, verify they save
+2. [ ] **Test Regenerate:** Click 🔄 on an idea, verify it regenerates
+3. [ ] **Check Saved Ideas Page:** Verify saved ideas appear in new page
+4. [ ] **Provide Feedback:** Tell me what features need polish for launch
+5. [ ] **TikTok Rotation:** When ready, rotate the secret (still pending)
 
 ### Gandalf (Me) - My Tasks:
-1. [x] **PLAN.md Updated:** Reviewed March 7, set March 8 priorities ✅
-2. [ ] **AI Integration:** Connect Gemini API to "Generate Ideas" button
-3. [ ] **Real Ideas:** Replace placeholders with AI-generated content
-4. [ ] **Save/Regenerate:** Implement idea card functionality
-5. [ ] **Hook Generator:** Build UI and API for hook variations
+1. [x] **PLAN.md Updated:** Reviewed March 8, set March 9 priorities ✅
+2. [ ] **Save Ideas:** POST /ideas/{id}/save endpoint + database storage
+3. [ ] **Regenerate Ideas:** POST /ideas/{id}/regenerate with AI call
+4. [ ] **Saved Ideas Page:** Create /saved-ideas page with all saved content
+5. [ ] **Hook Generator:** Build UI for 10 hooks + API endpoint
+6. [ ] **Content Calendar:** Connect calendar to saved ideas
 
 ---
 
