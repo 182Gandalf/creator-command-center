@@ -1,3 +1,58 @@
+# Critical Context & Lessons Learned - Updated March 11, 2026 (22:00 UTC)
+
+## March 11, 2026 — Major Polish & Bug Fixes Day
+
+### Summary
+**21+ commits** — All pricing constraints finalized, onboarding tier-gating, script generation fixes, UI polish.
+
+### Key Accomplishments
+
+**Script Generation Fixed:**
+- Active hook now properly flows into generated scripts
+- Platform-specific hooks (TikTok/Reels/Shorts tailored)
+- Rich idea context (not just title) for better script variety
+
+**Pricing Page Finalized:**
+- All 3 plans aligned: Content Ideation → Saves & Storage → Personalization → Workflow
+- Splash: 5-question onboarding (Q6-10 locked), 2 saves each, unlimited feedback
+- Creator: 10-question onboarding highlighted
+- Studio: Same sections as Creator + Agency Economics
+
+**Splash Tier Limits (Final):**
+| Feature | Limit |
+|---------|-------|
+| Ideas/month | 20 |
+| Saves (ideas/hooks/scripts) | 2 each |
+| Hooks visible | 3/5 |
+| Platforms | TikTok only |
+| Tweaks/week | 1 |
+| Feedback signals | Unlimited |
+
+**Onboarding Changes:**
+- Splash sees Q1-5 only, Q6-10 blurred with "🔒 Upgrade" overlay
+- Monthly idea counter PRESERVED when redoing onboarding
+- Tier check runs reliably on all page loads (DOMContentLoaded + retry logic)
+
+**UI Polish:**
+- Animated logo loading on all AI operations
+- 1-inch bottom gap on left panel and content area
+- Hooks page clarifies "not platform specific"
+- "Generate 5 Fresh Ideas with Tweaks" button text
+
+### Bugs Fixed
+1. Script generation ignoring active hook when idea_id passed
+2. Saved counter showing 2/1 instead of 2/2 for Splash
+3. Onboarding resetting monthly idea tally
+4. Onboarding tier check not running when accessed via settings
+5. Pricing sections misaligned across plans
+
+### Current State
+- **Launch target:** Friday March 13 (2 days)
+- **Active blockers:** None
+- **Next:** Beta testing, Content Calendar (Phase 2 Feature 4)
+
+---
+
 # Critical Context & Lessons Learned - Updated March 10, 2026 (20:00 UTC)
 
 ## March 10, 2026 — Taste Profile Polish + Mobile Battle
