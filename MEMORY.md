@@ -1,3 +1,47 @@
+# Critical Context & Lessons Learned - Updated March 10, 2026 (20:00 UTC)
+
+## March 10, 2026 — Taste Profile Polish + Mobile Battle
+
+### Key Features Built / Fixed Today
+**17 commits to FlowCast**
+
+**Taste Profile System (8 items × 12.5%):**
+- Added Idea Evolution (7-day timer from account creation)
+- Added Niche Filtering (7-day timer from account creation)
+- Splash users capped at 25% (items 1-2 only)
+- No visible countdown — described as "proprietary algorithm"
+- Onboarding now properly resets AI learning data (liked_topics, tone_prefs)
+
+**Animated Logo Loading:**
+- Replaces CSS spinner on all AI generation
+- Dark navy background (#050d1c) with no mix-blend-mode issues
+- Also loops in sidebar (36×36px video)
+
+**Mobile Button War:**
+- "Generate 5 New Ideas" button unresponsive on mobile
+- Final fix: removed onclick attr, bound via addEventListener('click') + touchend at script end
+- touch-action: manipulation + z-index:2 + :active state
+- Show loading state BEFORE async work (immediate feedback)
+
+**Hooks Polish:**
+- Use Hook: index-based reference (not inline text) to avoid escaping bugs
+- Generated hooks persist across tab navigations (localStorage cached)
+- Persist across nav, empty state on delete
+
+### Technical Lessons Learned
+- `onclick="func('${text}')"` is ALWAYS risky for AI-generated text — use index + stored array
+- Mobile unclickable buttons: try touch-action:manipulation FIRST
+- addEventListener('touchend', preventDefault) + click at script END is most reliable
+- `mix-blend-mode: screen` requires truly transparent backgrounds
+- MP4 with `loop autoplay muted playsinline` > GIF for animations
+
+### Current State
+- **Active:** Testing mobile button fix (deployed, awaiting confirmation)
+- **SEC-001:** TikTok secret rotation — Day 14, final reminder sent
+- **Launch:** Friday March 13 deadline approaching
+
+---
+
 # Critical Context & Lessons Learned - Updated March 9, 2026 (22:30 UTC)
 
 ## March 9, 2026 — Full Day Build: Dashboard Polish + Mobile UX
