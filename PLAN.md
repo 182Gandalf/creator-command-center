@@ -1,7 +1,7 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-09 00:00 UTC  
-**Next Update:** 2026-03-10 00:00 UTC
+**Last Updated:** 2026-03-11 00:00 UTC  
+**Next Update:** 2026-03-12 00:00 UTC
 
 ---
 
@@ -15,110 +15,119 @@
 
 ---
 
-## 📊 Current Status
-
-### ✅ Completed (March 8) - AI INTEGRATION DAY - HUGE PROGRESS!
-- [x] **Multi-Provider AI Service:** Built services/ai.py supporting Anthropic, OpenAI, Gemini, Moonshot
-- [x] **Moonshot Integration:** Set as default provider with Kimi K2.5 model
-- [x] **AI Idea Generation:** POST /generate/ideas endpoint working with real AI responses
-- [x] **5 Ideas Per Generation:** Always returns exactly 5 ideas with auto-padding if AI returns fewer
-- [x] **Platform-Native Output:** Each idea includes TikTok, Reels, and Shorts versions
-- [x] **Dashboard UI:** New dashboard-new.html with modern AI Co-Creator design
-- [x] **Tier Gating:** Splash users see TikTok only; Reels/Shorts blurred with upgrade CTA
-- [x] **Copy Functionality:** Copy buttons for each platform's content
-- [x] **Bold Remix Section:** Shows alternative angle for each idea
-- [x] **Idea Counter:** Shows "Unlimited" for paid users, countdown (20→0) for Splash
-- [x] **Next Steps Card:** Appears after generation with guidance text
-- [x] **Example Ideas:** Updated to match generated format with platform tabs
-- [x] **Error Handling:** Better JSON parsing, AI provider fallback, detailed logging
-- [x] **3-Column Layout:** Widened dashboard to fit 3 idea cards per row
-- [x] **Brand Icons:** Replaced emojis with SVG icons for TikTok, Reels, Shorts
-- [x] **Loading States:** "This may take a minute" message during generation
-
-### ✅ Completed (March 7) - ONBOARDING & CREATOR PROFILES DAY
-- [x] **10-Question Onboarding Quiz:** Expanded from 5 to 10 questions with AI personalization
-- [x] **Enhanced CreatorProfile Model:** Added audience_description, content_types, weekly_content_hours, content_struggle, forbidden_topics
-- [x] **Database Migrations:** Created migrations for new profile fields
-- [x] **Onboarding Form UI:** Progress bar, section dividers, numbered questions, sliders
-- [x] **Dashboard Fix:** Fixed "Authorization header missing" error
-- [x] **Platforms Array Fix:** Handle both string (legacy) and ARRAY (new) formats
-- [x] **All Pushed to GitHub:** Deployed to Railway
-
-### ✅ Completed (March 6) - STABILITY & FIXES DAY
-- [x] **Dashboard Auth Fix:** Removed server-side auth requirement, client-side handles it
-- [x] **GitHub Push:** All changes committed and deployed
-
-### ✅ Completed (March 5) - AI INTEGRATION DAY
-- [x] **Paddle Checkout Fix:** Debugged and fixed overlay opening issue
-- [x] **Creator Profile API:** /api/creator-profile endpoints working
-- [x] **Onboarding Router:** Created dedicated onboarding module
-
-### ✅ Completed (March 4) - PADDLE & AUTH PRODUCTION DAY
-- [x] **Paddle Billing Integration:** Complete subscription system with Paddle.js overlay
-- [x] **Database Migration:** Added paddle_customer_id, paddle_subscription_id, subscription_ends_at
-- [x] **Checkout API:** /subscribe/* endpoints for Creator/Studio monthly/annual
-- [x] **Paddle Webhooks:** transaction.completed, subscription.canceled, subscription.updated handlers
-- [x] **Tier Checking:** require_tier() dependency for protected routes
-- [x] **Pricing Page:** Updated with Paddle.js and checkout buttons
-- [x] **Clerk Production:** Switched from dev to production (accounts.flowcast.space)
-- [x] **Clerk DNS:** Configured Cloudflare CNAME records for custom domain
-- [x] **Google OAuth:** Fixed scopes (openid email profile)
-- [x] **Auth Flow Fixed:** Sign-in/sign-out working, no more redirect loops
-- [x] **Mobile Header CSS:** Fixed button spacing across ALL pages
-
-### 🚧 In Progress
-- [ ] **Save Ideas:** ⭐ button functionality to save ideas to database
-- [ ] **Regenerate Ideas:** 🔄 button to regenerate individual ideas
-- [ ] **TikTok Secret Rotation:** Still pending user action
-- [ ] **Hook Generator:** Build 10-hook generator with scoring UI
-
-### ⏳ Pending
-- [ ] TikTok NEW developer account (P0 - security)
-- [ ] Meta/Instagram app creation
-- [ ] Post scheduling system
-- [ ] Content calendar integration
+## 🚀 Launch Countdown: **2 days to Friday March 13**
 
 ---
 
-## 🎯 Today's Priorities (March 9, 2026) - MONDAY MOMENTUM
+## 📊 Current Status
 
-### 🔴 Critical (Complete Today)
-1. **Save Ideas:** Implement ⭐ button to save ideas to user's profile
-2. **Regenerate Ideas:** Implement 🔄 button to regenerate individual ideas
-3. **Saved Ideas Page:** Create page to view all saved ideas
-4. **Idea Feedback:** Thumbs up/down to improve AI personalization
+### ✅ Completed (March 11) — UI Polish, Calendar, Bug Fixes
 
-### 🟡 High Priority (Today)
-5. **Hook Generator:** Build UI for 10 hook variations with 1-10 scoring
-6. **Content Calendar:** Connect saved ideas to calendar view
-7. **Taste Profile:** Display and update taste profile percentage based on feedback
+**Content Calendar (Phase 2 Feature 4 — COMPLETE)**
+- [x] `calendars` table added to models.py (id, user_id, generated_at, entries JSON)
+- [x] Migration file: `2024_03_12_calendars.py`
+- [x] `routers/calendar.py` — POST /api/calendar/generate, GET /api/calendar/latest
+- [x] GET /api/calendar/export/ics — Google Calendar export with VEVENT (9am–9:30am)
+- [x] GET /api/calendar/export/csv — Notion CSV export with import note in UI
+- [x] Calendar embedded inline in dashboard (no redirect, reuses Clerk session)
+- [x] Week-by-week grid — platform emoji, date, title, hook, Copy Hook button
+- [x] Tier gating: Splash sees 7 entries (blur + upgrade overlay for remainder)
+- [x] Notion import note: "To import into Notion: open your database → Import → CSV"
+- [x] AI prompt matches exact spec; robust parser handles date strings vs integers
+- [x] `icalendar>=5.0.0` added to requirements.txt
 
-### 🟢 Medium Priority (If Time)
-8. **Trending Intelligence:** Show what's trending in user's niche
-9. **Quick Actions:** Generate Hooks, Plan Content buttons functional
-10. **Beta Testing Prep:** Final polish before launch week
+**UI Polish**
+- [x] FAQ link added to footer on all pages (dashboard, pricing, index, terms, privacy, refund)
+- [x] "What's Next?" guidance card added to Hooks page (empty state + after results)
+- [x] Calendar nav item restored to inline navigate('calendar') — no page redirect
 
-### 🎯 Monday Goal
-**Save/regenerate working + hook generator functional + content calendar connected**
+**Bug Fixes**
+- [x] Calendar: `date_offset` validation error — AI returned date string instead of int
+- [x] Calendar: Robust `coerce_entry()` parser handles date strings, missing fields, alt field names
+
+---
+
+### ✅ Completed (March 10) — Taste Profile + Mobile Polish
+
+- [x] Taste Profile System (8 items × 12.5% each):
+  - Idea Evolution (7-day timer from account creation)
+  - Niche Filtering (7-day timer from account creation)
+  - Splash capped at 25% (items 1-2 only)
+- [x] Animated logo loading on all AI generation (Ideas, Hooks, Scripts, Tweaks, Scoring)
+- [x] Sidebar: 36×36px animated logo on loop
+- [x] Mobile "Generate 5 New Ideas" button — final fix via addEventListener + touchend
+- [x] Hooks: index-based reference for Copy Hook (no escaping bugs)
+- [x] Generated hooks persist across tab navigations (localStorage cached)
+- [x] Hooks: persist across nav, empty state on delete
+
+---
+
+### ✅ Completed (March 11 earlier) — Pricing + Script Fixes + Onboarding
+
+- [x] Script generation now uses active hook word-for-word
+- [x] Platform-specific hooks (TikTok/Reels/Shorts tailored AI guidance)
+- [x] Rich idea context for script generation (full platform hooks + remix variant)
+- [x] Pricing page: all 3 plans aligned — Content Ideation → Saves & Storage → Personalization → Workflow
+- [x] Splash tier limits final: 20 ideas/month, 2 saves each, 3/5 hooks, TikTok only, 1 tweak/week
+- [x] Onboarding: Splash sees Q1-5 only, Q6-10 blurred with "🔒 Upgrade" overlay
+- [x] Onboarding: Monthly idea counter preserved when redoing onboarding
+- [x] Onboarding: Tier check runs reliably on all page loads
+- [x] 1-inch (96px) bottom gap on left panel and content area
+- [x] Tweaks button text: "Generate 5 Fresh Ideas with Tweaks"
+
+---
+
+### ✅ Completed (March 9) — Save/Hooks/Scripts/Mobile
+
+- [x] Saved Ideas: ⭐ button saves to database, counter shows Splash 1/1 limit
+- [x] Saved Hooks: Save from hook generator, view in Saved section
+- [x] Saved Scripts: Save from scripts tab, view in Saved section
+- [x] Hook Scorer inline in dashboard (right panel of Hooks section)
+- [x] Hook scoring: 1 score → 3 distinct rewrites (not duplicates)
+- [x] Mobile footer: slim single-line, anchored, no content overlap
+- [x] Mobile: `html { font-size: 14px }` scales whole app
+- [x] Scripts context: SVG platform icons replace emojis
+- [x] "Upgrade to Creator" CTA hidden for non-Splash users
+- [x] `showToast()` replaces `alert()` everywhere (mobile-safe)
+
+---
+
+### 🚧 In Progress / Pending for Launch
+
+- [ ] **Beta Testing** — Full end-to-end test on all features before Friday launch
+- [ ] **TikTok Secret Rotation** — Still blocked on user action (P0, Day 14+ old)
+- [ ] **Post Scheduling / Publishing** — Post Coming Soon (deferred to Phase 3)
+- [ ] **Trend Intelligence** — Placeholder showing (deferred to Phase 3)
+
+---
+
+## 🎯 Today's Priorities (March 11 → 12, 2026)
+
+### 🔴 Critical (Launch Prep — 2 Days Left)
+1. **Beta Testing** — Full flow test: sign up → onboard → generate ideas → hooks → scripts → calendar
+2. **Mobile QA** — Test all critical paths on mobile (known issues were fixed but need verification)
+3. **Fix any regressions** — Calendar generation working? All 3 tiers rendering correctly?
+4. **Export testing** — Verify .ics opens in Google Calendar, .csv imports into Notion
+
+### 🟡 High Priority
+5. **FAQ page** — Populate /faq with common questions (link is live but page returns 404)
+6. **Error states** — Ensure all errors are user-friendly (no raw stack traces shown)
+7. **Onboarding edge cases** — What happens if user skips fields?
+
+### 🟢 Nice to Have (If Time)
+8. **Marketing copy review** — Index page copy aligned with current feature set?
+9. **Pricing page final check** — All plan descriptions accurate?
+10. **Launch announcement** — Prepare what to post/send on Friday
 
 ---
 
 ## 📅 Weekly Roadmap
 
-### Week of Mar 2 - Mar 8 (COMPLETE)
-- **Monday (Mar 2):** ✅ Clerk auth, dashboard UI, onboarding flow
-- **Tuesday (Mar 3):** ✅ Clerk fixes, UI/UX polish, refund policy
-- **Wednesday (Mar 4):** ✅ Paddle integration, Clerk production, mobile CSS fixes
-- **Thursday (Mar 5):** ✅ Paddle checkout fix, creator profile API
-- **Friday (Mar 6):** ✅ Dashboard auth fix, stability improvements
-- **Saturday (Mar 7):** ✅ 10-question onboarding, enhanced profiles
-- **Sunday (Mar 8):** 🔴 AI integration, real idea generation
-
 ### Week of Mar 9 - Mar 15 (LAUNCH WEEK)
-- **Monday (Mar 9):** Content calendar, scheduling system
-- **Tuesday (Mar 10):** Hook generator, trend intelligence
-- **Wednesday (Mar 11):** Beta testing, bug fixes
-- **Thursday (Mar 12):** Final polish, documentation
+- **Monday (Mar 9):** ✅ Save features, hook scorer inline, mobile fixes
+- **Tuesday (Mar 10):** ✅ Taste profile, animated logo, mobile button fixes
+- **Wednesday (Mar 11):** ✅ Pricing polish, script fixes, onboarding, Content Calendar
+- **Thursday (Mar 12):** 🔴 Beta testing, bug fixes, launch prep, FAQ page
 - **Friday (Mar 13):** 🚀 **LAUNCH DAY**
 - **Weekend:** Marketing, user onboarding support
 
@@ -126,107 +135,68 @@
 
 ## 🚨 Blockers & Risks
 
-| Risk | Impact | Status | Mitigation |
-|------|--------|--------|------------|
-| TikTok Secret Rotation | HIGH | 🟠 Still pending | User action required - escalated |
-| AI Integration | HIGH | 🔴 Today | Priority for today |
-| Paddle Checkout | MEDIUM | ✅ Fixed | Working now |
-| AI API Costs | MEDIUM | 🟡 Monitoring | Track usage, set limits |
+| Risk | Impact | Status | Notes |
+|------|--------|--------|-------|
+| TikTok Secret Rotation | HIGH | 🔴 Overdue | Day 14+ — user action required |
+| FAQ page missing content | MEDIUM | 🟡 Today | Link is live, page is blank |
+| Beta testing not done | HIGH | 🔴 Today | Must test before Friday launch |
+| Calendar AI generation | MEDIUM | ✅ Fixed | Date-string parsing bug resolved |
 
 ---
 
-## 🔧 Technical Debt
+## 🔧 Phase 2 Feature Status
 
-### Backend
-- [x] Paddle billing integration ✅
-- [x] Clerk production auth ✅
-- [x] Database migrations ✅
-- [x] 10-question onboarding ✅
-- [ ] AI content generation API (today)
-- [ ] Save/regenerate endpoints (today)
-- [ ] Hook generator API (today)
-
-### Frontend
-- [x] Paddle.js checkout ✅
-- [x] Mobile header CSS ✅
-- [x] 10-question onboarding form ✅
-- [ ] AI integration (today)
-- [ ] Real-time idea generation (today)
-- [ ] Hook generator UI (today)
+| Feature | Status | Notes |
+|---------|--------|-------|
+| 1. Save Ideas / Hooks / Scripts | ✅ Complete | Splash: 2 saves each |
+| 2. Hook Generator + Scorer | ✅ Complete | Inline in dashboard |
+| 3. Script Generator | ✅ Complete | Platform-specific, uses active hook |
+| 4. Content Calendar | ✅ Complete | AI-generated, ICS + CSV export |
+| 5. Taste Profile | ✅ Complete | 8 items, unlocks over time |
+| 6. Trend Intelligence | ⏳ Deferred | Placeholder only (Phase 3) |
+| 7. Post Scheduling | ⏳ Deferred | "Coming Soon" (Phase 3) |
 
 ---
 
 ## 📝 Daily Notes
 
-### 2026-03-09 - MONDAY MOMENTUM - SAVE & REGENERATE DAY
-- **PLAN.md Updated:** March 8 AI integration logged, March 9 priorities set
-- **Yesterday's Wins:** AI idea generation LIVE! 5 ideas per click, platform-native output, tier gating working
-- **Today Focus:** Save ideas (⭐), regenerate (🔄), hook generator, content calendar
-- **Status:** Core AI feature working - now building user interaction features
-- **Next:** Save/regenerate → Hook generator → Content calendar → LAUNCH WEEK
+### 2026-03-11 (Midnight) — PLAN.md Update
+- 2 days to launch — all Phase 2 features complete except deferred ones
+- Content Calendar built and integrated into dashboard
+- Calendar generation bug fixed (AI returning date strings)
+- Notion import note added to UI per spec
+- Tomorrow: beta testing is the priority, then FAQ page content
 
-### 2026-03-08 - SUNDAY FUNDAY - AI INTEGRATION DAY - MASSIVE SUCCESS!
-- **AI Service:** Multi-provider support (Moonshot, Anthropic, Gemini, OpenAI)
-- **Idea Generation:** Working end-to-end with real AI responses
-- **Dashboard:** New modern UI with 3-column layout
-- **Tier Gating:** Splash users see TikTok only, Creator/Studio see all platforms
-- **Always 5 Ideas:** Auto-padding if AI returns fewer than 5
-- **User Testing:** Daz beta testing live, feedback incorporated
-- **Polish:** Brand icons, loading states, idea counter, next steps card
+### 2026-03-10
+- Taste profile, animated logo, mobile button war resolved
+- Hooks persist across navigation
+- All major UX issues addressed
 
-### 2026-03-07 - ONBOARDING & CREATOR PROFILES DAY
-- **10-Question Onboarding:** Expanded from 5 to 10 questions
-- **New Questions:** Target audience, content types, weekly hours, struggle, forbidden topics
-- **Database:** Added 5 new columns to creator_profiles table
-- **UI Improvements:** Progress bar, section dividers, numbered questions, sliders
-- **Dashboard Fix:** Fixed auth header error, platforms array handling
-- **Migrations:** Created 2 new migration files
-
-### 2026-03-06 - STABILITY & FIXES DAY
-- **Dashboard Auth:** Fixed "Authorization header missing" error
-- **Client-Side Auth:** Dashboard now uses client-side auth check
-- **GitHub Push:** All changes deployed to Railway
-
-### 2026-03-05 - AI INTEGRATION DAY
-- **Paddle Checkout:** Fixed overlay opening issue
-- **Creator Profile API:** Endpoints working for profile management
-- **Onboarding Router:** Created dedicated onboarding module
-
-### 2026-03-04 - PADDLE & AUTH PRODUCTION DAY
-- **Paddle Billing:** Complete integration with checkout, webhooks
-- **Clerk Production:** Migrated from dev to production
-- **Mobile CSS:** Fixed header spacing across all pages
+### 2026-03-09
+- Huge output day: save features, hook scorer, scripts, mobile fixes
+- 20+ commits
 
 ---
 
-## 🎯 Action Items for Today (Mar 9)
+## 🎯 Daz's Action Items (Before Friday)
 
-### Daz - Your Tasks:
-1. [ ] **Beta Test Save Ideas:** Click ⭐ on generated ideas, verify they save
-2. [ ] **Test Regenerate:** Click 🔄 on an idea, verify it regenerates
-3. [ ] **Check Saved Ideas Page:** Verify saved ideas appear in new page
-4. [ ] **Provide Feedback:** Tell me what features need polish for launch
-5. [ ] **TikTok Rotation:** When ready, rotate the secret (still pending)
-
-### Gandalf (Me) - My Tasks:
-1. [x] **PLAN.md Updated:** Reviewed March 8, set March 9 priorities ✅
-2. [ ] **Save Ideas:** POST /ideas/{id}/save endpoint + database storage
-3. [ ] **Regenerate Ideas:** POST /ideas/{id}/regenerate with AI call
-4. [ ] **Saved Ideas Page:** Create /saved-ideas page with all saved content
-5. [ ] **Hook Generator:** Build UI for 10 hooks + API endpoint
-6. [ ] **Content Calendar:** Connect calendar to saved ideas
+1. [ ] **Beta test the full flow** — sign up, onboard, generate, save, export calendar
+2. [ ] **TikTok secret rotation** — please do this ASAP (security risk)
+3. [ ] **FAQ content** — send me the Q&As to populate the FAQ page
+4. [ ] **Approve launch** — green light on Friday or push to next week?
 
 ---
 
 ## 🔗 Important Links
 
 - **Live Site:** https://flowcast.space
-- **Onboarding:** https://flowcast.space/onboarding
 - **Dashboard:** https://flowcast.space/dashboard
+- **Calendar:** https://flowcast.space/dashboard (Calendar tab)
 - **Pricing:** https://flowcast.space/pricing
+- **FAQ:** https://flowcast.space/faq (⚠️ needs content)
 - **GitHub:** https://github.com/182Gandalf/FlowCast
 - **Railway Dashboard:** https://railway.app/dashboard
 
 ---
 
-*This document is updated automatically every day at midnight UTC.*
+*Updated automatically at midnight UTC. Next update: March 12, 2026.*
