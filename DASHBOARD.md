@@ -2,7 +2,7 @@
 
 **Single source of truth for all active blockers and action items.**
 
-**Last Updated:** March 12, 2026 07:30 UTC  
+**Last Updated:** March 13, 2026 UTC  
 **Next Review:** Weekly (Sundays)
 
 ---
@@ -23,6 +23,10 @@ None.
 
 | ID | Issue | Completed Date | Impact |
 |----|-------|----------------|--------|
+| **PDF-001** | **White-label PDF exports (Studio)** | **Mar 13, 2026** | **🚀 Committed e562cb3** |
+| | - Brand Settings modal (name/color/logo) | | |
+| | - /api/export/pdf/hooks, /scripts, /content-pack | | |
+| | - reportlab, DB migration, Studio-tier gate | | |
 | **PIVOT-001** | **Brand Repivot — AI Co-Creator** | **Mar 1, 2026** | **🚀 LIVE ON PRODUCTION** |
 | | - Landing page complete rewrite | | |
 | | - New positioning: "Know what to film" | | |
