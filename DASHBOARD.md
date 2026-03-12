@@ -2,8 +2,8 @@
 
 **Single source of truth for all active blockers and action items.**
 
-**Last Updated:** March 6, 2026 02:03 UTC  
-**Next Review:** March 8, 2026 (weekly schedule)
+**Last Updated:** March 12, 2026 07:30 UTC  
+**Next Review:** Weekly (Sundays)
 
 ---
 
@@ -63,6 +63,63 @@ None.
 | ID | Issue | Priority | Notes |
 |----|-------|----------|-------|
 | DOM-001 | Domain transfer to Cloudflare | P2 | Can wait until post-launch |
+| TRENDS-001 | Migrate Google Trends to SerpAPI | P2 | Execute when first paying users come in |
+
+---
+
+## 🗺️ TRENDS-001 — SerpAPI Migration Plan
+
+**Trigger:** First paying users / revenue covers $25/mo  
+**Cost:** $25/mo (Starter — 1,000 searches/mo, 200/hr throughput)  
+**Why:** pytrends is archived (Apr 2025), rate-limited, unreliable long-term  
+**Current workaround:** 60s+jitter delay, 3 AM UTC fetch — acceptable for early stage
+
+### What to do
+
+**1. Sign up**
+- https://serpapi.com → Starter plan ($25/mo)
+- Get API key → add to Railway env vars as `SERPAPI_KEY`
+
+**2. Replace `services/trends.py` fetch logic**
+
+Current pytrends call:
+```python
+pt = TrendReq(hl="en-US", tz=0, ...)
+pt.build_payload([niche], timeframe="now 7-d", geo="")
+related = pt.related_queries()
+top_df = related.get(niche, {}).get("top")
+```
+
+Replace with SerpAPI call:
+```python
+import httpx
+
+async def _fetch_sync():
+    resp = httpx.get("https://serpapi.com/search", params={
+        "engine": "google_trends",
+        "q": niche,
+        "date": "now 7-d",
+        "api_key": os.environ["SERPAPI_KEY"],
+    }, timeout=30)
+    resp.raise_for_status()
+    data = resp.json()
+    results = []
+    for item in data.get("related_queries", {}).get("top", []):
+        results.append({"topic": item["query"], "score": int(item["value"])})
+    return results
+```
+
+**3. Remove from requirements.txt**
+- Remove `pytrends`
+- Remove `urllib3<2` (no longer needed)
+- Add `httpx` (already in requirements)
+
+**4. Test locally → push → verify Railway deploy**
+
+### Expected outcome
+- Zero 429 errors
+- Reliable daily fetch for all 17 niches
+- ~510 requests/month used out of 1,000 quota (~490 headroom)
 
 ---
 
