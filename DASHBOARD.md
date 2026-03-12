@@ -123,6 +123,30 @@ async def _fetch_sync():
 
 ---
 
+## 🗺️ TRENDS-002 — Extended Trend Data (implement AFTER TRENDS-001)
+
+**Trigger:** SerpAPI or Official Google Trends API is live (TRENDS-001 complete)  
+**Why blocked:** Adding more pytrends endpoints now = 4x more rate-limit exposure on an archived library. Wrong moment.
+
+### New endpoints to add
+
+| Priority | Endpoint | Feature | Est. daily calls |
+|----------|----------|---------|-----------------|
+| P1 | `realtime_trending_searches` | "Hot right now" feed on Trends tab (past 24h breaking topics) | +17 |
+| P1 | `interest_over_time` | Niche health score — is your niche growing or shrinking this month? | +17 |
+| P2 | `trending_searches` | Daily digest card — yesterday's top searches in user's region | +17 |
+| P3 | `interest_by_region` | Geo-targeting for Studio tier — where is your niche hottest? | +17 |
+
+**Total after TRENDS-002:** ~68 calls/day (up from 17) — well within SerpAPI Starter 1,000/mo quota
+
+### Feature ideas per endpoint
+- **realtime_trending_searches** → "🔥 Hot right now" section on Trends tab, refreshed daily
+- **interest_over_time** → Niche health badge (📈 +28% this month / 📉 cooling) shown on Ideas tab
+- **trending_searches** → "Yesterday's top searches" digest card on dashboard
+- **interest_by_region** → Studio-tier geo map — top countries for your niche
+
+---
+
 ## 📋 Quick Status
 
 ### Health Check
