@@ -1,7 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-11 00:00 UTC  
-**Next Update:** 2026-03-12 00:00 UTC
+**Last Updated:** 2026-03-12 08:00 UTC
 
 ---
 
@@ -15,121 +14,86 @@
 
 ---
 
-## 🚀 Launch Countdown: **2 days to Friday March 13**
+## 🚀 Launch Status: **Shipping when ready**
 
 ---
 
 ## 📊 Current Status
 
-### ✅ Completed (March 11) — UI Polish, Calendar, Bug Fixes
+### ✅ Completed (March 12 — Today)
 
-**Content Calendar (Phase 2 Feature 4 — COMPLETE)**
-- [x] `calendars` table added to models.py (id, user_id, generated_at, entries JSON)
-- [x] Migration file: `2024_03_12_calendars.py`
-- [x] `routers/calendar.py` — POST /api/calendar/generate, GET /api/calendar/latest
-- [x] GET /api/calendar/export/ics — Google Calendar export with VEVENT (9am–9:30am)
-- [x] GET /api/calendar/export/csv — Notion CSV export with import note in UI
-- [x] Calendar embedded inline in dashboard (no redirect, reuses Clerk session)
-- [x] Week-by-week grid — platform emoji, date, title, hook, Copy Hook button
-- [x] Tier gating: Splash sees 7 entries (blur + upgrade overlay for remainder)
-- [x] Notion import note: "To import into Notion: open your database → Import → CSV"
-- [x] AI prompt matches exact spec; robust parser handles date strings vs integers
-- [x] `icalendar>=5.0.0` added to requirements.txt
+- [x] **DB migration** — `alembic upgrade head` run, `trending_topics` + `calendars` tables live on Railway
+- [x] **Trends tab** — wired up to real DB data (score bars, meta, empty state)
+- [x] **pytrends urllib3 fix** — pinned `urllib3<2` in requirements.txt, pushed to Railway
+- [x] **Scheduler improved** — delay increased to 60s + random jitter, moved to 3 AM UTC
+- [x] **SerpAPI migration plan** — documented as TRENDS-001 in DASHBOARD.md (trigger: first paying users)
+- [x] **Extended trends plan** — documented as TRENDS-002 in DASHBOARD.md (after TRENDS-001)
 
-**UI Polish**
-- [x] FAQ link added to footer on all pages (dashboard, pricing, index, terms, privacy, refund)
-- [x] "What's Next?" guidance card added to Hooks page (empty state + after results)
-- [x] Calendar nav item restored to inline navigate('calendar') — no page redirect
+### ✅ Completed (March 11 — Full Day)
 
-**Bug Fixes**
-- [x] Calendar: `date_offset` validation error — AI returned date string instead of int
-- [x] Calendar: Robust `coerce_entry()` parser handles date strings, missing fields, alt field names
+**Phase 3: Personalization — COMPLETE**
+- [x] "Current Niche & Tone" panel added to header dropdown
+- [x] Shows Niche, Tone, Goal, Audience (if set), Platforms with brand SVG icons
+- [x] Populated from `/api/creator-profile` on load — auto-refreshes after onboarding resubmit
+- [x] `/api/creator-profile` GET extended with content_goal, audience_description, content_types, content_struggle, forbidden_topics
 
----
+**Phase 4: Trend Intelligence — COMPLETE** ✨
+- [x] `pytrends` added to requirements.txt
+- [x] `TrendingTopic` model + migration live on Railway
+- [x] `services/trends.py` — async fetch, 429 handling, DB storage
+- [x] Scheduler: daily trend fetch at 3:00 AM UTC, 17 niches, 60s+jitter delay
+- [x] `GET /api/trends/current` endpoint — returns trends for user's niche (last 24h), supports `?limit=` param
+- [x] Trend injection in idea generation — non-fatal, additive only
+- [x] Dashboard trend pills — 🔥 pill bar above Generate Ideas button
+- [x] Splash sees 1 pill + 🔒 upsell; Creator/Studio see all 3
+- [x] Trends tab — live data from DB with score bars, timestamps, empty state
 
-### ✅ Completed (March 10) — Taste Profile + Mobile Polish
+**Calendar Fixes**
+- [x] 7-day blur filters by date_offset (day-based)
+- [x] Splash frequency locked to 3×/week (UI + backend)
+- [x] Brand SVG icons on calendar cards
+- [x] Script button on all calendar cards
 
-- [x] Taste Profile System (8 items × 12.5% each):
-  - Idea Evolution (7-day timer from account creation)
-  - Niche Filtering (7-day timer from account creation)
-  - Splash capped at 25% (items 1-2 only)
-- [x] Animated logo loading on all AI generation (Ideas, Hooks, Scripts, Tweaks, Scoring)
-- [x] Sidebar: 36×36px animated logo on loop
-- [x] Mobile "Generate 5 New Ideas" button — final fix via addEventListener + touchend
-- [x] Hooks: index-based reference for Copy Hook (no escaping bugs)
-- [x] Generated hooks persist across tab navigations (localStorage cached)
-- [x] Hooks: persist across nav, empty state on delete
+**Platform & Workspace Fixes**
+- [x] Platform tab click persists to workspace
+- [x] Workspace scoped per Clerk user ID (no cross-account leakage)
+- [x] Primary platform no longer overrides idea platform
 
----
-
-### ✅ Completed (March 11 earlier) — Pricing + Script Fixes + Onboarding
-
-- [x] Script generation now uses active hook word-for-word
-- [x] Platform-specific hooks (TikTok/Reels/Shorts tailored AI guidance)
-- [x] Rich idea context for script generation (full platform hooks + remix variant)
-- [x] Pricing page: all 3 plans aligned — Content Ideation → Saves & Storage → Personalization → Workflow
+**Phase 2 + Polish (March 9–11)**
+- [x] Script generation uses active hook word-for-word
+- [x] Pricing page finalized across all 3 plans
 - [x] Splash tier limits final: 20 ideas/month, 2 saves each, 3/5 hooks, TikTok only, 1 tweak/week
-- [x] Onboarding: Splash sees Q1-5 only, Q6-10 blurred with "🔒 Upgrade" overlay
-- [x] Onboarding: Monthly idea counter preserved when redoing onboarding
-- [x] Onboarding: Tier check runs reliably on all page loads
-- [x] 1-inch (96px) bottom gap on left panel and content area
-- [x] Tweaks button text: "Generate 5 Fresh Ideas with Tweaks"
+- [x] Creator save limits: 7 each
+- [x] Onboarding Q6-10 blurred for Splash with upgrade overlay
+- [x] Content Calendar fully built and integrated
+- [x] Mobile button fixes, animated logo loading, hooks polish
 
 ---
 
-### ✅ Completed (March 9) — Save/Hooks/Scripts/Mobile
+### 🚧 Pending (No Target Date — Ship When Ready)
 
-- [x] Saved Ideas: ⭐ button saves to database, counter shows Splash 1/1 limit
-- [x] Saved Hooks: Save from hook generator, view in Saved section
-- [x] Saved Scripts: Save from scripts tab, view in Saved section
-- [x] Hook Scorer inline in dashboard (right panel of Hooks section)
-- [x] Hook scoring: 1 score → 3 distinct rewrites (not duplicates)
-- [x] Mobile footer: slim single-line, anchored, no content overlap
-- [x] Mobile: `html { font-size: 14px }` scales whole app
-- [x] Scripts context: SVG platform icons replace emojis
-- [x] "Upgrade to Creator" CTA hidden for non-Splash users
-- [x] `showToast()` replaces `alert()` everywhere (mobile-safe)
+- [ ] **Beta Testing** — Full end-to-end test: sign up → onboard → ideas → hooks → scripts → calendar → save → export
+- [ ] **Mobile QA** — Verify all sections on device
+- [ ] **TikTok Secret Rotation** — Blocked on Daz (P0, security risk, day 14+ overdue)
+- [ ] **FAQ page content** — `/faq` currently 404s — Daz to provide Q&As
+- [ ] **Launch announcement** — What to post/send on launch day
 
 ---
 
-### 🚧 In Progress / Pending for Launch
+## 🎯 Current Priorities
 
-- [ ] **Beta Testing** — Full end-to-end test on all features before Friday launch
-- [ ] **TikTok Secret Rotation** — Still blocked on user action (P0, Day 14+ old)
-- [ ] **Post Scheduling / Publishing** — Post Coming Soon (deferred to Phase 3)
-- [ ] **Trend Intelligence** — Placeholder showing (deferred to Phase 3)
+### 🔴 Needs Daz Action
+1. **TikTok secret rotation** — Security risk, overdue
+2. **Beta test the full flow** — Biggest pre-launch risk
+3. **FAQ content** — Send Q&As when ready
 
----
+### 🟡 High Priority (Dev)
+4. **Mobile QA** — Full device test across all tabs
+5. **Pricing page final check** — Confirm all limits accurate
+6. **Marketing copy review** — Index page aligned with current features?
 
-## 🎯 Today's Priorities (March 11 → 12, 2026)
-
-### 🔴 Critical (Launch Prep — 2 Days Left)
-1. **Beta Testing** — Full flow test: sign up → onboard → generate ideas → hooks → scripts → calendar
-2. **Mobile QA** — Test all critical paths on mobile (known issues were fixed but need verification)
-3. **Fix any regressions** — Calendar generation working? All 3 tiers rendering correctly?
-4. **Export testing** — Verify .ics opens in Google Calendar, .csv imports into Notion
-
-### 🟡 High Priority
-5. **FAQ page** — Populate /faq with common questions (link is live but page returns 404)
-6. **Error states** — Ensure all errors are user-friendly (no raw stack traces shown)
-7. **Onboarding edge cases** — What happens if user skips fields?
-
-### 🟢 Nice to Have (If Time)
-8. **Marketing copy review** — Index page copy aligned with current feature set?
-9. **Pricing page final check** — All plan descriptions accurate?
-10. **Launch announcement** — Prepare what to post/send on Friday
-
----
-
-## 📅 Weekly Roadmap
-
-### Week of Mar 9 - Mar 15 (LAUNCH WEEK)
-- **Monday (Mar 9):** ✅ Save features, hook scorer inline, mobile fixes
-- **Tuesday (Mar 10):** ✅ Taste profile, animated logo, mobile button fixes
-- **Wednesday (Mar 11):** ✅ Pricing polish, script fixes, onboarding, Content Calendar
-- **Thursday (Mar 12):** 🔴 Beta testing, bug fixes, launch prep, FAQ page
-- **Friday (Mar 13):** 🚀 **LAUNCH DAY**
-- **Weekend:** Marketing, user onboarding support
+### 🟢 Nice to Have
+7. **Launch announcement prep** — Copy for social/email
 
 ---
 
@@ -137,53 +101,31 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| TikTok Secret Rotation | HIGH | 🔴 Overdue | Day 14+ — user action required |
-| FAQ page missing content | MEDIUM | 🟡 Today | Link is live, page is blank |
-| Beta testing not done | HIGH | 🔴 Today | Must test before Friday launch |
-| Calendar AI generation | MEDIUM | ✅ Fixed | Date-string parsing bug resolved |
+| TikTok Secret Rotation | HIGH | 🔴 Critical | Daz action required — day 14+ overdue |
+| Beta testing not done | HIGH | 🟡 Ongoing | Must complete before launch |
+| FAQ page no content | MEDIUM | 🟡 Pending | Daz to provide Q&As |
+| Trend pills empty on new accounts | LOW | ✅ Expected | Scheduler runs 3 AM UTC, populates overnight |
 
 ---
 
-## 🔧 Phase 2 Feature Status
+## 🔧 Phase Status Summary
 
-| Feature | Status | Notes |
-|---------|--------|-------|
-| 1. Save Ideas / Hooks / Scripts | ✅ Complete | Splash: 2 saves each |
-| 2. Hook Generator + Scorer | ✅ Complete | Inline in dashboard |
-| 3. Script Generator | ✅ Complete | Platform-specific, uses active hook |
-| 4. Content Calendar | ✅ Complete | AI-generated, ICS + CSV export |
-| 5. Taste Profile | ✅ Complete | 8 items, unlocks over time |
-| 6. Trend Intelligence | ⏳ Deferred | Placeholder only (Phase 3) |
-| 7. Post Scheduling | ⏳ Deferred | "Coming Soon" (Phase 3) |
-
----
-
-## 📝 Daily Notes
-
-### 2026-03-11 (Midnight) — PLAN.md Update
-- 2 days to launch — all Phase 2 features complete except deferred ones
-- Content Calendar built and integrated into dashboard
-- Calendar generation bug fixed (AI returning date strings)
-- Notion import note added to UI per spec
-- Tomorrow: beta testing is the priority, then FAQ page content
-
-### 2026-03-10
-- Taste profile, animated logo, mobile button war resolved
-- Hooks persist across navigation
-- All major UX issues addressed
-
-### 2026-03-09
-- Huge output day: save features, hook scorer, scripts, mobile fixes
-- 20+ commits
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 1: Paddle Billing | ✅ Complete | Full subscription lifecycle |
+| Phase 2: AI Content Engine | ✅ Complete | Ideas, Hooks, Scripts, Calendar, Taste Profile |
+| Phase 3: Personalization | ✅ Complete | Niche & Tone dropdown, onboarding data surfaced |
+| Phase 4: Trend Intelligence | ✅ Complete | Live on Railway, scheduler running nightly at 3 AM UTC |
+| Phase 5: Email Sequences | ⏳ Deferred | Post-launch |
+| Phase 6: Post Scheduling | ⏳ Deferred | "Coming Soon" |
 
 ---
 
-## 🎯 Daz's Action Items (Before Friday)
+## 🎯 Daz's Open Action Items
 
 1. [ ] **Beta test the full flow** — sign up, onboard, generate, save, export calendar
-2. [ ] **TikTok secret rotation** — please do this ASAP (security risk)
-3. [ ] **FAQ content** — send me the Q&As to populate the FAQ page
-4. [ ] **Approve launch** — green light on Friday or push to next week?
+2. [ ] **TikTok secret rotation** — CRITICAL security risk, day 14+ overdue
+3. [ ] **FAQ content** — send Q&As so the /faq page can go live
 
 ---
 
@@ -191,7 +133,6 @@
 
 - **Live Site:** https://flowcast.space
 - **Dashboard:** https://flowcast.space/dashboard
-- **Calendar:** https://flowcast.space/dashboard (Calendar tab)
 - **Pricing:** https://flowcast.space/pricing
 - **FAQ:** https://flowcast.space/faq (⚠️ needs content)
 - **GitHub:** https://github.com/182Gandalf/FlowCast
@@ -199,4 +140,4 @@
 
 ---
 
-*Updated automatically at midnight UTC. Next update: March 12, 2026.*
+*Updated manually. No fixed launch date — shipping when ready.*
