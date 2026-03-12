@@ -1,3 +1,101 @@
+# Critical Context & Lessons Learned - Updated March 12, 2026 (22:00 UTC)
+
+## March 12, 2026 — Evening Sprint Complete
+
+### Latest Commit: `db0caed` | All features live on Railway
+
+### Features Shipped Today (Full Day — 27+ commits)
+
+**Studio Plan — All features confirmed:**
+- ✅ 90-day calendar (backend `_get_tier_days("studio")=(90,90)` + visible lock banner for non-Studio)
+- ✅ Daily trend digest email (studio_daily_digest scheduler 07:00 UTC)
+- ✅ Workspace switcher: 5 slots Studio / 1 others, localStorage, add/rename/delete, locked slots visible with 🔒
+- ✅ White-label PDF exports: scripts, hooks, content-pack, calendar (reportlab, brand settings on CreatorProfile)
+- ✅ Zapier webhook: `POST /webhooks/zapier` → returns `{scripts:[...5], ideas:[...5]}`
+
+**New DB tables (auto-migrated on Railway deploy):**
+- `api_keys` (id, user_id UNIQUE, api_key 32-char, created_at) — for Zapier auth
+- `creator_profiles` new cols: brand_name, brand_color, brand_logo_url
+
+**New routes:**
+- `GET/POST /api/export/branding` — brand settings
+- `GET /api/export/pdf/{scripts,hooks,content-pack}` — Studio PDF exports
+- `GET /api/calendar/export/pdf` — Studio branded calendar PDF
+- `GET/POST /api/settings/api-key`, `/api/settings/generate-api-key`
+- `POST /webhooks/zapier`
+- `GET /faq`, `GET /help`
+
+**New pages:**
+- `/faq` — 35 questions, 8 sections, live search, accordion
+- `/help` — full tutorial, sticky TOC, 9 sections (onboarding → taste profile)
+
+**Bug fixed:** Ideas counter always showed 20 — was reading `User.splash_ideas_used_this_month` (never written); fixed to read `CreatorProfile.splash_ideas_used_this_month`
+
+**Product knowledge correction:** "Tweaks" = regenerates ALL 5 ideas with fresh angles. NOT a single idea. FAQ + help guide corrected.
+
+**Content updates:**
+- Day 7 splash email: added retention paragraph after "Creator-tier FlowCast learns all of that."
+- All 13 templates: static logo.jpg → `<video autoplay loop muted playsinline>` animated logo
+- Dashboard dropdown: Help Guide + FAQ + Email Support links
+
+**Settings page (`/settings`):** Integrations section — generate/regenerate API key, 30s full-key display, double-click confirm for regen, Zapier instructions
+
+### Reminder Active
+- Tomorrow 9AM NL (8AM UTC): check Railway logs for pytrends nightly scheduler — did all 17 niches populate?
+
+---
+
+## March 12, 2026 — Phase 5 Complete: Email Sequences + Trend Intelligence
+
+### Summary
+**19+ commits** — Trends tab live, email digest system built, OG image updated, deliverability hardened, onboarding Splash fix.
+
+### Key Completions
+
+**Phase 5: Email Sequences — COMPLETE ✅**
+- `services/email.py` — Resend SDK wrapper, FROM display name, plain-text + headers
+- `services/digests.py` — `generate_digest_scripts()` (Gemini), `generate_and_send_trend_digest()`, Day 7 email
+- `services/scheduler.py` — Creator weekly digest (Mon 07:00), Studio daily digest (07:00), Day 7 hourly check
+- Admin endpoints: `/api/admin/test/send-digest`, `/api/admin/test/send-day7-email`
+- Both test emails confirmed delivered ✅ (Fitness niche, Creator + Splash tiers)
+
+**Trends Tab — LIVE ✅**
+- `/api/trends/current` returns 10 topics with score bars + `fetched_at` timestamp
+- Splash gating: topic #1 visible, #2–10 blurred + "Upgrade to Creator" overlay
+- Pricing page updated: "Trend Intelligence" section added to all 3 plans
+- pytrends `urllib3<2` pinned — scheduler runs at 03:00 UTC with 60s+jitter between fetches
+
+**Email Deliverability Hardened:**
+- Day 7 email is plain/personal (no HTML template) — targets Primary inbox
+- All emails have plain-text versions + `List-Unsubscribe` headers
+- FROM: `Daz from FlowCast <hello@flowcast.space>`
+- DMARC `p=quarantine` ✅, DKIM ✅, SPF gap: needs `include:amazonses.com` in Cloudflare
+- `FROM_NAME` env var needed in Railway
+
+**OG Image Updated:**
+- Was: square 1024×1024 logo-only
+- Now: 1200×630 cropped from Daz's brand reference JPG
+- Cache-busted with `?v=3` in index.html + pricing.html
+
+**Onboarding Splash Fix:**
+- Splash users were blocked from submitting onboarding (Q7 blank validation check)
+- Fix: frontend skips disabled inputs; backend Q6–10 made Optional in Pydantic model
+
+**Key Decisions:**
+- **No fixed launch date** — ship when ready (Daz, March 12)
+- SerpAPI ($25/mo) planned as pytrends replacement at first paying user milestone
+- Day 7 email deliberately plain — Primary inbox > marketing template
+- Gemini key (DIGEST_API_KEY) was suspended initially — replaced by Daz mid-session, now working
+
+### Known Gap
+- **SPF record** missing Resend: add `include:amazonses.com` to Cloudflare DNS (TXT record)
+- **FROM_NAME** env var needs adding in Railway dashboard
+
+### Commits Today
+`f43f7a5` `a208db3` `0fcc86c` `6edc7b0` `6faff41` `9cb10c1` `1fdee53` `35d8686` `604863d` `b06e260` `4138896` `4f2f05c` `f7c6b92` `148bcaf` `4791e40`
+
+---
+
 # Critical Context & Lessons Learned - Updated March 11, 2026 (22:00 UTC)
 
 ## March 11, 2026 — Major Polish & Bug Fixes Day
