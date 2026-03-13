@@ -1,4 +1,42 @@
-# Critical Context & Lessons Learned - Updated March 12, 2026 (22:00 UTC)
+# Critical Context & Lessons Learned - Updated March 13, 2026 (21:00 UTC)
+
+## March 13, 2026 — Full Sprint Day (Evening Update)
+
+### Key Completions (afternoon/evening session)
+- **Creator Pro tier** live: $25/mo / $20/mo annual — 90-day calendar, daily digest, Zapier access, 20 saves
+  - Paddle env vars still needed: `PADDLE_PRICE_CREATOR_PRO_MONTHLY`, `PADDLE_PRICE_CREATOR_PRO_ANNUAL`
+- **Success Compounder** built: replaces Niche Filtering in taste profile — users paste video links → AI extracts content intelligence → highest-priority signal in idea generation
+  - Needs `alembic upgrade head` on Railway
+- **Interactive landing page demo** live: niche/tone picker → 3 live AI ideas → conversion panel
+- **pytrends rate limit fix**: delays 150-200s, batch pauses, retry pass
+- **Digest fix**: max_tokens 2000→4000, partial JSON salvage, skip placeholder emails
+- **Save limits**: Splash 5, Creator 15, Creator Pro 20
+- **Annual 14-day guarantee** on pricing page (both toggles + refund policy)
+- Multiple dashboard UX fixes: nav reorder, padding, button alignment, calendar nudge text, hooks button visible, mobile hook fix (position:relative on hook-card)
+
+### Active Pending Items
+- [ ] Paddle: create Creator Pro product, set 2 Railway env vars
+- [ ] Railway: run `alembic upgrade head` (video_signals table)
+- [ ] SPF record: add `include:amazonses.com` to Cloudflare
+- [ ] Railway: add `FROM_NAME` env var
+- [ ] Fix stale daily midnight analysis cron
+
+## March 13, 2026 — Launch Day (End of Day)
+
+### Day Summary
+- Quiet day — no direct user interaction; automated crons ran as scheduled
+- **FlowCast improvement cron** (11:00 UTC): surfaced hero headline typo ("aboutwhat" → "about what") to Daz via Telegram
+- **Daily analysis cron is stale** — `flowcast-daily-improvements.md` last updated 2026-02-27; midnight analysis job appears broken/never auto-updating — needs investigation
+- No confirmation received from Daz on typo fix or Railway logs
+
+### Carried-Forward Blockers (from March 12 + today)
+- [ ] Hero headline typo fix — confirm deployed to flowcast.space
+- [ ] Railway logs: did pytrends nightly scheduler populate all 17 niches?
+- [ ] SPF record: add `include:amazonses.com` to Cloudflare DNS
+- [ ] Railway env var: `FROM_NAME` still needs adding in Railway dashboard
+- [ ] Fix/investigate daily midnight FlowCast analysis cron (stale since 2026-02-27)
+
+---
 
 ## March 12, 2026 — Evening Sprint Complete
 
