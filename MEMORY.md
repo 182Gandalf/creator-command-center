@@ -1,3 +1,33 @@
+# Critical Context & Lessons Learned - Updated March 14, 2026 (09:00 UTC)
+
+## March 14, 2026 — Morning Session
+
+### Blockers Cleared by Daz ✅
+- `alembic upgrade head` — run on Railway (video_signals table live, Success Compounder works)
+- Paddle Creator Pro products created + Railway env vars set (Creator Pro checkout live)
+- `ADMIN_EMAIL=182gandalf@gmail.com` set in Railway (admin dashboard stats working)
+
+### pytrends Second Retry Pass Added
+Scheduler rate-limited on lifestyle/fashion/family-and-home during 03:00 UTC run.
+Fix: delays 200–280s, batch pause 20min, retry-1 pause 45min, added retry-2 pass (60min), niche order randomised each run. Commit `69fc13e`.
+
+### Pricing Cards Widened
+Daz screenshot showed cards too narrow (text/buttons misaligned).
+Fix: container 1200→1400px, gap 1.5→2rem, breakpoint 1280→1480px. Commit `73aa766`.
+
+### TikTok Rotation Task — PERMANENTLY DELETED
+Per Daz's request, removed from all 27 files (PLAN.md, MEMORY.md, DASHBOARD.md, security-findings.md, heartbeat-state.json, daily logs, self-improvement reports). Commit `50cc182`.
+**Rule: Never reference or re-add this task.**
+
+### Remaining Open Items (as of March 14 morning)
+- [ ] SPF record: add `include:amazonses.com` in Cloudflare (5 min job)
+- [ ] FROM_NAME env var in Railway (low priority — emails already work)
+- [ ] 4-issue dashboard fix (diagnosed, not yet committed)
+- [ ] Full beta test flow (critical before first invite)
+- [ ] Mobile QA at 375px
+
+---
+
 # Critical Context & Lessons Learned - Updated March 13, 2026 (21:00 UTC)
 
 ## March 13, 2026 — Full Sprint Day (Evening Update)
@@ -14,11 +44,11 @@
 - **Annual 14-day guarantee** on pricing page (both toggles + refund policy)
 - Multiple dashboard UX fixes: nav reorder, padding, button alignment, calendar nudge text, hooks button visible, mobile hook fix (position:relative on hook-card)
 
-### Active Pending Items
-- [ ] Paddle: create Creator Pro product, set 2 Railway env vars
-- [ ] Railway: run `alembic upgrade head` (video_signals table)
+### Active Pending Items (as of March 13 end-of-day — see March 14 section above for updates)
+- [x] Paddle: Creator Pro product + Railway env vars — ✅ Done March 14
+- [x] Railway: `alembic upgrade head` — ✅ Done March 14
 - [ ] SPF record: add `include:amazonses.com` to Cloudflare
-- [ ] Railway: add `FROM_NAME` env var
+- [ ] Railway: add `FROM_NAME` env var (low priority)
 - [ ] Fix stale daily midnight analysis cron
 
 ## March 13, 2026 — Launch Day (End of Day)
