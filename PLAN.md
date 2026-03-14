@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-14 00:00 UTC
+**Last Updated:** 2026-03-14 08:05 UTC
 
 ---
 
@@ -96,9 +96,9 @@
 
 ### 🚧 Pending — Needs Action
 
-- [ ] **`alembic upgrade head`** — Run on Railway to create `video_signals` table + `video_signals_count` column on `creator_profiles` *(BLOCKING for Success Compounder)*
-- [ ] **Paddle Creator Pro products** — Create in Paddle dashboard, then set `PADDLE_PRICE_CREATOR_PRO_MONTHLY` + `PADDLE_PRICE_CREATOR_PRO_ANNUAL` in Railway *(BLOCKING for Creator Pro checkout)*
-- [ ] **Set `ADMIN_EMAIL=182gandalf@gmail.com`** in Railway env vars *(BLOCKING for admin stats)*
+- [x] **`alembic upgrade head`** — ✅ Done March 14 — `video_signals` table live
+- [x] **Paddle Creator Pro products** — ✅ Done March 14 — env vars set in Railway
+- [x] **Set `ADMIN_EMAIL=182gandalf@gmail.com`** — ✅ Done March 14
 - [ ] **4-issue dashboard fix** — pricing grid layout, calendar nudge text, hooks button visibility, mobile hook button handlers (see details below)
 - [ ] **Full beta test flow** — sign up → onboard → ideas → hooks → scripts → calendar → save → export
 - [ ] **Mobile QA** — Real device test at 375px across all tabs
@@ -119,10 +119,10 @@
 
 ## 🎯 Today's Priorities (March 14)
 
-### 🔴 Must Do (Blocking Features)
-1. **Run `alembic upgrade head`** on Railway — creates `video_signals` table (Success Compounder needs this)
-2. **Create Creator Pro products in Paddle** — then set the 2 env vars in Railway
-3. **Set `ADMIN_EMAIL`** in Railway (admin dashboard shows 0 counts without it)
+### ✅ Blocking Items — ALL CLEARED (March 14 morning)
+1. ~~**Run `alembic upgrade head`**~~ — ✅ Done
+2. ~~**Create Creator Pro products in Paddle**~~ — ✅ Done
+3. ~~**Set `ADMIN_EMAIL`**~~ — ✅ Done
 
 ### 🟡 Should Do
 4. **Complete the 4-issue dashboard fix** — commit the diagnosed changes
@@ -141,9 +141,9 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| `alembic upgrade head` not run | HIGH | 🔴 Blocking | Success Compounder won't work |
-| Paddle Creator Pro products missing | HIGH | 🔴 Blocking | Creator Pro checkout broken |
-| `ADMIN_EMAIL` not set | MEDIUM | 🔴 Action needed | Admin dashboard stats broken |
+| `alembic upgrade head` not run | HIGH | ✅ Done Mar 14 | Success Compounder live |
+| Paddle Creator Pro products missing | HIGH | ✅ Done Mar 14 | Creator Pro checkout live |
+| `ADMIN_EMAIL` not set | MEDIUM | ✅ Done Mar 14 | Admin dashboard stats live |
 | SPF record missing Resend | MEDIUM | 🟡 Pending | Add `include:amazonses.com` in Cloudflare |
 | Beta testing not done | HIGH | 🟡 Ongoing | Must complete before inviting users |
 | TikTok Secret Rotation | HIGH | 🔴 Overdue | Security risk — day 14+ |
@@ -168,9 +168,9 @@
 
 ## 🎯 Daz's Open Action Items
 
-1. [ ] **`alembic upgrade head`** on Railway — creates `video_signals` table *(ASAP)*
-2. [ ] **Create Creator Pro products in Paddle** — set 2 env vars in Railway *(ASAP)*
-3. [ ] **Set `ADMIN_EMAIL=182gandalf@gmail.com`** in Railway *(ASAP)*
+1. [x] **`alembic upgrade head`** on Railway — ✅ Done March 14
+2. [x] **Create Creator Pro products in Paddle** — ✅ Done March 14
+3. [x] **Set `ADMIN_EMAIL=182gandalf@gmail.com`** in Railway — ✅ Done March 14
 4. [ ] **SPF record** — Cloudflare → add `include:amazonses.com` *(5 min)*
 5. [ ] **Add `FROM_NAME` env var** in Railway dashboard
 6. [ ] **TikTok secret rotation** — CRITICAL security risk, seriously overdue
@@ -180,9 +180,9 @@
 
 ## 📋 Before First Beta User Checklist
 
-- [ ] `alembic upgrade head` run on Railway (video_signals table)
-- [ ] Paddle Creator Pro products created + Railway env vars set
-- [ ] `ADMIN_EMAIL` set in Railway
+- [x] `alembic upgrade head` run on Railway (video_signals table) — ✅ Mar 14
+- [x] Paddle Creator Pro products created + Railway env vars set — ✅ Mar 14
+- [x] `ADMIN_EMAIL` set in Railway — ✅ Mar 14
 - [ ] `/admin` page verified (stats load for admin email)
 - [ ] Full sign-up → onboarding → generate → save → export flow tested
 - [ ] Feedback widget tested on dashboard + pricing (now captures user_id ✅)
