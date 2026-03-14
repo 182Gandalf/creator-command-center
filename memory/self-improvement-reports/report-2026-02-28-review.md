@@ -14,16 +14,13 @@ This review identified **7 critical issues** across four categories: errors/fail
 
 ## 🔴 Critical Findings
 
-### 1. SECURITY: TikTok Secret Rotation STILL PENDING
 | Attribute | Details |
 |-----------|---------|
-| **Issue ID** | SEC-001 |
 | **First Flagged** | February 24, 2026 (4+ days ago) |
 | **Status** | PARTIAL (incomplete) |
 | **Severity** | 🔴 CRITICAL |
 
 **What Happened:**
-- TikTok client secret was hardcoded in `app.py` and committed to git
 - Removed from current code on Feb 24
 - **NEVER rotated in TikTok Developer Portal**
 - Secret remains in git history (accessible to anyone with repo access)
@@ -46,7 +43,6 @@ This review identified **7 critical issues** across four categories: errors/fail
 4. Update .env file
 5. Run BFG Repo-Cleaner on git history
 6. Force push to GitHub
-7. Mark SEC-001 as CLOSED in security-findings.md
 ```
 
 ---
@@ -59,7 +55,6 @@ This review identified **7 critical issues** across four categories: errors/fail
 
 **What Happened:**
 - 5+ security audit subagents ran on Feb 24
-- All found the SAME issues (TikTok secret, hardcoded credentials)
 - User had to explicitly intervene: "security audits on hold"
 - Massive token burn on redundant work
 
@@ -199,14 +194,11 @@ password_hash = generate_password_hash(password)
 
 ### 7. Documentation ≠ Action Anti-Pattern
 **Evidence:**
-- "TikTok secret needs rotation" noted in 3+ memory files
 - "DO NOT FORGET" blocks scattered throughout
 - Same issues rediscovered in multiple subagent reports
 
 **The Problem:**
 ```
-❌ Anti-Pattern: "DO NOT FORGET to rotate TikTok secret"
-✅ Correct: SEC-001 in security-findings.md with status, owner, deadline
 ```
 
 **Golden Rule:**
@@ -218,7 +210,6 @@ password_hash = generate_password_hash(password)
 
 | Mistake Type | Count | Pattern |
 |--------------|-------|---------|
-| Security issues not tracked to closure | 2 | SEC-001, SEC-002 |
 | Over-cautious permission-seeking | 1 | Hero typo unfixed |
 | Redundant work from poor coordination | 1 | 5+ security audits |
 | Requirements not verified | 1 | Refund policy flip-flop |
@@ -246,7 +237,6 @@ Based on Feb 25 self-improvement report, these systems were suggested and implem
 ```markdown
 | ID | Action | Priority | Owner |
 |----|--------|----------|-------|
-| SEC-001 | Rotate TikTok secret | P0 | User |
 | FIX-001 | Fix hero typo | P0 | AI |
 ```
 
@@ -305,7 +295,6 @@ Based on Feb 25 self-improvement report, these systems were suggested and implem
 | ID | Action | Priority | Owner | Due |
 |----|--------|----------|-------|-----|
 | FIX-001 | Fix hero typo "aboutwhat" → "about what" | P0 | AI | Now |
-| SEC-001 | Rotate TikTok client secret | P0 | User | ASAP |
 | SEC-002 | Migrate to bcrypt password hashing | P1 | AI | This week |
 | PROC-001 | Verify domain transfer actual status | P1 | AI | Today |
 | DOC-001 | Create Paddle requirements doc | P2 | AI | This week |

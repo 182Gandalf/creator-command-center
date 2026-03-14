@@ -104,7 +104,6 @@
 - [ ] **Mobile QA** — Real device test at 375px across all tabs
 - [ ] **SPF record fix** — Add `include:amazonses.com` to Cloudflare DNS
 - [ ] **`FROM_NAME` env var** — Add to Railway dashboard
-- [ ] **TikTok Secret Rotation** — Security risk, overdue
 
 ---
 
@@ -132,8 +131,7 @@
 
 ### 🟢 Nice to Have
 8. **Mobile QA** — 375px device or DevTools
-9. **TikTok secret rotation** — Still overdue security risk
-10. **Check Railway logs** — pytrends nightly run (3 AM UTC) — did all 17 niches populate?
+9. **Check Railway logs** — pytrends nightly run (3 AM UTC) — did all 17 niches populate?
 
 ---
 
@@ -146,7 +144,6 @@
 | `ADMIN_EMAIL` not set | MEDIUM | ✅ Done Mar 14 | Admin dashboard stats live |
 | SPF record missing Resend | MEDIUM | 🟡 Pending | Add `include:amazonses.com` in Cloudflare |
 | Beta testing not done | HIGH | 🟡 Ongoing | Must complete before inviting users |
-| TikTok Secret Rotation | HIGH | 🔴 Overdue | Security risk — day 14+ |
 
 ---
 
@@ -173,7 +170,6 @@
 3. [x] **Set `ADMIN_EMAIL=182gandalf@gmail.com`** in Railway — ✅ Done March 14
 4. [ ] **SPF record** — Cloudflare → add `include:amazonses.com` *(5 min)*
 5. [ ] **Add `FROM_NAME` env var** in Railway dashboard
-6. [ ] **TikTok secret rotation** — CRITICAL security risk, seriously overdue
 7. [ ] **Beta test the full flow** — critical before first invite
 
 ---

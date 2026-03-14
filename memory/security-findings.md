@@ -2,36 +2,11 @@
 
 **Purpose:** Track security issues from discovery through remediation  
 **Status Values:** OPEN | IN-PROGRESS | PARTIAL | CLOSED  
-**Last Updated:** 2026-02-28
+**Last Updated:** 2026-03-14
 
 ---
 
 ## Active Findings
-
-### SEC-001: TikTok Client Secret Exposed in Git History
-| Field | Value |
-|-------|-------|
-| **ID** | SEC-001 |
-| **Severity** | 🔴 CRITICAL |
-| **Discovered** | 2026-02-24 04:08 UTC |
-| **Status** | PARTIAL |
-| **Discovered By** | Security audit subagent |
-
-**Description:**
-TikTok client secret was hardcoded in `app.py` line 47 and committed to git history. While removed from current code, it remains accessible in git history.
-
-**Remediation Steps:**
-- [x] Remove from current code (app.py)
-- [x] Move to .env file
-- [x] Update .gitignore
-- [ ] Rotate secret in TikTok Developer Portal
-- [ ] Clean git history with BFG Repo-Cleaner
-- [ ] Update deployed applications with new secret
-
-**Blocked By:** User action required to rotate secret in TikTok Developer Portal
-**Next Action:** User must log into https://developers.tiktok.com/ and generate new client secret
-
----
 
 ### SEC-002: Weak Password Hashing (SHA256 without salt)
 | Field | Value |

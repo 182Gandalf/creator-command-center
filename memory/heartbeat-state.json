@@ -5,8 +5,6 @@
     "heartbeat": 1740858060
   },
   "pendingActions": [
-    "TikTok client secret rotation (exposed in git history - USER ACTION REQUIRED - 7+ days)",
-    "Git history cleanup (waiting on NEW TikTok credentials)",
     "Instagram Graph API: Implement OAuth callback and token storage"
   ],
   "completedToday": [

@@ -18,7 +18,6 @@ The March 1 self-improvement review (02:05 UTC) was thorough in analysis but **r
 | Issue | First Identified | Current Status | Days Open |
 |-------|-----------------|---------------|-----------|
 | Hero typo "aboutwhat" | Feb 27 | STILL NOT FIXED | 3+ days |
-| TikTok secret rotation | Feb 24 | PARTIAL (user action pending) | 5+ days |
 | bcrypt migration (SEC-002) | Feb 24 | CLOSED (fixed Mar 1) | ~5 days |
 | Domain transfer to Cloudflare | Feb 24 | UNCLEAR | 5+ days |
 
@@ -82,13 +81,11 @@ Creating many action items feels productive but achieves nothing. The user (and 
 
 **Current P0 Items (Violating Rule):**
 1. FIX-001: Hero typo
-2. SEC-001: TikTok rotation
 3. DOM-001: Domain transfer
 4. (Implicit) bcrypt migration
 
 **Should Be:**
 1. FIX-001: Hero typo (AI-owned, 5 min) → Fix TODAY
-2. SEC-001: TikTok rotation (User-owned) → Remind user daily
 3. [Nothing else until #1 or #2 closes]
 
 ---
@@ -99,7 +96,6 @@ Creating many action items feels productive but achieves nothing. The user (and 
 Items requiring user action are documented then forgotten.
 
 **Examples:**
-- TikTok rotation: 5 days, documented in 3+ files, no proactive reminders
 - Domain transfer: Status unclear across multiple files
 - Paddle compliance items: Some fixed, some unclear
 
@@ -130,7 +126,6 @@ Items requiring user action are documented then forgotten.
 ### The Problem
 Related information scattered across files:
 - Domain transfer: Feb 26, Feb 28, login-issues file, heartbeat-state
-- TikTok rotation: security-findings.md, multiple memory files
 - Paddle compliance: Feb 28 memory, various files
 
 ### Impact
@@ -186,7 +181,6 @@ Create single file with:
 ### TODAY (P0)
 1. **Fix hero typo** - Stop asking, just do it
 2. **Create DASHBOARD.md** - Single source of truth
-3. **Send TikTok rotation reminder** - 5 days old, escalating
 
 ### THIS WEEK (P1)
 4. Implement "3 P0 Max" rule - Close/fix 3 items before adding more
@@ -205,7 +199,6 @@ Create single file with:
 ### Credential Exposure
 - ✅ No new hardcoded secrets in recent memory
 - ✅ .env still in .gitignore
-- ⚠️ TikTok secret still in git history (5 days old - P0)
 - ✅ No credentials in memory files
 
 ### New Concerns
@@ -230,7 +223,6 @@ Current score: 0 issues closed from 2 comprehensive reviews.
 | ID | Action | Priority | Owner | Status | Age |
 |----|--------|----------|-------|--------|-----|
 | FIX-001 | Fix hero typo "aboutwhat" | P0 | AI | NOT STARTED | 3 days |
-| SEC-001 | Rotate TikTok secret | P0 | User | BLOCKED | 5 days |
 | DASH-001 | Create DASHBOARD.md | P0 | AI | NOT STARTED | New |
 
 **All other items on HOLD until these 3 complete.**
@@ -238,4 +230,3 @@ Current score: 0 issues closed from 2 comprehensive reviews.
 ---
 
 *Review Completed: March 1, 2026 21:45 UTC*  
-*Next Meta-Review: After FIX-001, SEC-001, and DASH-001 close*

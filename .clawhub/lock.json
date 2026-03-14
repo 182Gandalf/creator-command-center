@@ -12,6 +12,30 @@
     "gog": {
       "version": "1.0.0",
       "installedAt": 1771481137051
+    },
+    "flask": {
+      "version": "1.0.0",
+      "installedAt": 1772823015866
+    },
+    "paddle": {
+      "version": "1.0.0",
+      "installedAt": 1772823036351
+    },
+    "fastapi-patterns": {
+      "version": "1.0.0",
+      "installedAt": 1772898026456
+    },
+    "content-ideas-free": {
+      "version": "1.0.0",
+      "installedAt": 1772898031316
+    },
+    "seo": {
+      "version": "1.0.3",
+      "installedAt": 1772898037149
+    },
+    "railway-skill": {
+      "version": "0.1.0",
+      "installedAt": 1772898042313
     }
   }
 }

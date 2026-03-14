@@ -13,7 +13,6 @@ Multiple subagents (04:08, 06:38, 09:03, 10:32 UTC) all flagged the SAME hardcod
 
 ### The Mistake
 - Security was treated as an audit task, not a design principle
-- Credentials were hardcoded in the first place (TikTok secret in app.py line 47)
 - API keys stored in markdown files instead of environment variables
 - Passwords committed to git history
 
@@ -61,23 +60,19 @@ Example structure:
 ## Pattern 3: Incomplete Remediation
 
 ### What Happened
-- TikTok client secret was flagged as exposed at 04:08 UTC
 - By 22:00 UTC, it was removed from code BUT still exists in git history
-- Memory notes: "**TikTok client secret still needs rotation**" — flagged but not done
 
 ### The Mistake
 Finding problems is not the same as solving them. Issues were documented but not tracked to completion.
 
 ### Actionable Improvement
 **Implement a FINDINGS → ACTIONS workflow:**
-1. Every finding gets an ID (e.g., SEC-001)
 2. Findings go in `memory/security-findings.md` with status: OPEN | IN-PROGRESS | CLOSED
 3. Subagents don't just report—they track remediation
 4. User-facing blockers require explicit acknowledgment
 
 For this specific case:
 ```markdown
-### SEC-001: TikTok Secret Rotation (CRITICAL)
 - **Found:** 2026-02-24 04:08 UTC
 - **Status:** PARTIALLY RESOLVED
 - **Done:** Removed from app.py, added to .env
@@ -177,7 +172,6 @@ Move from scattered "DO NOT FORGET" notes to structured:
 |----------|--------|-------|-----|
 | P0 | Create PRE-COMMIT security checklist | AI | Immediate |
 | P0 | Add .wip-status.json for subagent coordination | AI | Immediate |
-| P1 | Create security-findings.md with SEC-001 tracking | AI | Today |
 | P1 | Create CRITICAL-CONTEXT.md (migrate from scattered notes) | AI | Today |
 | P2 | Create SERVICES.md with plan requirements | AI | This week |
 | P2 | Document credential hierarchy in TOOLS.md | AI | This week |

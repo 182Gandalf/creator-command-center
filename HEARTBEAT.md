@@ -15,3 +15,5 @@
 - Keep checks lightweight — no heavy analysis
 - Self-improvement reviews run separately (weekly on Sundays via cron)
 - If nothing needs attention, reply HEARTBEAT_OK
+- **NEVER add summaries or commentary after HEARTBEAT_OK — silent ack only**
+- **NEVER send heartbeat status updates to chat — commit findings to memory files instead**
