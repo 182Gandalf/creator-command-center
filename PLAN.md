@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-14 08:05 UTC
+**Last Updated:** 2026-03-15 00:00 UTC
 
 ---
 
@@ -20,118 +20,83 @@
 
 ## 📊 Current Status
 
+### ✅ Completed (March 15 — Overnight / Early Morning)
+
+- [x] **Trust badges** — 🔒 SSL Secure · 💳 Paddle Payments · 🛡️ Privacy Protected added to sign-up + sign-in pages
+- [x] **Hook hint texts updated** — Both hints now say "Then proceed to the Scripts tab."
+- [x] **Hook generator orange banner** → replaced with plain orange text (matches scorer style)
+- [x] **Hook scorer copy button fix** — data-hook-text + addEventListener (no more raw JS in button)
+- [x] **Hooks section overhaul** — info banners, scorer buttons match generator style, copy+save on scorer results
+- [x] **Onboarding tones expanded** — Added Honest/Raw, Inspiring, Casual to Q3 + whitelist fixed
+- [x] **"See how it works" scroll fix** — scroll-padding-top accounts for fixed header + beta bar
+- [x] **Help guide table of contents** — inline TOC with 9 hyperlinked sections
+- [x] **/hooks + /calendar disabled** — both 301 → /dashboard
+- [x] **Onboarding logo size** — constrained to 36×36px (was expanding full width)
+- [x] **PADDLE_CLIENT_TOKEN** — confirmed server-injected, never hardcoded
+- [x] **Beta announcement bar** — gradient bar on landing page + callout card on pricing page (dismissable, localStorage)
+- [x] **Pricing summary mobile grid** — replaced inline `repeat(4,1fr)` with responsive 2×2 class
+- [x] **Dashboard padding** — tab content + container bottom padding + scroll-padding-top
+- [x] **Admin feedback text** — long messages now wrap instead of truncating
+
+---
+
+### ✅ Completed (March 14 — Full Day Sprint)
+
+**Blockers Cleared by Daz ✅**
+- [x] `alembic upgrade head` — video_signals table live, Success Compounder works
+- [x] Paddle Creator Pro products created + Railway env vars set
+- [x] `ADMIN_EMAIL=182gandalf@gmail.com` set in Railway
+
+**Shipped**
+- [x] pytrends retry hardening — delays 200–280s, 20min batch pause, 45min + 60min retry passes, randomised niche order
+- [x] Pricing cards widened — container 1400px, gap 2rem, breakpoint 1480px
+- [x] TikTok task permanently removed from all 27 files
+
+---
+
 ### ✅ Completed (March 13 — Full Day Sprint)
 
-**Creator Pro Tier — COMPLETE**
-- [x] Full implementation across 16 files: $25/mo monthly, $20/mo annual
-- [x] 90-day calendar, daily digest, Zapier access
-- [x] Save limit 20 (raised from sub-agent default of 15)
-- [x] Paddle env vars documented (`PADDLE_PRICE_CREATOR_PRO_MONTHLY`, `PADDLE_PRICE_CREATOR_PRO_ANNUAL`)
-
-**Success Compounder — COMPLETE**
-- [x] Replaces "Niche Filtering" in taste profile
-- [x] Users paste YouTube/TikTok/Instagram URLs → AI extracts content intelligence
-- [x] Highest-priority signal in idea generation
-- [x] DB table `video_signals` + alembic migration created
-- [x] Sidebar UI with progress bar
-- [x] FAQ + Help Guide updated with 3 new Q&As
-
-**Interactive Landing Page Demo — COMPLETE**
-- [x] `POST /api/demo/generate` endpoint with IP rate limit + 6hr cache
-- [x] Niche + tone picker → 3 live AI idea cards
-- [x] Button text evolves over 3 clicks
-- [x] Conversion panel replaces cards on 3rd click
-- [x] Animated logo as loading state
-
-**pytrends & Digest Fixes — COMPLETE**
-- [x] Rate limit fix: 150–200s delays, batch pauses, retry pass
-- [x] Digest truncation fix: max_tokens 2000→4000, partial JSON salvage, skip placeholder emails
-
-**Save Limits & Pricing**
-- [x] Splash: 2→5 saves, Creator: 7→15 saves, Creator Pro: 20 saves
-- [x] 14-day annual money-back guarantee on pricing page (both toggles + refund policy)
-
-**UX Fixes**
-- [x] Dashboard padding — all tabs + sidebar `!important` padding-bottom
-- [x] Onboarding restart warning modal with taste profile reset warning
-- [x] "Restart Onboarding" renamed from "Resume / Restart Onboarding"
-- [x] Landing page copy: early access text + "Pending Beta Feedback" testimonials heading
-
-**March 13 Evening — Admin & Zapier**
-- [x] **Zapier webhook confirmed live** — `POST /webhooks/zapier` returns correct JSON (5 ideas + 5 scripts)
-- [x] **`created_at` null fix** — `ContentIdea` model gets Python-side `default=datetime.utcnow`; Zapier route fallback added
-- [x] **Admin feedback count** — per-user feedback tally column added to Last 10 Signups table
-- [x] **CTA button alignment** — pricing summary section buttons now `margin-top: auto` (all 4 aligned)
-- [x] **Feedback auth fix** — `submitFeedback()` now passes Clerk token so `user_id` is captured (was always NULL/anon)
+- [x] Creator Pro tier — $25/mo / $20/mo annual, 90-day calendar, Zapier, 20 saves
+- [x] Success Compounder — video URL → AI content intelligence → top signal in idea gen
+- [x] Interactive landing page demo — niche/tone picker → 3 live ideas → conversion panel
+- [x] Admin feedback count, CTA alignment, feedback auth fix
+- [x] Zapier webhook confirmed live
 
 ---
 
-### ✅ Completed (March 12 — Evening Sprint)
+### ✅ Completed (March 12 and Earlier)
 
-**Beta Readiness Pass — ALL 7 PARTS COMPLETE**
-- [x] Loading states, error handling, input sanitization, mobile responsiveness
-- [x] Admin dashboard — `/admin` + `/api/admin-ui/stats`
-- [x] Feedback widget — Fixed bottom-right on 5 pages
-- [x] Security audit — No hardcoded keys, all routes return 401/403 correctly
-
-**Studio Features — ALL COMPLETE**
-- [x] White-label PDF exports, 90-day calendar, daily trend digest, workspace switcher
-
-**Content Pages**
-- [x] FAQ page `/faq`, Help Guide `/help`, Zapier webhook
-
-**Email & Deliverability**
-- [x] Phase 5 email sequences — Creator weekly, Studio daily, Day 7 all live
-
----
-
-### ✅ Completed (March 11 and Earlier)
-
-- [x] Phase 1: Paddle Billing — full subscription lifecycle
-- [x] Phase 2: AI Content Engine — Ideas, Hooks, Scripts, Calendar, Taste Profile
-- [x] Phase 3: Personalization — Niche & Tone dropdown, onboarding data
-- [x] Phase 4: Trend Intelligence — live scheduler, Trends tab, trend injection
+- [x] Beta Readiness Pass — all 7 parts (loading states, error handling, mobile, admin, security)
+- [x] Studio Features — PDFs, 90-day calendar, daily digest, workspace switcher
+- [x] Phase 1–5 — Paddle billing, AI content engine, personalization, trends, email sequences
 
 ---
 
 ### 🚧 Pending — Needs Action
 
-- [x] **`alembic upgrade head`** — ✅ Done March 14 — `video_signals` table live
-- [x] **Paddle Creator Pro products** — ✅ Done March 14 — env vars set in Railway
-- [x] **Set `ADMIN_EMAIL=182gandalf@gmail.com`** — ✅ Done March 14
-- [ ] **4-issue dashboard fix** — pricing grid layout, calendar nudge text, hooks button visibility, mobile hook button handlers (see details below)
-- [ ] **Full beta test flow** — sign up → onboard → ideas → hooks → scripts → calendar → save → export
+- [ ] **Full beta test flow** — sign up → onboard → ideas → hooks → scripts → calendar → save → export — CRITICAL before first invite
 - [ ] **Mobile QA** — Real device test at 375px across all tabs
-- [ ] **SPF record fix** — Add `include:amazonses.com` to Cloudflare DNS
-- [ ] **`FROM_NAME` env var** — Add to Railway dashboard
+- [ ] **SPF record fix** — Add `include:amazonses.com` to Cloudflare DNS *(5 min)*
+- [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
+- [ ] **Daily analysis cron** — Midnight scan stale since Feb 27, not auto-updating — needs fix
+- [ ] **Admin page verified** — confirm stats load correctly for admin email
 
 ---
 
-### 📋 4-Issue Dashboard Fix (Diagnosed, Not Yet Committed)
+## 🎯 Today's Priorities (March 15)
 
-1. **Pricing grid 4-column layout** — `repeat(auto-fit, minmax(200px, 1fr))` → `repeat(4, 1fr)` at line ~423 of `pricing.html`
-2. **Calendar nudge text** — Splash message: "Splash users have a 7-day calendar, upgrade to Creator to unlock up to 30 days. Upgrade to Creator →" (lines 3718-3720 of `dashboard-new.html`)
-3. **Generate hook button missing on desktop** — `#hooks-initial-generate-btn` is inside `#hooks-idea-banner` which is `display:none`; needs to be exposed on desktop
-4. **Mobile hook buttons not responding on 1st generated hook** — click handlers around lines 5808-5908 of `dashboard-new.html` need investigation
-
----
-
-## 🎯 Today's Priorities (March 14)
-
-### ✅ Blocking Items — ALL CLEARED (March 14 morning)
-1. ~~**Run `alembic upgrade head`**~~ — ✅ Done
-2. ~~**Create Creator Pro products in Paddle**~~ — ✅ Done
-3. ~~**Set `ADMIN_EMAIL`**~~ — ✅ Done
+### 🔴 Must Do
+1. **Full beta test flow** — end-to-end, real sign-up, every tab, every action
+2. **Fix daily midnight analysis cron** — stale since Feb 27
 
 ### 🟡 Should Do
-4. **Complete the 4-issue dashboard fix** — commit the diagnosed changes
-5. **SPF record** — Add `include:amazonses.com` in Cloudflare (5 min job)
-6. **Add `FROM_NAME` env var** in Railway
-7. **Full beta test flow** — end-to-end user journey
+3. **SPF record** — Add `include:amazonses.com` in Cloudflare (5 min)
+4. **Mobile QA** — 375px across all pages
+5. **Verify /admin stats** — confirm admin dashboard shows correct counts
 
 ### 🟢 Nice to Have
-8. **Mobile QA** — 375px device or DevTools
-9. **Check Railway logs** — pytrends nightly run (3 AM UTC) — did all 17 niches populate?
+6. **Add `FROM_NAME` env var** in Railway
+7. **Check Railway logs** — did pytrends nightly run populate all niches?
 
 ---
 
@@ -139,11 +104,10 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| `alembic upgrade head` not run | HIGH | ✅ Done Mar 14 | Success Compounder live |
-| Paddle Creator Pro products missing | HIGH | ✅ Done Mar 14 | Creator Pro checkout live |
-| `ADMIN_EMAIL` not set | MEDIUM | ✅ Done Mar 14 | Admin dashboard stats live |
-| SPF record missing Resend | MEDIUM | 🟡 Pending | Add `include:amazonses.com` in Cloudflare |
 | Beta testing not done | HIGH | 🟡 Ongoing | Must complete before inviting users |
+| Daily analysis cron stale | MEDIUM | 🔴 Broken | Last ran Feb 27 — midnight job not auto-updating |
+| SPF record missing Resend | MEDIUM | 🟡 Pending | Add `include:amazonses.com` in Cloudflare |
+| FROM_NAME env var | LOW | 🟡 Pending | Emails work without it |
 
 ---
 
@@ -157,36 +121,25 @@
 | Phase 4: Trend Intelligence | ✅ Complete | Live on Railway, scheduler running nightly 3 AM UTC |
 | Phase 5: Email Sequences | ✅ Complete | Creator weekly, Studio daily, Day 7 onboarding |
 | Beta Readiness (v0.1.0) | ✅ Complete | All 7 parts done and pushed |
-| Creator Pro Tier | ✅ Complete | Pending Paddle product creation + Railway env vars |
+| Creator Pro Tier | ✅ Complete | Live — Paddle + Railway env vars set |
 | Phase 6: Post Scheduling | ⏳ Deferred | "Coming Soon" — post-launch |
-| Real Workspace Isolation | ⏳ Deferred | Documented in FUTURE-FEATURES.md — on demand |
-
----
-
-## 🎯 Daz's Open Action Items
-
-1. [x] **`alembic upgrade head`** on Railway — ✅ Done March 14
-2. [x] **Create Creator Pro products in Paddle** — ✅ Done March 14
-3. [x] **Set `ADMIN_EMAIL=182gandalf@gmail.com`** in Railway — ✅ Done March 14
-4. [ ] **SPF record** — Cloudflare → add `include:amazonses.com` *(5 min)*
-5. [ ] **Add `FROM_NAME` env var** in Railway dashboard
-7. [ ] **Beta test the full flow** — critical before first invite
 
 ---
 
 ## 📋 Before First Beta User Checklist
 
-- [x] `alembic upgrade head` run on Railway (video_signals table) — ✅ Mar 14
+- [x] `alembic upgrade head` run on Railway — ✅ Mar 14
 - [x] Paddle Creator Pro products created + Railway env vars set — ✅ Mar 14
 - [x] `ADMIN_EMAIL` set in Railway — ✅ Mar 14
-- [ ] `/admin` page verified (stats load for admin email)
+- [x] Trust badges on sign-up/sign-in — ✅ Mar 15
+- [x] Beta announcement bar on landing + pricing — ✅ Mar 15
 - [ ] Full sign-up → onboarding → generate → save → export flow tested
-- [ ] Feedback widget tested on dashboard + pricing (now captures user_id ✅)
+- [ ] Feedback widget tested (captures user_id ✅)
 - [ ] Paddle checkout tested end-to-end (Splash → Creator upgrade)
-- [ ] Monthly limit banner verified (shows correct reset date)
 - [ ] Mobile test at 375px (ideas, hooks, calendar, onboarding)
 - [ ] Railway deploy logs checked for migration errors
 - [ ] SPF record updated in Cloudflare
+- [ ] /admin verified (stats load for admin email)
 
 ---
 
