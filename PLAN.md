@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-15 00:00 UTC
+**Last Updated:** 2026-03-16 00:00 UTC
 
 ---
 
@@ -20,53 +20,56 @@
 
 ## 📊 Current Status
 
+### ✅ Completed (March 15 — Full Day)
+
+- [x] **Ghost-tap mobile fix** — Ideas no longer generate on scroll; touchstart/touchend movement detection added (`47b3e3c`)
+- [x] **Platform heading in .txt downloads** — All script downloads (live + saved) now start with `PLATFORM: TikTok / Reels / Shorts` header (`1c5f094`)
+- [x] **Per-script PDF download** — 📄 PDF button added to each script card (live + saved); new `POST /api/export/pdf/script` endpoint (Studio only) (`21041d5`, `c3d954a`)
+- [x] **PDF content fix** — Was extracting `body`/`main_content`; now correctly pulls `script_body → script → body`, plus keywords, hashtags, description, end_screen_cta, tip — matches TXT output
+- [x] **Bulk PDF export** — Single bulk button stays at top of Saved Scripts; per-script buttons at bottom of each card
+- [x] **Daily analysis cron fixed** — Old one-shot job (Feb 27) replaced with recurring nightly job at 1:00 AM UTC; first run triggered same day
+- [x] **Header mobile overlap fixed** — Title now ellipsis-truncates, user menu is flex-shrink:0, padding reduced on mobile (`9021ffd`)
+- [x] **Pricing & Plans link** — Added to account dropdown (top-right), styled in orange (`9021ffd`)
+- [x] **Beta banner mobile font** — Reduced to 0.72rem on ≤640px screens for neater wrapping (`a399003`)
+
+---
+
 ### ✅ Completed (March 15 — Overnight / Early Morning)
 
 - [x] **Trust badges** — 🔒 SSL Secure · 💳 Paddle Payments · 🛡️ Privacy Protected added to sign-up + sign-in pages
 - [x] **Hook hint texts updated** — Both hints now say "Then proceed to the Scripts tab."
-- [x] **Hook generator orange banner** → replaced with plain orange text (matches scorer style)
-- [x] **Hook scorer copy button fix** — data-hook-text + addEventListener (no more raw JS in button)
-- [x] **Hooks section overhaul** — info banners, scorer buttons match generator style, copy+save on scorer results
+- [x] **Hook generator orange banner** → replaced with plain orange text
+- [x] **Hook scorer copy button fix** — data-hook-text + addEventListener
+- [x] **Hooks section overhaul** — info banners, scorer buttons, copy+save on scorer results
 - [x] **Onboarding tones expanded** — Added Honest/Raw, Inspiring, Casual to Q3 + whitelist fixed
 - [x] **"See how it works" scroll fix** — scroll-padding-top accounts for fixed header + beta bar
 - [x] **Help guide table of contents** — inline TOC with 9 hyperlinked sections
 - [x] **/hooks + /calendar disabled** — both 301 → /dashboard
-- [x] **Onboarding logo size** — constrained to 36×36px (was expanding full width)
-- [x] **PADDLE_CLIENT_TOKEN** — confirmed server-injected, never hardcoded
-- [x] **Beta announcement bar** — gradient bar on landing page + callout card on pricing page (dismissable, localStorage)
-- [x] **Pricing summary mobile grid** — replaced inline `repeat(4,1fr)` with responsive 2×2 class
+- [x] **Onboarding logo size** — constrained to 36×36px
+- [x] **Beta announcement bar** — gradient bar on landing + pricing page (dismissable)
+- [x] **Pricing summary mobile grid** — responsive 2×2 class
 - [x] **Dashboard padding** — tab content + container bottom padding + scroll-padding-top
-- [x] **Admin feedback text** — long messages now wrap instead of truncating
+- [x] **Admin feedback text** — long messages now wrap
 
 ---
 
-### ✅ Completed (March 14 — Full Day Sprint)
+### ✅ Completed (March 14)
 
-**Blockers Cleared by Daz ✅**
-- [x] `alembic upgrade head` — video_signals table live, Success Compounder works
-- [x] Paddle Creator Pro products created + Railway env vars set
+- [x] `alembic upgrade head` — video_signals table live
+- [x] Paddle Creator Pro products + Railway env vars set
 - [x] `ADMIN_EMAIL=182gandalf@gmail.com` set in Railway
-
-**Shipped**
-- [x] pytrends retry hardening — delays 200–280s, 20min batch pause, 45min + 60min retry passes, randomised niche order
-- [x] Pricing cards widened — container 1400px, gap 2rem, breakpoint 1480px
+- [x] pytrends retry hardening
+- [x] Pricing cards widened
 - [x] TikTok task permanently removed from all 27 files
 
 ---
 
-### ✅ Completed (March 13 — Full Day Sprint)
+### ✅ Completed (March 13 and Earlier)
 
-- [x] Creator Pro tier — $25/mo / $20/mo annual, 90-day calendar, Zapier, 20 saves
-- [x] Success Compounder — video URL → AI content intelligence → top signal in idea gen
-- [x] Interactive landing page demo — niche/tone picker → 3 live ideas → conversion panel
-- [x] Admin feedback count, CTA alignment, feedback auth fix
-- [x] Zapier webhook confirmed live
-
----
-
-### ✅ Completed (March 12 and Earlier)
-
-- [x] Beta Readiness Pass — all 7 parts (loading states, error handling, mobile, admin, security)
+- [x] Creator Pro tier — live
+- [x] Success Compounder — live
+- [x] Interactive landing page demo — live
+- [x] Beta Readiness Pass — all 7 parts
 - [x] Studio Features — PDFs, 90-day calendar, daily digest, workspace switcher
 - [x] Phase 1–5 — Paddle billing, AI content engine, personalization, trends, email sequences
 
@@ -78,19 +81,19 @@
 - [ ] **Mobile QA** — Real device test at 375px across all tabs
 - [ ] **SPF record fix** — Add `include:amazonses.com` to Cloudflare DNS *(5 min)*
 - [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
-- [ ] **Daily analysis cron** — Midnight scan stale since Feb 27, not auto-updating — needs fix
 - [ ] **Admin page verified** — confirm stats load correctly for admin email
+- [ ] **Scripts tab header missing on mobile** — header disappears when scrolling to scripts tab; under investigation
 
 ---
 
-## 🎯 Today's Priorities (March 15)
+## 🎯 Today's Priorities (March 16)
 
 ### 🔴 Must Do
-1. **Full beta test flow** — end-to-end, real sign-up, every tab, every action
-2. **Fix daily midnight analysis cron** — stale since Feb 27
+1. **Full beta test flow** — end-to-end, real sign-up, every tab, every action *(still the #1 blocker)*
+2. **Fix missing header on scripts tab (mobile)** — needs investigation + fix
 
 ### 🟡 Should Do
-3. **SPF record** — Add `include:amazonses.com` in Cloudflare (5 min)
+3. **SPF record** — Add `include:amazonses.com` in Cloudflare (5 min job)
 4. **Mobile QA** — 375px across all pages
 5. **Verify /admin stats** — confirm admin dashboard shows correct counts
 
@@ -105,7 +108,7 @@
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
 | Beta testing not done | HIGH | 🟡 Ongoing | Must complete before inviting users |
-| Daily analysis cron stale | MEDIUM | 🔴 Broken | Last ran Feb 27 — midnight job not auto-updating |
+| Scripts tab header missing (mobile) | MEDIUM | 🔴 Active | Header disappears on scripts tab scroll |
 | SPF record missing Resend | MEDIUM | 🟡 Pending | Add `include:amazonses.com` in Cloudflare |
 | FROM_NAME env var | LOW | 🟡 Pending | Emails work without it |
 
