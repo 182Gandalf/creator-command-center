@@ -79,10 +79,10 @@
 
 - [ ] **Full beta test flow** — sign up → onboard → ideas → hooks → scripts → calendar → save → export — CRITICAL before first invite
 - [ ] **Mobile QA** — Real device test at 375px across all tabs
-- [ ] **SPF record fix** — Add `include:amazonses.com` to Cloudflare DNS *(5 min)*
+- [x] **SPF record fix** — `include:amazonses.com` already present in Cloudflare DNS ✅
 - [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
 - [ ] **Admin page verified** — confirm stats load correctly for admin email
-- [ ] **Scripts tab header missing on mobile** — header disappears when scrolling to scripts tab; under investigation
+- [x] **Scripts tab header missing on mobile** — fixed ✅
 
 ---
 
@@ -90,10 +90,10 @@
 
 ### 🔴 Must Do
 1. **Full beta test flow** — end-to-end, real sign-up, every tab, every action *(still the #1 blocker)*
-2. **Fix missing header on scripts tab (mobile)** — needs investigation + fix
+2. ~~**Fix missing header on scripts tab (mobile)**~~ — ✅ Closed by Daz
 
 ### 🟡 Should Do
-3. **SPF record** — Add `include:amazonses.com` in Cloudflare (5 min job)
+3. ~~**SPF record**~~ — ✅ Already present in Cloudflare DNS
 4. **Mobile QA** — 375px across all pages
 5. **Verify /admin stats** — confirm admin dashboard shows correct counts
 
@@ -108,8 +108,8 @@
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
 | Beta testing not done | HIGH | 🟡 Ongoing | Must complete before inviting users |
-| Scripts tab header missing (mobile) | MEDIUM | 🔴 Active | Header disappears on scripts tab scroll |
-| SPF record missing Resend | MEDIUM | 🟡 Pending | Add `include:amazonses.com` in Cloudflare |
+| Scripts tab header missing (mobile) | MEDIUM | ✅ Closed | Fixed by Daz |
+| SPF record missing Resend | MEDIUM | ✅ Closed | `include:amazonses.com` already in DNS |
 | FROM_NAME env var | LOW | 🟡 Pending | Emails work without it |
 
 ---
@@ -141,7 +141,7 @@
 - [ ] Paddle checkout tested end-to-end (Splash → Creator upgrade)
 - [ ] Mobile test at 375px (ideas, hooks, calendar, onboarding)
 - [ ] Railway deploy logs checked for migration errors
-- [ ] SPF record updated in Cloudflare
+- [x] SPF record updated in Cloudflare — ✅ `include:amazonses.com` already present
 - [ ] /admin verified (stats load for admin email)
 
 ---
