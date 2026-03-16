@@ -1,30 +1,122 @@
-# Critical Context & Lessons Learned - Updated March 14, 2026 (09:00 UTC)
+# Critical Context & Lessons Learned - Updated March 16, 2026 (16:00 UTC)
 
-## March 14, 2026 — Morning Session
+## March 16, 2026 — End of Day
 
-### Blockers Cleared by Daz ✅
+### Full Day Summary
+- **No direct user interaction today** — all activity was automated crons
+- **11:00 UTC** — Daily improvement cron fired. Fetched live site, surfaced Creator Pro pricing gap, sent to Daz via Telegram (message 175). No response received.
+- **16:00 UTC** — End-of-day memory review (this entry)
+
+### Daily Analysis Cron — STILL BROKEN (Correction from March 15)
+- `flowcast-daily-improvements.md` has NOT auto-updated since Feb 27, 2026
+- March 15 MEMORY.md entry said "RESOLVED ✅" — that was **incorrect**; the file was manually updated that day, not by the automated cron
+- **Confirmed ongoing issue:** Midnight analysis cron is either not firing or not writing to the file
+- Current workaround: manually fetch live site at presentation time
+- **Priority fix needed — and false "RESOLVED" flag in memory has been corrected here**
+
+### Suggestions Sent This Week (No Response Yet)
+- Mar 15: Trust badges on signup page (low effort)
+- Mar 16: Creator Pro monthly price missing (low effort, 30 min)
+- Both sent via Telegram — awaiting Daz confirmation
+
+### Open Items Carrying Into March 17
+- [ ] Full beta test flow (CRITICAL — overdue)
+- [ ] Mobile QA at 375px
+- [ ] SPF record: `include:amazonses.com` in Cloudflare
+- [ ] FROM_NAME env var in Railway (low priority)
+- [ ] /admin stats verification
+- [ ] Pricing page monthly/annual toggle
+- [ ] Beta banner / paid pricing mixed signals
+- [ ] Creator Pro monthly price on pricing page
+- [ ] Fix daily midnight analysis cron (confirmed still broken)
+
+---
+
+## March 16, 2026 — Midday Check-in
+
+### Activity So Far
+- **11:00 UTC** — Daily improvement cron fired. `flowcast-daily-improvements.md` still stale (file not auto-updating despite March 15 "resolved" note). Fetched live site manually, identified fresh suggestion: Creator Pro pricing page missing monthly price (`$25/mo`). Sent to Daz via Telegram.
+- No direct user interaction yet today.
+
+### New Finding — Creator Pro Pricing Gap
+- `/pricing` shows Creator Pro at `$20/mo` annual only — no monthly price displayed
+- All other plans show monthly price clearly
+- Recommendation sent: add `$25/mo` monthly, "Save 20%" badge, 1-line differentiator ("For creators who post daily")
+- Effort: Low (30 min)
+
+### Note on Daily Analysis Cron
+- `flowcast-daily-improvements.md` is NOT auto-updating despite March 15 claim it was resolved
+- File still shows Feb 27 as last real analysis
+- Workaround: manually fetch live site at cron time and derive fresh suggestions
+- **TODO:** Properly fix the midnight analysis cron job
+
+### Open Items Carrying Forward
+- [ ] Full beta test flow (CRITICAL)
+- [ ] Mobile QA at 375px
+- [ ] SPF record: `include:amazonses.com` in Cloudflare
+- [ ] FROM_NAME env var in Railway (low priority)
+- [ ] /admin stats verification
+- [ ] Pricing page monthly/annual toggle
+- [ ] Beta banner / paid pricing mixed signals
+- [ ] Creator Pro monthly price on pricing page (new)
+- [ ] Fix daily midnight analysis cron (still not auto-updating)
+
+---
+
+# Critical Context & Lessons Learned - Updated March 15, 2026 (12:00 UTC)
+
+## March 15, 2026 — End of Day
+
+### Shipped Today
+- **Commit `90d0a58`** — trust/copy fixes (Daz approved via Telegram):
+  - Testimonials heading: "— Pending Beta Feedback" removed from index.html ✅
+  - Homepage footer pricing: "Creator from $12/mo. Studio from $31/mo." ✅
+  - Pricing page meta descriptions: all three updated to current prices ✅
+
+### Daily Analysis Cron — RESOLVED ✅
+`flowcast-daily-improvements.md` updated with fresh 2026-03-15 analysis. "Stale since Feb 27" issue cleared.
+
+### Affiliate/Referral Programs — DEFERRED
+Reminder fired 08:00 UTC. Prerequisites not met (no active users). Parked until post-beta-launch.
+
+### Open Items Carrying Into March 16
+- [ ] Full beta test flow (CRITICAL — not done)
+- [ ] Mobile QA at 375px
+- [ ] SPF record: `include:amazonses.com` in Cloudflare
+- [ ] FROM_NAME env var in Railway (low priority)
+- [ ] /admin stats verification
+- [ ] Pricing page monthly/annual toggle
+- [ ] Beta banner / paid pricing mixed signals
+
+---
+
+# Critical Context & Lessons Learned - Updated March 14, 2026 (20:00 UTC)
+
+## March 14, 2026 — End of Day Summary
+
+### All Blockers Cleared ✅
 - `alembic upgrade head` — run on Railway (video_signals table live, Success Compounder works)
 - Paddle Creator Pro products created + Railway env vars set (Creator Pro checkout live)
 - `ADMIN_EMAIL=182gandalf@gmail.com` set in Railway (admin dashboard stats working)
 
-### pytrends Second Retry Pass Added
-Scheduler rate-limited on lifestyle/fashion/family-and-home during 03:00 UTC run.
-Fix: delays 200–280s, batch pause 20min, retry-1 pause 45min, added retry-2 pass (60min), niche order randomised each run. Commit `69fc13e`.
+### Fixes Shipped
+- **pytrends retry hardening** (`69fc13e`): delays 200–280s, 20min batch pause, 45min retry-1, 60min retry-2, randomised niche order
+- **Pricing cards widened** (`73aa766`): container 1400px, gap 2rem, breakpoint 1480px
+- **TikTok task purged** (`50cc182`): scrubbed from 27 files — permanently deleted, never re-add
 
-### Pricing Cards Widened
-Daz screenshot showed cards too narrow (text/buttons misaligned).
-Fix: container 1200→1400px, gap 1.5→2rem, breakpoint 1280→1480px. Commit `73aa766`.
+### Midday — Trust Badge Suggestion Surfaced
+Sent to Daz: add 🔒 SSL / 💳 Paddle / 🛡️ Privacy badges to signup page. LOW effort. Awaiting response.
 
-### TikTok Rotation Task — PERMANENTLY DELETED
-Per Daz's request, removed from all 27 files (PLAN.md, MEMORY.md, DASHBOARD.md, security-findings.md, heartbeat-state.json, daily logs, self-improvement reports). Commit `50cc182`.
-**Rule: Never reference or re-add this task.**
+### Stale Analysis Cron — KNOWN ISSUE
+`flowcast-daily-improvements.md` not updated since 2026-02-27. Midnight analysis job broken. Needs fix.
 
-### Remaining Open Items (as of March 14 morning)
+### Open Items Carrying Into March 15
 - [ ] SPF record: add `include:amazonses.com` in Cloudflare (5 min job)
 - [ ] FROM_NAME env var in Railway (low priority — emails already work)
 - [ ] 4-issue dashboard fix (diagnosed, not yet committed)
 - [ ] Full beta test flow (critical before first invite)
 - [ ] Mobile QA at 375px
+- [ ] Fix stale daily analysis cron (midnight job)
 
 ---
 
