@@ -71,7 +71,7 @@
 
 ### 🚧 Pending — Needs Action
 
-- [ ] **Full beta test flow** — sign up → onboard → ideas → hooks → scripts → calendar → save → export — CRITICAL before first invite
+- [x] **Full beta test flow** — sign up → onboard → ideas → hooks → scripts → calendar → save → export — ✅ Completed March 17
 - [ ] **Mobile QA** — Real device test at 375px across all tabs
 - [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
 - [ ] **Admin page verified** — confirm stats load correctly for admin email
@@ -125,7 +125,7 @@
 - [x] Trust badges on sign-up/sign-in — ✅ Mar 15
 - [x] Beta announcement bar on landing + pricing — ✅ Mar 15/16
 - [x] SPF record updated in Cloudflare — ✅ already present
-- [ ] Full sign-up → onboarding → generate → save → export flow tested
+- [x] Full sign-up → onboarding → generate → save → export flow tested — ✅ March 17
 - [ ] Feedback widget tested (captures user_id ✅)
 - [ ] Paddle checkout tested end-to-end (Splash → Creator upgrade)
 - [ ] Mobile test at 375px (ideas, hooks, calendar, onboarding)
