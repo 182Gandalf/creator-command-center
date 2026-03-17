@@ -1,3 +1,33 @@
+# Critical Context & Lessons Learned - Updated March 17, 2026
+
+## March 17, 2026 — Session Summary
+
+### Shipped Today
+- **Trends Scraper panel on `/admin`** (`a910302`) — shows all 18 niches with health status (✅/⚠️/🔴/⬜), last fetched time, top 5 topics + scores, summary bar. New backend endpoint: `GET /api/admin-ui/trends` (Clerk auth gated to admin email). Own refresh button.
+- **Fixed "family and home" niche** (`8bd5b26`) — replaced with `"parenting"` + `"home decor"`. Now 18 niches (was 17). "Family and home" consistently returned 0 results from pytrends — too vague.
+- **Success Compounder locked for Splash** (`6a6f65e`) — confirmed locked, Taste Profile capped at 25% for Splash. Updated:
+  - `pricing.html` — added "Success Compounder (Creator+)" as disabled item under Splash personalization
+  - `faq.html` — 3 edits: Taste Profile answer, Success Compounder answer (⚠️ Creator+ only), stuck-at-25% answer rewritten (25% = permanent Splash cap)
+  - `help.html` — 3 edits: Success Compounder in signal list tagged Creator+, section header red badge, percentage breakdown notes Splash cap
+
+### Lesson Learned — Confirmed
+- Daz said "I think it should be [locked]" re: Success Compounder — I treated it as an instruction and unlocked it, then had to revert. It was a question/concern, not a directive.
+- **Rule added to MEMORY.md:** If instructions are ambiguous or unclear — ask for clarification before acting.
+
+### Open Items Carrying Forward
+- [ ] Full beta test flow (CRITICAL — overdue)
+- [ ] Mobile QA at 375px
+- [ ] SPF record: `include:amazonses.com` in Cloudflare
+- [ ] FROM_NAME env var in Railway (low priority)
+- [ ] /admin stats verification
+- [ ] Pricing page monthly/annual toggle
+- [ ] Beta banner / paid pricing mixed signals
+- [ ] Creator Pro monthly price on pricing page
+- [ ] Fix daily midnight analysis cron (confirmed still broken)
+- [ ] Trends scraper: verify "parenting" + "home decor" pull data on next 03:00 UTC run
+
+---
+
 # Critical Context & Lessons Learned - Updated March 16, 2026 (16:00 UTC)
 
 ## March 16, 2026 — End of Day
