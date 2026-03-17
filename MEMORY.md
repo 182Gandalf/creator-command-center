@@ -854,3 +854,4 @@ See `DASHBOARD.md` for single source of truth on all blockers.
 - Simple explanations with analogies
 - Proactive but not pushy
 - Honest about mistakes
+- **If instructions are ambiguous or unclear — ask for clarification or confirmation before acting. Do not assume and execute. One wrong action wastes more time than one clarifying question.**
