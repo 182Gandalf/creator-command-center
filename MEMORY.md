@@ -23,8 +23,16 @@
 - [ ] Pricing page monthly/annual toggle
 - [ ] Beta banner / paid pricing mixed signals
 - [ ] Creator Pro monthly price on pricing page
-- [ ] Fix daily midnight analysis cron (confirmed still broken)
+- [ ] Fix daily midnight analysis cron (status unclear — see note below)
 - [ ] Trends scraper: verify "parenting" + "home decor" pull data on next 03:00 UTC run
+
+### March 18 Completions (confirmed by Daz)
+- ✅ `alembic upgrade head` on Railway — `niche_category` column live, onboarding saves unblocked
+- ✅ `AI_PROVIDER=anthropic` set on Railway — Anthropic fallback chain active
+
+### 11:00–12:00 UTC Automated Activity
+- Daily improvement suggestion sent to Daz (Telegram msg 179): "Upgrade" CTA copy wrong for first-time visitors — quick fix, high impact
+- **Note on midnight analysis cron:** `flowcast-daily-improvements.md` now has a `2026-03-17` analysis section present — this suggests the cron may have run successfully last night (contradicts "confirmed still broken" status). Status should be verified — may be partially or fully working now.
 
 ---
 
