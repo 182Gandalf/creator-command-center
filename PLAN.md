@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-17 00:00 UTC
+**Last Updated:** 2026-03-18 00:00 UTC
 
 ---
 
@@ -19,6 +19,20 @@
 ---
 
 ## 📊 Current Status
+
+### ✅ Completed (March 17)
+
+- [x] **Full beta test flow** — Daz tested end-to-end ✅
+- [x] **Trends Scraper panel on /admin** — 18 niches, health status, last fetched, top topics (`a910302`)
+- [x] **"family and home" niche replaced** — split into `"parenting"` + `"home decor"` — now 18 niches (`8bd5b26`)
+- [x] **Success Compounder locked for Splash** — 25% Taste Profile cap enforced; pricing, FAQ, help guide all updated (`6a6f65e`)
+- [x] **Per-row delete on admin feedback table** — 🗑 button per row, instant removal without reload (`907a7c6`)
+- [x] **Two-part onboarding Q1** — category picker (18 chips) + specific niche text; `niche_category` stored in DB, used for trend lookups; idea AI still uses typed niche (`7fc27d3`)
+- [x] **AI fallback chain** — Anthropic primary → Kimi K2.5 → moonshot-v1-8k inner safety net (`9f0a76a`)
+- [x] **Ideas tab full-width on desktop** — `width:100%` on section-inner, grid breakpoints recalibrated for sidebar offset (`b634bf2`)
+- [x] **YouTube "Coming Soon"** — Connected Accounts page updated to match Instagram + TikTok (`1668e9e`)
+
+---
 
 ### ✅ Completed (March 16)
 
@@ -71,25 +85,28 @@
 
 ### 🚧 Pending — Needs Action
 
-- [x] **Full beta test flow** — sign up → onboard → ideas → hooks → scripts → calendar → save → export — ✅ Completed March 17
+- [ ] **`alembic upgrade head` on Railway** — Required for `niche_category` column (two-part onboarding Q1) — ⚠️ BLOCKING new onboarding saves
+- [ ] **Change `AI_PROVIDER` to `anthropic` on Railway** — To activate Anthropic primary + Kimi K2.5 fallback chain
 - [ ] **Mobile QA** — Real device test at 375px across all tabs
 - [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
 - [ ] **Admin page verified** — confirm stats load correctly for admin email
+- [ ] **Paddle checkout tested** — Splash → Creator upgrade end-to-end
 
 ---
 
-## 🎯 Today's Priorities (March 17)
+## 🎯 Today's Priorities (March 18)
 
 ### 🔴 Must Do
-1. **Full beta test flow** — end-to-end, real sign-up, every tab, every action *(#1 blocker — overdue)*
+1. **`alembic upgrade head` on Railway** — adds `niche_category` column; onboarding saves will fail without it
+2. **Change `AI_PROVIDER` to `anthropic` on Railway** — activates the new fallback chain
 
 ### 🟡 Should Do
-2. **Mobile QA** — 375px across all pages + new hook sub-tabs
-3. **Verify /admin stats** — confirm admin dashboard shows correct counts
+3. **Mobile QA** — 375px across all pages + new hook sub-tabs + new category chip grid in onboarding
+4. **Verify /admin trends panel** — confirm "parenting" + "home decor" populated after 03:00 UTC nightly run
 
 ### 🟢 Nice to Have
-4. **Add `FROM_NAME` env var** in Railway
-5. **Check Railway logs** — did pytrends nightly run populate all niches?
+5. **Paddle checkout test** — Splash → Creator upgrade end-to-end
+6. **Add `FROM_NAME` env var** in Railway
 
 ---
 
@@ -97,7 +114,9 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| Beta testing not done | HIGH | 🟡 Ongoing | Must complete before inviting users |
+| `alembic upgrade head` not run | HIGH | 🔴 Blocking | Onboarding Q1 saves will fail without `niche_category` column |
+| `AI_PROVIDER` still set to moonshot | MEDIUM | 🟡 Pending | Change to `anthropic` in Railway to activate new fallback chain |
+| Mobile QA not done | MEDIUM | 🟡 Ongoing | Test at 375px before first beta invite |
 | FROM_NAME env var | LOW | 🟡 Pending | Emails work without it |
 
 ---
