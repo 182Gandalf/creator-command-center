@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-18 00:00 UTC
+**Last Updated:** 2026-03-18 08:00 UTC
 
 ---
 
@@ -85,8 +85,8 @@
 
 ### 🚧 Pending — Needs Action
 
-- [ ] **`alembic upgrade head` on Railway** — Required for `niche_category` column (two-part onboarding Q1) — ⚠️ BLOCKING new onboarding saves
-- [ ] **Change `AI_PROVIDER` to `anthropic` on Railway** — To activate Anthropic primary + Kimi K2.5 fallback chain
+- [x] **`alembic upgrade head` on Railway** — `niche_category` column live ✅ Mar 18
+- [x] **Change `AI_PROVIDER` to `anthropic` on Railway** — Anthropic fallback chain active ✅ Mar 18
 - [ ] **Mobile QA** — Real device test at 375px across all tabs
 - [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
 - [ ] **Admin page verified** — confirm stats load correctly for admin email
@@ -96,9 +96,9 @@
 
 ## 🎯 Today's Priorities (March 18)
 
-### 🔴 Must Do
-1. **`alembic upgrade head` on Railway** — adds `niche_category` column; onboarding saves will fail without it
-2. **Change `AI_PROVIDER` to `anthropic` on Railway** — activates the new fallback chain
+### ✅ Already Done (Mar 18 early AM)
+1. ~~**`alembic upgrade head` on Railway**~~ — ✅ Done
+2. ~~**Change `AI_PROVIDER` to `anthropic` on Railway**~~ — ✅ Done
 
 ### 🟡 Should Do
 3. **Mobile QA** — 375px across all pages + new hook sub-tabs + new category chip grid in onboarding
@@ -114,8 +114,8 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| `alembic upgrade head` not run | HIGH | 🔴 Blocking | Onboarding Q1 saves will fail without `niche_category` column |
-| `AI_PROVIDER` still set to moonshot | MEDIUM | 🟡 Pending | Change to `anthropic` in Railway to activate new fallback chain |
+| `alembic upgrade head` not run | HIGH | ✅ Resolved | `niche_category` column live — Mar 18 |
+| `AI_PROVIDER` still set to moonshot | MEDIUM | ✅ Resolved | Changed to `anthropic` — Mar 18 |
 | Mobile QA not done | MEDIUM | 🟡 Ongoing | Test at 375px before first beta invite |
 | FROM_NAME env var | LOW | 🟡 Pending | Emails work without it |
 
