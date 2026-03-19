@@ -1,4 +1,37 @@
-# Critical Context & Lessons Learned - Updated March 17, 2026
+# Critical Context & Lessons Learned - Updated March 19, 2026
+
+## March 19, 2026 — Session Summary
+
+### Activity Today
+- **11:00 UTC** — Daily improvement suggestion sent: Hero CTA hierarchy issue (two CTAs competing without visual hierarchy)
+- **Afternoon** — CTA fix implemented via Telegram group request (Crypto Raven)
+  - Changed hero secondary CTA from button to text link
+  - Commit `fa67510` deployed to production
+- **Feedback loop validated:** Suggestion surfaced → Daz saw it → implemented same day
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress today
+- All other open items unchanged (see list below)
+
+---
+
+## March 18, 2026 — Session Summary
+
+### Activity Today
+- **04:01 UTC** — Daz confirmed Railway completions: `alembic upgrade head` (niche_category live) and `AI_PROVIDER=anthropic` set
+- **11:00 UTC** — Daily improvement suggestion sent (Telegram msg 190): Hero CTA hierarchy issue — two CTAs competing without visual hierarchy
+- **No direct user sessions** — quiet infrastructure day, no code changes
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress today
+- All other open items unchanged (see list below)
+
+### Note on Daily Analysis Cron
+- `flowcast-daily-improvements.md` has 2026-03-18 analysis section — cron appears to be working
+- File has been auto-updating since March 17, contradicting earlier "broken" status
+- Cron status should be considered **resolved** unless evidence of failure emerges
+
+---
 
 ## March 17, 2026 — Session Summary
 
