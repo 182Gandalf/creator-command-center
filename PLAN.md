@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-18 08:00 UTC
+**Last Updated:** 2026-03-21 00:00 UTC
 
 ---
 
@@ -20,6 +20,18 @@
 
 ## 📊 Current Status
 
+### ✅ Completed (March 20)
+
+- [x] **Dual hook selection bug fixed** — Generator + saved/scorer hooks could both show active simultaneously; fixed via `selected_hook_source` tracking in workspace state (`8147659`)
+- [x] **Scripts failing from scorer hook fixed** — Scripts failed to generate when using a scored hook without an active idea; hook text now used as topic fallback (`8147659`)
+- [x] **Onboarding content_types validation removed** — Q7 (talking head / voiceover checkboxes) was silently blocking form submission; made optional (`344c591`)
+- [x] **Onboarding prefill completely broken — fixed** — `prefillExistingProfile()` was calling `/api/onboarding` (non-existent endpoint, silent 404); now calls `/api/creator-profile` and restores all 10 questions for returning users (`344c591`)
+- [x] **`niche_category` added to `/api/creator-profile` response** — Was missing, required for prefill (`344c591`)
+- [x] **Idea generation 500 error fixed** — AI occasionally returns invalid JSON (unescaped quotes in creative niches like "Teleportation", or truncation); added `json-repair` library as final fallback across ideas, hooks, scripts (`9a7f800`)
+- [x] **`content_ideas` + `tweak_ideas` max tokens increased** — 2500 → 4000; prevents mid-JSON truncation for 5 full ideas (`9a7f800`)
+
+---
+
 ### ✅ Completed (March 17)
 
 - [x] **Full beta test flow** — Daz tested end-to-end ✅
@@ -27,86 +39,53 @@
 - [x] **"family and home" niche replaced** — split into `"parenting"` + `"home decor"` — now 18 niches (`8bd5b26`)
 - [x] **Success Compounder locked for Splash** — 25% Taste Profile cap enforced; pricing, FAQ, help guide all updated (`6a6f65e`)
 - [x] **Per-row delete on admin feedback table** — 🗑 button per row, instant removal without reload (`907a7c6`)
-- [x] **Two-part onboarding Q1** — category picker (18 chips) + specific niche text; `niche_category` stored in DB, used for trend lookups; idea AI still uses typed niche (`7fc27d3`)
+- [x] **Two-part onboarding Q1** — category picker (18 chips) + specific niche text (`7fc27d3`)
 - [x] **AI fallback chain** — Anthropic primary → Kimi K2.5 → moonshot-v1-8k inner safety net (`9f0a76a`)
-- [x] **Ideas tab full-width on desktop** — `width:100%` on section-inner, grid breakpoints recalibrated for sidebar offset (`b634bf2`)
-- [x] **YouTube "Coming Soon"** — Connected Accounts page updated to match Instagram + TikTok (`1668e9e`)
+- [x] **Ideas tab full-width on desktop** (`b634bf2`)
+- [x] **YouTube "Coming Soon"** — Connected Accounts page updated (`1668e9e`)
 
 ---
 
 ### ✅ Completed (March 16)
 
-- [x] **Generate button — size + sensitivity** — Shrunk to half size, centered, no longer full-width on mobile; touch requires ≥150ms deliberate tap (`81dc9cc`)
-- [x] **Beta bar restored on landing page** — Dismiss button removed, bar always visible; mobile: shorter text, single line, dynamic height offset (`33f1d6c`, `dbf039a`)
-- [x] **Hook scorer moved to own sub-tab** — Hooks tab now has ✨ Generate New Hook / 📊 Score Your Own Hook sub-tabs; generator gets full-width screen (`3374931`, `0c53f27`)
-- [x] **Help guide updated** — Hooks section updated to reference new sub-tab layout
-- [x] **SPF record confirmed** — `include:amazonses.com` already present in Cloudflare DNS ✅
+- [x] **Generate button — size + sensitivity** (`81dc9cc`)
+- [x] **Beta bar restored on landing page** (`33f1d6c`, `dbf039a`)
+- [x] **Hook scorer moved to own sub-tab** — Generate / Score sub-tabs (`3374931`, `0c53f27`)
+- [x] **Help guide updated** — Hooks section
+- [x] **SPF record confirmed** — `include:amazonses.com` already present ✅
 - [x] **Scripts tab mobile header** — Confirmed fixed ✅
 
 ---
 
-### ✅ Completed (March 15 — Full Day)
+### ✅ Completed (March 15 and Earlier)
 
-- [x] **Ghost-tap mobile fix** — Ideas no longer generate on scroll (`47b3e3c`)
-- [x] **Platform heading in .txt downloads** — All script downloads start with `PLATFORM:` header (`1c5f094`)
-- [x] **Per-script PDF download** — Studio only (`21041d5`, `c3d954a`)
-- [x] **Daily analysis cron fixed** — Recurring nightly job at 1:00 AM UTC
-- [x] **Header mobile overlap fixed** (`9021ffd`)
-- [x] **Pricing & Plans link** — Added to account dropdown (`9021ffd`)
-- [x] **Trust badges** — Sign-up + sign-in pages
-- [x] **Hooks section overhaul** — banners, scorer buttons, copy+save
-- [x] **Onboarding tones expanded** — Honest/Raw, Inspiring, Casual added
-- [x] **Beta announcement bar** — Landing + pricing pages
-- [x] **Admin feedback text** — Long messages now wrap
-
----
-
-### ✅ Completed (March 14)
-
-- [x] `alembic upgrade head` — video_signals table live
-- [x] Paddle Creator Pro products + Railway env vars set
-- [x] `ADMIN_EMAIL=182gandalf@gmail.com` set in Railway
-- [x] pytrends retry hardening
-- [x] Pricing cards widened
-- [x] TikTok task permanently removed
-
----
-
-### ✅ Completed (March 13 and Earlier)
-
-- [x] Creator Pro tier — live
-- [x] Success Compounder — live
-- [x] Interactive landing page demo — live
-- [x] Beta Readiness Pass — all 7 parts
-- [x] Studio Features — PDFs, 90-day calendar, daily digest, workspace switcher
-- [x] Phase 1–5 — Paddle billing, AI content engine, personalization, trends, email sequences
+- [x] Ghost-tap mobile fix, platform headings in downloads, per-script PDF, daily analysis cron, header mobile fix, pricing link, trust badges, hooks overhaul, onboarding tones, beta bar, pytrends hardening, Paddle Creator Pro, all phases 1–5
 
 ---
 
 ### 🚧 Pending — Needs Action
 
-- [x] **`alembic upgrade head` on Railway** — `niche_category` column live ✅ Mar 18
-- [x] **Change `AI_PROVIDER` to `anthropic` on Railway** — Anthropic fallback chain active ✅ Mar 18
-- [ ] **Mobile QA** — Real device test at 375px across all tabs
-- [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
-- [ ] **Admin page verified** — confirm stats load correctly for admin email
+- [ ] **Mobile QA** — Real device test at 375px across all tabs *(still not done — blocking first beta invite)*
 - [ ] **Paddle checkout tested** — Splash → Creator upgrade end-to-end
+- [ ] **Admin page verified** — confirm stats load correctly for admin email
+- [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
+- [ ] **Railway deploy logs** — Check for migration errors post-deploy
 
 ---
 
-## 🎯 Today's Priorities (March 18)
+## 🎯 Today's Priorities (March 21)
 
-### ✅ Already Done (Mar 18 early AM)
-1. ~~**`alembic upgrade head` on Railway**~~ — ✅ Done
-2. ~~**Change `AI_PROVIDER` to `anthropic` on Railway**~~ — ✅ Done
+### 🔴 Must Do
+1. **Mobile QA at 375px** — This is the last thing standing between now and sending beta invites. Test: ideas, hooks (both sub-tabs), scripts, onboarding (new prefill + category chips), calendar
+2. **Verify Railway deploy** — Confirm `json-repair` installed correctly (check deploy logs)
 
 ### 🟡 Should Do
-3. **Mobile QA** — 375px across all pages + new hook sub-tabs + new category chip grid in onboarding
-4. **Verify /admin trends panel** — confirm "parenting" + "home decor" populated after 03:00 UTC nightly run
+3. **Paddle checkout test** — Splash → Creator upgrade end-to-end
+4. **Verify /admin stats** — confirm stats load for admin email
 
 ### 🟢 Nice to Have
-5. **Paddle checkout test** — Splash → Creator upgrade end-to-end
-6. **Add `FROM_NAME` env var** in Railway
+5. **Add `FROM_NAME` env var** in Railway
+6. **Send first beta invite** — if Mobile QA passes 🎉
 
 ---
 
@@ -114,9 +93,8 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| `alembic upgrade head` not run | HIGH | ✅ Resolved | `niche_category` column live — Mar 18 |
-| `AI_PROVIDER` still set to moonshot | MEDIUM | ✅ Resolved | Changed to `anthropic` — Mar 18 |
-| Mobile QA not done | MEDIUM | 🟡 Ongoing | Test at 375px before first beta invite |
+| Mobile QA not done | HIGH | 🔴 Blocking | Last item before beta invites |
+| json-repair Railway install | MEDIUM | 🟡 Verify | Check deploy logs after next push |
 | FROM_NAME env var | LOW | 🟡 Pending | Emails work without it |
 
 ---
@@ -147,7 +125,7 @@
 - [x] Full sign-up → onboarding → generate → save → export flow tested — ✅ March 17
 - [ ] Feedback widget tested (captures user_id ✅)
 - [ ] Paddle checkout tested end-to-end (Splash → Creator upgrade)
-- [ ] Mobile test at 375px (ideas, hooks, calendar, onboarding)
+- [ ] **Mobile test at 375px** (ideas, hooks, calendar, onboarding) ← **LAST BLOCKER**
 - [ ] Railway deploy logs checked for migration errors
 - [ ] /admin verified (stats load for admin email)
 
