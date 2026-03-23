@@ -2,7 +2,7 @@
 
 **Single source of truth for all active blockers and action items.**
 
-**Last Updated:** March 13, 2026 UTC  
+**Last Updated:** March 23, 2026 UTC  
 **Next Review:** Weekly (Sundays)
 
 ---
@@ -23,6 +23,10 @@ None.
 
 | ID | Issue | Completed Date | Impact |
 |----|-------|----------------|--------|
+| **BETA-001** | **Formal Beta Request Modal** | **Mar 23, 2026** | **🚀 Committed f18da47** |
+| | - New /api/beta-request endpoint | | |
+| | - Modal popup on landing + pricing pages | | |
+| | - Email sent to hello@flowcast.space on submit | | |
 | **PDF-001** | **White-label PDF exports (Studio)** | **Mar 13, 2026** | **🚀 Committed e562cb3** |
 | | - Brand Settings modal (name/color/logo) | | |
 | | - /api/export/pdf/hooks, /scripts, /content-pack | | |
