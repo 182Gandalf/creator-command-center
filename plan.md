@@ -98,6 +98,7 @@
 - [ ] Email users who haven't posted in 7 days
 - [ ] Monthly "your stats" email
 - [ ] Annual plan with 2 months free
+- [ ] **Pause Subscription** ⏸️ *(revisit after beta testing)* — Allow users to temporarily pause billing instead of cancelling. Paddle supports this natively. Medium effort, high retention impact — typically reduces voluntary churn by 15–30%. Main build: pause/resume UI on billing page, access control during pause, webhook handling.
 
 ---
 
