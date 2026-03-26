@@ -1,16 +1,246 @@
+# Critical Context & Lessons Learned - Updated March 26, 2026
+
+## March 26, 2026 — End of Day Summary (12:00 UTC)
+
+### Activity Today
+- **11:00 UTC** — Daily improvement suggestion presented: Hero trust micro-copy inaccuracy (30-day vs 7-day calendar)
+- **~11:00 UTC** — Crypto Raven requested Discord link in footer; added to pricing.html, faq.html, help.html
+- **~12:00 UTC** — Crypto Raven requested implementation of today's improvement; fixed hero copy
+- **Commits:** `fe9cbca` (Discord links), `2157c30` (calendar copy fix)
+
+### Key Learning
+User-requested fixes via Telegram can be executed immediately when they're isolated copy/UX changes. The daily improvement system and direct user requests can work in parallel — no need to wait for end-of-day to implement clear, low-risk fixes.
+
+### Site Status
+✅ **Recovered** — Site fully operational after March 25 HTTP 500 outage
+
+### Persistent Bug Tracker (10+ Days)
+1. Dashboard double "Loading trends…" render — since Mar 16
+2. Pricing page closing section has no CTA button — since Mar 16
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" — since Mar 16
+4. Dashboard "Use this hook" instruction misplaced — since Mar 17
+
+---
+
+## March 25, 2026 — End of Day Summary (20:00 UTC)
+
+### Activity Today
+- **11:00 UTC** — Daily improvement suggestion presented: Site-wide HTTP 500 outage (CRITICAL)
+- **16:00 UTC** — End-of-day memory review completed
+- **20:00 UTC** — Final review: No new activity since 16:00 UTC
+- **No direct user sessions** — activity limited to automated crons
+
+### Key Learning
+An outage of the entire production site is a "stop everything" event. All marketing optimizations, UX fixes, and feature work are irrelevant when visitors see error pages. Infrastructure stability is prerequisite to everything else.
+
+### New Critical Issue
+- **flowcast.space completely down** — HTTP 500 on all routes
+- **Error:** `unhashable type: 'dict'` — Python regression
+- **Action needed:** Railway rollback + root cause fix
+- **No uptime monitoring** — outage duration unknown
+
+### Persistent Bug Tracker (9+ Days) — Unverifiable Due to Outage
+1. Dashboard double "Loading trends…" render — since Mar 16
+2. Pricing page closing section has no CTA button — since Mar 16
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" — since Mar 16
+
+### Open Items Status
+- Site outage is now **P0 emergency** — blocks all other work
+- Full beta test flow remains **CRITICAL and overdue** — no progress
+- All persistent UX bugs still unresolved
+- Telegram group: Crypto Raven asked about Discord bot access — declined (I'm private, not public)
+
+---
+
+## March 24, 2026 — End of Day Summary (20:00 UTC)
+
+### Activity Today
+- **11:00 UTC** — Daily improvement suggestion sent: Creator Pro "Most Value" badge lacks ROI math
+- **~12:00 UTC** — User declined suggestion (Crypto Raven), marked in file
+- **16:00 UTC** — End-of-day memory review completed
+- **No direct user sessions** — activity limited to Telegram group
+
+### Key Learning
+When suggestions are declined, mark immediately and move on. The system surfaces fresh alternatives next cycle — no need to revisit rejected ideas.
+
+### Persistent Bug Tracker (8+ Days)
+1. Dashboard double "Loading trends…" render — since Mar 16
+2. Pricing page closing section has no CTA button — since Mar 16
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" — since Mar 16
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress today
+- All other open items unchanged
+
+---
+
+## March 23, 2026 — End of Day Summary (20:00 UTC)
+
+### Activity Today
+- **11:00 UTC** — Daily improvement suggestion sent: Money-back guarantee is invisible in main plan card section (HIGH priority, LOW effort)
+- **16:00 UTC** — End-of-day memory review completed
+- **No direct user interaction** — quiet Monday, all activity automated crons
+
+### Key Insight
+Three UX bugs have now persisted for **7+ consecutive days** without resolution. After a full week of flagging, the pattern is clear: these items are documented sufficiently but need implementation. The daily analysis system continues to surface fresh, high-value suggestions (today's money-back guarantee placement is a good example), so the system itself remains valuable — but the persistent bugs should no longer be the headline finding each day.
+
+### Pattern Observation
+Monday = consistently low-activity day (similar to Sunday). No user sessions, only automated crons. This is predictable — no action needed.
+
+### Persistent Bug Tracker (7+ Days)
+1. Dashboard double "Loading trends…" render — since Mar 16
+2. Pricing page closing section has no CTA button — since Mar 16
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" — since Mar 16
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress today
+- All other open items unchanged
+
+---
+
+## March 22, 2026 — End of Day Summary (20:00 UTC)
+
+### Activity Today
+- **11:00 UTC** — Daily improvement suggestion sent: "50 Early-Access Spots" scarcity claim is static and potentially misleading (HIGH priority, LOW effort)
+- **16:00 UTC** — End-of-day memory review completed
+- **No direct user interaction** — quiet Sunday, all activity automated crons
+
+### Key Insight
+Three UX bugs have now persisted for 6+ consecutive days of analysis without resolution: (1) Dashboard double "Loading trends…" render, (2) Pricing page closing section has no CTA button, (3) Studio plan reads "Everything in Creator, plus:" instead of "Creator Pro." These are documented sufficiently — they need implementation, not further documentation. The pattern suggests either: (a) Daz is prioritizing other work, (b) the fixes are harder than they appear, or (c) they haven't been seen/reviewed. After 6 days, additional flagging is noise.
+
+### Pattern Observation
+Sunday = consistently lowest activity day. No user sessions, only automated crons firing. This is predictable and acceptable — no action needed.
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress today
+- All three persistent UX bugs still unresolved (6+ days flagged)
+- All other open items unchanged
+
+## March 22, 2026 — Midday Review (12:00 UTC)
+
+### Activity So Far
+- **11:00 UTC** — Daily improvement suggestion sent: "50 Early-Access Spots" scarcity claim is static and potentially misleading (HIGH priority, LOW effort)
+- **No direct user interaction yet** — quiet Sunday morning, all activity automated crons
+
+### Persistent Issues Requiring Action
+Three bugs have been flagged for 6+ consecutive days without resolution:
+1. Dashboard double "Loading trends…" render (since Mar 16)
+2. Pricing page closing section has no CTA button (since Mar 16)
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" (since Mar 16)
+
+These are documented sufficiently — they need implementation, not further analysis.
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress today
+- All other open items unchanged
+
+---
+
+## March 22, 2026 — End of Day Summary (20:00 UTC)
+
+### Activity Today
+- **11:00 UTC** — Daily improvement suggestion sent: "50 Early-Access Spots" scarcity claim is static and potentially misleading (HIGH priority, LOW effort)
+- **16:00 UTC** — End-of-day memory review completed
+- **No direct user interaction** — quiet Sunday, all activity automated crons
+
+### Key Insight
+Three UX bugs have now persisted for 6+ consecutive days of analysis without resolution: (1) Dashboard double "Loading trends…" render, (2) Pricing page closing section has no CTA button, (3) Studio plan reads "Everything in Creator, plus:" instead of "Creator Pro." These are documented sufficiently — they need implementation, not further documentation. The pattern suggests either: (a) Daz is prioritizing other work, (b) the fixes are harder than they appear, or (c) they haven't been seen/reviewed. After 6 days, additional flagging is noise.
+
+### Pattern Observation
+Sunday = consistently lowest activity day. No user sessions, only automated crons firing. This is predictable and acceptable — no action needed.
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress today
+- All three persistent UX bugs still unresolved (6+ days flagged)
+- All other open items unchanged
+
+---
+
+# Critical Context & Lessons Learned - Updated March 21, 2026
+
+## March 21, 2026 — End of Day Summary (20:00 UTC)
+
+### Activity Today
+- **11:00 UTC** — Daily improvement suggestion sent: Monthly prices are JavaScript-only — not visible to Google crawlers or no-JS users (SEO/trust liability)
+- **16:00 UTC** — End-of-day memory review completed
+- **No direct user interaction** — quiet day, all activity automated crons
+
+### Key Insight
+Two consecutive days of pricing-page-related suggestions (buried toggle on Mar 20, invisible monthly prices on Mar 21) indicate this area needs attention. The pricing page has multiple UX and SEO issues that compound each other.
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress today
+- All other open items unchanged (see list below)
+
+---
+
+## March 21, 2026 — Midday Review (12:00 UTC)
+
+### Activity So Far
+- **11:00 UTC** — Daily improvement suggestion sent: Monthly prices are JavaScript-only — not visible to Google crawlers or no-JS users (SEO/trust liability)
+- **No direct user interaction yet** — quiet morning, all activity automated crons
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress
+- All other open items unchanged
+- Two consecutive days of pricing-page-related suggestions (buried toggle on Mar 20, invisible monthly prices on Mar 21) indicate this area needs attention
+
+### Daily Analysis Cron — Status
+- `flowcast-daily-improvements.md` properly updated with 2026-03-21 analysis — cron is working
+- Suggestion quality remains high (SEO and conversion-critical issues being surfaced)
+
+---
+
+# Critical Context & Lessons Learned - Updated March 20, 2026
+
+## March 20, 2026 — End of Day Summary (20:00 UTC)
+
+### Activity Today
+- **11:00 UTC** — Daily improvement suggestion sent: Pricing page monthly/annual toggle buried at bottom (high impact, low effort)
+- **16:00 UTC** — End-of-day memory review completed
+- **No direct user interaction** — quiet day, all activity automated crons
+
+### Key Insight
+Consistent automated analysis continues to surface conversion-critical UX issues. Today's suggestion (buried billing toggle) is another example of a small UX friction point that likely costs conversions. The pattern of daily suggestions showing "high impact / low effort" fixes validates the value of the automated analysis system.
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress today
+- All other open items unchanged (see list below)
+
+---
+
+## March 20, 2026 — Midday Review (12:00 UTC)
+
+### Activity So Far
+- **11:00 UTC** — Daily improvement suggestion sent: Pricing page monthly/annual toggle buried at bottom (high impact, low effort)
+- **No direct user interaction yet** — quiet morning, all activity automated crons
+
+### Open Items Status
+- Full beta test flow remains **CRITICAL and overdue** — no progress
+- All other open items unchanged
+
+### Daily Analysis Cron — Status
+- `flowcast-daily-improvements.md` properly updated with 2026-03-20 analysis — cron is working
+- Suggestion quality remains high (conversion-critical UX issues being surfaced)
+
+---
+
 # Critical Context & Lessons Learned - Updated March 19, 2026
 
-## March 19, 2026 — Session Summary
+## March 19, 2026 — End of Day Summary (20:00 UTC)
 
 ### Activity Today
 - **11:00 UTC** — Daily improvement suggestion sent: Hero CTA hierarchy issue (two CTAs competing without visual hierarchy)
 - **Afternoon** — CTA fix implemented via Telegram group request (Crypto Raven)
   - Changed hero secondary CTA from button to text link
   - Commit `fa67510` deployed to production
-- **Feedback loop validated:** Suggestion surfaced → Daz saw it → implemented same day
+- **Feedback loop validated:** Suggestion surfaced → Daz saw it → implemented same day (~4 hour turnaround)
+
+### Key Insight
+The daily improvement system is working as designed. Even small UX fixes (low effort, high clarity) compound when they can go from identification → implementation in hours rather than days. This justifies continuing the automated analysis despite the initial setup friction.
 
 ### Open Items Status
-- Full beta test flow remains **CRITICAL and overdue** — no progress today
+- Full beta test flow remains **CRITICAL and overdue** — no progress today (now significantly behind schedule)
 - All other open items unchanged (see list below)
 
 ---
