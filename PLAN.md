@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-21 00:00 UTC
+**Last Updated:** 2026-03-27 00:05 UTC
 
 ---
 
@@ -19,6 +19,23 @@
 ---
 
 ## 📊 Current Status
+
+### ✅ Completed (March 26)
+
+- [x] **Site recovered from HTTP 500 outage** — March 25 outage resolved, all services operational
+- [x] **Discord links added to footer** — pricing.html, faq.html, help.html (`fe9cbca`)
+- [x] **Hero trust micro-copy fixed** — "30-day calendar" → "7-day calendar on Splash (30 days on Creator)" (`2157c30`)
+- [x] **Pricing page UX updates** — "No credit card needed" in blue accent, new tier tagline (`a0a8081`, `a228b18`)
+- [x] **Pause subscription documented** — Added to plan.md churn prevention section for post-beta implementation
+- [x] **AI fallback chain fixed** — Idea generation failing due to broken provider chain; fixed to anthropic → moonshot → gemini → openai (`5cf36fc`, `843c750`)
+
+---
+
+### ✅ Completed (March 22)
+
+- [x] **Niche split — 20 niches total** — "food and cooking" → "food" + "cooking"; "politics and society" → "politics" + "DIY". Updated `services/trends.py` (TRACKED_NICHES) and `templates/onboarding.html` (chips). Committed `ec7dee4`.
+
+---
 
 ### ✅ Completed (March 20)
 
@@ -73,11 +90,11 @@
 
 ---
 
-## 🎯 Today's Priorities (March 21)
+## 🎯 Today's Priorities (March 27)
 
 ### 🔴 Must Do
-1. **Mobile QA at 375px** — This is the last thing standing between now and sending beta invites. Test: ideas, hooks (both sub-tabs), scripts, onboarding (new prefill + category chips), calendar
-2. **Verify Railway deploy** — Confirm `json-repair` installed correctly (check deploy logs)
+1. **Mobile QA at 375px** — Still the last blocker before beta invites. Test: ideas, hooks (both sub-tabs), scripts, onboarding (new prefill + category chips), calendar
+2. **Verify idea generation working** — Test the AI fallback chain fix in production
 
 ### 🟡 Should Do
 3. **Paddle checkout test** — Splash → Creator upgrade end-to-end
@@ -93,9 +110,9 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| Mobile QA not done | HIGH | 🔴 Blocking | Last item before beta invites |
-| json-repair Railway install | MEDIUM | 🟡 Verify | Check deploy logs after next push |
-| FROM_NAME env var | LOW | 🟡 Pending | Emails work without it |
+| Mobile QA not done | HIGH | 🔴 Blocking | Last item before beta invites (2+ weeks overdue) |
+| Idea generation reliability | MEDIUM | 🟡 Monitor | Fallback chain fixed, needs production verification |
+| FROM_NAME env var | LOW | 🟢 Backlog | Emails work without it |
 
 ---
 
