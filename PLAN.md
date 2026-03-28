@@ -86,8 +86,8 @@
 
 ### 🚧 Pending — Needs Action
 
-- [ ] **Mobile QA** — Real device test at 375px across all tabs *(still not done — blocking first beta invite)*
-- [ ] **Paddle checkout tested** — Splash → Creator upgrade end-to-end
+- [x] **Mobile QA** ✅ — Real device test at 375px completed
+- [x] **Paddle checkout tested** ✅ — Splash → Creator upgrade end-to-end complete
 - [ ] **Admin page verified** — confirm stats load correctly for admin email
 - [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
 - [ ] **Railway deploy logs** — Check for migration errors post-deploy
@@ -97,8 +97,8 @@
 ## 🎯 Today's Priorities (March 28)
 
 ### 🔴 Must Do
-1. **Mobile QA at 375px** — Still the last blocker before beta invites. Test: ideas, hooks (both sub-tabs), scripts, onboarding (new prefill + category chips), calendar
-2. **Paddle checkout test** — Splash → Creator upgrade end-to-end
+1. ~~**Mobile QA at 375px**~~ ✅ **COMPLETED** — Last blocker cleared!
+2. ~~**Paddle checkout test**~~ ✅ **COMPLETED** — All systems GO!
 
 ### 🟡 Should Do
 3. **Verify /admin stats** — confirm stats load for admin email
@@ -106,7 +106,7 @@
 
 ### 🟢 Nice to Have
 5. **Add `FROM_NAME` env var** in Railway
-6. **Send first beta invite** — if Mobile QA passes 🎉
+6. **🚀 SEND FIRST BETA INVITE** — All blockers cleared! 🎉
 
 ---
 
@@ -114,7 +114,7 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| Mobile QA not done | HIGH | 🔴 Blocking | Last item before beta invites (2+ weeks overdue) |
+| ~~Mobile QA not done~~ | — | ✅ Done | Blocker cleared — ready for beta! |
 | Idea generation reliability | MEDIUM | 🟡 Monitor | Fallback chain fixed, needs production verification |
 | FROM_NAME env var | LOW | 🟢 Backlog | Emails work without it |
 
@@ -145,8 +145,8 @@
 - [x] SPF record updated in Cloudflare — ✅ already present
 - [x] Full sign-up → onboarding → generate → save → export flow tested — ✅ March 17
 - [ ] Feedback widget tested (captures user_id ✅)
-- [ ] Paddle checkout tested end-to-end (Splash → Creator upgrade)
-- [ ] **Mobile test at 375px** (ideas, hooks, calendar, onboarding) ← **LAST BLOCKER**
+- [x] Paddle checkout tested end-to-end (Splash → Creator upgrade) ✅
+- [x] **Mobile test at 375px** (ideas, hooks, calendar, onboarding) ← **DONE** ✅
 - [ ] Railway deploy logs checked for migration errors
 - [ ] /admin verified (stats load for admin email)
 
