@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-27 00:05 UTC
+**Last Updated:** 2026-03-28 00:05 UTC
 
 ---
 
@@ -19,6 +19,10 @@
 ---
 
 ## 📊 Current Status
+
+### ✅ Completed (March 27)
+
+- [x] **Beta signup modal updated** — New copy ("Enter FlowCast Beta Access"), required feedback commitment checkbox, updated subtitle (`4a254df`)
 
 ### ✅ Completed (March 26)
 
@@ -90,15 +94,15 @@
 
 ---
 
-## 🎯 Today's Priorities (March 27)
+## 🎯 Today's Priorities (March 28)
 
 ### 🔴 Must Do
 1. **Mobile QA at 375px** — Still the last blocker before beta invites. Test: ideas, hooks (both sub-tabs), scripts, onboarding (new prefill + category chips), calendar
-2. **Verify idea generation working** — Test the AI fallback chain fix in production
+2. **Paddle checkout test** — Splash → Creator upgrade end-to-end
 
 ### 🟡 Should Do
-3. **Paddle checkout test** — Splash → Creator upgrade end-to-end
-4. **Verify /admin stats** — confirm stats load for admin email
+3. **Verify /admin stats** — confirm stats load for admin email
+4. **Review ClawHub skills** — Evaluate youtube-publisher, social-media-publish for FlowCast integration (if vetted)
 
 ### 🟢 Nice to Have
 5. **Add `FROM_NAME` env var** in Railway
