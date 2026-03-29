@@ -58,7 +58,7 @@
 | Role-Based Access | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
 | **ANALYTICS** |
 | Basic Analytics | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
-| Advanced Analytics | ✅ (Creator+) | ✅ | ✅ (Growth+) | ✅ | ❌ | ✅ |
+| Advanced Analytics | ✅ (Creator Pro) | ✅ | ✅ (Growth+) | ✅ | ❌ | ✅ |
 | Competitor Analysis | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ |
 | Custom Reports | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ |
 | **OTHER FEATURES** |
@@ -69,7 +69,7 @@
 | White Label (Pro) | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | **SUPPORT** |
 | Email Support | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Priority Support | ✅ (Creator+) | ✅ | ✅ (Growth+) | ✅ | ✅ (Pro+) | ✅ |
+| Priority Support | ✅ (Creator Pro) | ✅ | ✅ (Growth+) | ✅ | ✅ (Pro+) | ✅ |
 | Dedicated Support | ✅ (Pro) | ❌ | ❌ | ✅ (Enterprise) | ❌ | ✅ (Advanced+) |
 
 ---
@@ -131,7 +131,7 @@
 - Simple, transparent pricing
 
 ✅ **AI-First Approach**
-- Unlimited AI ideas on Creator+ plans
+- Unlimited AI ideas on Creator Pro plans
 - Custom AI training on Pro (unique feature)
 - Built for content ideation, not just scheduling
 
