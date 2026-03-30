@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-28 00:05 UTC
+**Last Updated:** 2026-03-30 00:00 UTC
 
 ---
 
@@ -19,6 +19,19 @@
 ---
 
 ## 📊 Current Status
+
+### ✅ Completed (March 29)
+
+- [x] **Default tier changed from Splash → Creator** — All 8 user creation paths updated across models.py, middleware/clerk_auth.py, main.py, routers/admin.py, routers/webhooks.py (`8b94be0`, `5450f8f`)
+- [x] **Pricing page — collapsible feature categories** — Each category (Content Ideation, Saves & Storage, Personalization, Trend Intelligence, Workflow, Agency Economics) is now a dropdown (`a3fc95f`)
+- [x] **Pricing page — feature category colors inverted** — White background, blue/black text; turns blue gradient when expanded (`82ae106`)
+- [x] **Pricing page — accordion behavior** — Only one category open across all tiers at a time; same category syncs across all 4 tiers (`c3ce548`)
+- [x] **Pricing page — CTA button spacing** — 2.0rem added below features; extra 4.0rem on Splash to align with badged tiers (`ffeb4c5`, `6401be8`)
+- [x] **"Creator+" renamed to "Creator Pro" site-wide** — pricing.html, dashboard-new.html, faq.html, help.html, competitor comparison doc (`b92b7a0`)
+- [x] **Splash tier description updated** — "For creators finding their footing" → "For creators just diving in for the first time" (`bcc95f8`)
+- [x] **Admin email notification for new signups** — Email sent to hello@flowcast.space on every new user registration via Clerk webhook (`fa73888`)
+- [x] **Beta notification email verified** — Endpoint live, Resend configured, test returned `{"success":true}`
+- [x] **First real user signed up** — cooper238719831@gmail.com (confirmed account created)
 
 ### ✅ Completed (March 27)
 
@@ -94,19 +107,19 @@
 
 ---
 
-## 🎯 Today's Priorities (March 28)
+## 🎯 Today's Priorities (March 30)
 
 ### 🔴 Must Do
-1. ~~**Mobile QA at 375px**~~ ✅ **COMPLETED** — Last blocker cleared!
-2. ~~**Paddle checkout test**~~ ✅ **COMPLETED** — All systems GO!
+1. **Verify /admin stats** — confirm stats load for admin email
+2. **Send first beta invite** — cooper238719831@gmail.com already signed up; reach out to engage them
 
 ### 🟡 Should Do
-3. **Verify /admin stats** — confirm stats load for admin email
-4. **Review ClawHub skills** — Evaluate youtube-publisher, social-media-publish for FlowCast integration (if vetted)
+3. **Check Railway deploy logs** — Verify no migration errors from recent changes
+4. **Test new signup notification email** — Confirm hello@flowcast.space receives email on next signup
 
 ### 🟢 Nice to Have
 5. **Add `FROM_NAME` env var** in Railway
-6. **🚀 SEND FIRST BETA INVITE** — All blockers cleared! 🎉
+6. **Review ClawHub skills** — Evaluate youtube-publisher, social-media-publish for FlowCast integration
 
 ---
 
