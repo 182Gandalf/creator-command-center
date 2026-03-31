@@ -92,7 +92,7 @@ Nothing currently in progress.
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| ENSEMBLEDATA_TOKEN not configured | HIGH | 🔴 Blocked | TikTok trend intelligence needs API token from dashboard.ensembledata.com |
+| ENSEMBLEDATA_TOKEN configured | — | ✅ Resolved | Token added to Railway, TikTok intelligence ready |
 | alembic upgrade head not run | MEDIUM | 🔴 Pending | New tables (reddit_trends, youtube_trends, tiktok_trends, trend_source) won't exist until migration runs |
 | Idea generation reliability | MEDIUM | 🟡 Monitor | Fallback chain fixed, needs production verification |
 | FROM_NAME env var | LOW | 🟢 Backlog | Emails work without it |
