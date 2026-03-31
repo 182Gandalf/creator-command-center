@@ -22,6 +22,7 @@
 
 ### ✅ Completed (March 31)
 
+- [x] **Admin Dashboard v2** — Reddit and YouTube trends now visible in admin panel; user signups and beta feedback moved to top for priority visibility (`6d919ea`)
 - [x] **Reddit + YouTube Trend Intelligence (Phase 2)** — AI prompts now include Reddit/YouTube trend context; `trend_source` field tracks which intelligence source inspired each idea (google_trends, reddit, youtube, seed, tweak, ai_generated) (`88b1832`)
 - [x] **YOUTUBE_API_KEY added to Railway** — YouTube trend intelligence now fully operational
 
