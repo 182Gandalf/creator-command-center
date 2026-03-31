@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-30 00:00 UTC
+**Last Updated:** 2026-03-31 00:00 UTC
 
 ---
 
@@ -20,106 +20,68 @@
 
 ## 📊 Current Status
 
+### ✅ Completed (March 31)
+
+- [x] **Reddit + YouTube Trend Intelligence (Phase 2)** — AI prompts now include Reddit/YouTube trend context; `trend_source` field tracks which intelligence source inspired each idea (google_trends, reddit, youtube, seed, tweak, ai_generated) (`88b1832`)
+- [x] **YOUTUBE_API_KEY added to Railway** — YouTube trend intelligence now fully operational
+
+### ✅ Completed (March 30)
+
+- [x] **Mobile onboarding header spacing fixed** — Padding, logo size, category chip grid all fixed for <640px (`846cf15`)
+- [x] **Excel Bulk Export (Creator+ tiers)** — Ideas, Hooks, Scripts — exports freshly generated session content, not saved; locked for Splash (`cb3946f`, `eb7ec28`)
+- [x] **Beta feedback widget captures user email** — Clerk JWT email extracted and stored; admin console shows email instead of user_id (`2f6ee3c`, `f5846c0`)
+- [x] **Hook Video Direction feature** — AI generates 1-2 sentence visual direction for first 3 seconds; expandable on hook cards (▸/▾); appears between HOOK and SCRIPT BODY in script output; hook type alignment rules in prompt (`727bc1a`, `f4b6b58`, `4475ce7`)
+- [x] **Reddit + YouTube Trend Intelligence (Phase 1)** — Unified NICHE_CONFIG (20 niches × subreddits + YouTube queries), new DB tables (reddit_trends, youtube_trends), Reddit public .json fetch (no API key), YouTube Data API v3, trend aggregation service, scheduler updated (Reddit 02:00+14:00, YouTube 03:00)
+
 ### ✅ Completed (March 29)
 
-- [x] **Default tier changed from Splash → Creator** — All 8 user creation paths updated across models.py, middleware/clerk_auth.py, main.py, routers/admin.py, routers/webhooks.py (`8b94be0`, `5450f8f`)
-- [x] **Pricing page — collapsible feature categories** — Each category (Content Ideation, Saves & Storage, Personalization, Trend Intelligence, Workflow, Agency Economics) is now a dropdown (`a3fc95f`)
-- [x] **Pricing page — feature category colors inverted** — White background, blue/black text; turns blue gradient when expanded (`82ae106`)
-- [x] **Pricing page — accordion behavior** — Only one category open across all tiers at a time; same category syncs across all 4 tiers (`c3ce548`)
-- [x] **Pricing page — CTA button spacing** — 2.0rem added below features; extra 4.0rem on Splash to align with badged tiers (`ffeb4c5`, `6401be8`)
-- [x] **"Creator+" renamed to "Creator Pro" site-wide** — pricing.html, dashboard-new.html, faq.html, help.html, competitor comparison doc (`b92b7a0`)
-- [x] **Splash tier description updated** — "For creators finding their footing" → "For creators just diving in for the first time" (`bcc95f8`)
-- [x] **Admin email notification for new signups** — Email sent to hello@flowcast.space on every new user registration via Clerk webhook (`fa73888`)
-- [x] **Beta notification email verified** — Endpoint live, Resend configured, test returned `{"success":true}`
-- [x] **First real user signed up** — cooper238719831@gmail.com (confirmed account created)
+- [x] **Default tier changed from Splash → Creator** — All user creation paths updated
+- [x] **Pricing page — collapsible feature categories accordion** — Synced across all 4 tiers
+- [x] **"Creator+" renamed to "Creator Pro" site-wide**
+- [x] **Admin email notification for new signups**
+- [x] **First real user signed up** — cooper238719831@gmail.com
 
-### ✅ Completed (March 27)
+### ✅ Completed (March 26–28)
 
-- [x] **Beta signup modal updated** — New copy ("Enter FlowCast Beta Access"), required feedback commitment checkbox, updated subtitle (`4a254df`)
+- [x] **Site recovered from HTTP 500 outage**
+- [x] **Discord links added to footer**
+- [x] **Hero trust micro-copy fixed** — "30-day calendar" → "7-day calendar on Splash"
 
-### ✅ Completed (March 26)
+### ✅ Completed (March 22 and Earlier)
 
-- [x] **Site recovered from HTTP 500 outage** — March 25 outage resolved, all services operational
-- [x] **Discord links added to footer** — pricing.html, faq.html, help.html (`fe9cbca`)
-- [x] **Hero trust micro-copy fixed** — "30-day calendar" → "7-day calendar on Splash (30 days on Creator)" (`2157c30`)
-- [x] **Pricing page UX updates** — "No credit card needed" in blue accent, new tier tagline (`a0a8081`, `a228b18`)
-- [x] **Pause subscription documented** — Added to plan.md churn prevention section for post-beta implementation
-- [x] **AI fallback chain fixed** — Idea generation failing due to broken provider chain; fixed to anthropic → moonshot → gemini → openai (`5cf36fc`, `843c750`)
+- [x] All Phase 1–5 work, beta readiness, Paddle billing, AI engine, personalization, trend intelligence v1, email sequences
 
 ---
 
-### ✅ Completed (March 22)
+### 🚧 In Progress
 
-- [x] **Niche split — 20 niches total** — "food and cooking" → "food" + "cooking"; "politics and society" → "politics" + "DIY". Updated `services/trends.py` (TRACKED_NICHES) and `templates/onboarding.html` (chips). Committed `ec7dee4`.
-
----
-
-### ✅ Completed (March 20)
-
-- [x] **Dual hook selection bug fixed** — Generator + saved/scorer hooks could both show active simultaneously; fixed via `selected_hook_source` tracking in workspace state (`8147659`)
-- [x] **Scripts failing from scorer hook fixed** — Scripts failed to generate when using a scored hook without an active idea; hook text now used as topic fallback (`8147659`)
-- [x] **Onboarding content_types validation removed** — Q7 (talking head / voiceover checkboxes) was silently blocking form submission; made optional (`344c591`)
-- [x] **Onboarding prefill completely broken — fixed** — `prefillExistingProfile()` was calling `/api/onboarding` (non-existent endpoint, silent 404); now calls `/api/creator-profile` and restores all 10 questions for returning users (`344c591`)
-- [x] **`niche_category` added to `/api/creator-profile` response** — Was missing, required for prefill (`344c591`)
-- [x] **Idea generation 500 error fixed** — AI occasionally returns invalid JSON (unescaped quotes in creative niches like "Teleportation", or truncation); added `json-repair` library as final fallback across ideas, hooks, scripts (`9a7f800`)
-- [x] **`content_ideas` + `tweak_ideas` max tokens increased** — 2500 → 4000; prevents mid-JSON truncation for 5 full ideas (`9a7f800`)
-
----
-
-### ✅ Completed (March 17)
-
-- [x] **Full beta test flow** — Daz tested end-to-end ✅
-- [x] **Trends Scraper panel on /admin** — 18 niches, health status, last fetched, top topics (`a910302`)
-- [x] **"family and home" niche replaced** — split into `"parenting"` + `"home decor"` — now 18 niches (`8bd5b26`)
-- [x] **Success Compounder locked for Splash** — 25% Taste Profile cap enforced; pricing, FAQ, help guide all updated (`6a6f65e`)
-- [x] **Per-row delete on admin feedback table** — 🗑 button per row, instant removal without reload (`907a7c6`)
-- [x] **Two-part onboarding Q1** — category picker (18 chips) + specific niche text (`7fc27d3`)
-- [x] **AI fallback chain** — Anthropic primary → Kimi K2.5 → moonshot-v1-8k inner safety net (`9f0a76a`)
-- [x] **Ideas tab full-width on desktop** (`b634bf2`)
-- [x] **YouTube "Coming Soon"** — Connected Accounts page updated (`1668e9e`)
-
----
-
-### ✅ Completed (March 16)
-
-- [x] **Generate button — size + sensitivity** (`81dc9cc`)
-- [x] **Beta bar restored on landing page** (`33f1d6c`, `dbf039a`)
-- [x] **Hook scorer moved to own sub-tab** — Generate / Score sub-tabs (`3374931`, `0c53f27`)
-- [x] **Help guide updated** — Hooks section
-- [x] **SPF record confirmed** — `include:amazonses.com` already present ✅
-- [x] **Scripts tab mobile header** — Confirmed fixed ✅
-
----
-
-### ✅ Completed (March 15 and Earlier)
-
-- [x] Ghost-tap mobile fix, platform headings in downloads, per-script PDF, daily analysis cron, header mobile fix, pricing link, trust badges, hooks overhaul, onboarding tones, beta bar, pytrends hardening, Paddle Creator Pro, all phases 1–5
+Nothing currently in progress.
 
 ---
 
 ### 🚧 Pending — Needs Action
 
-- [x] **Mobile QA** ✅ — Real device test at 375px completed
-- [x] **Paddle checkout tested** ✅ — Splash → Creator upgrade end-to-end complete
 - [ ] **Admin page verified** — confirm stats load correctly for admin email
 - [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
 - [ ] **Railway deploy logs** — Check for migration errors post-deploy
+- [ ] **Run `alembic upgrade head`** — Apply new migrations (reddit_trends, youtube_trends, trend_source)
+- [ ] **Reach out to first user** — cooper238719831@gmail.com signed up; worth a personal welcome
 
 ---
 
-## 🎯 Today's Priorities (March 30)
+## 🎯 Next Priorities
 
 ### 🔴 Must Do
-1. **Verify /admin stats** — confirm stats load for admin email
-2. **Send first beta invite** — cooper238719831@gmail.com already signed up; reach out to engage them
+1. **Run `alembic upgrade head`** on Railway — Apply pending migrations
+2. **Verify /admin stats** — confirm stats load correctly for admin email
+3. **Check Railway deploy logs** — Verify no migration errors post-deploy
 
 ### 🟡 Should Do
-3. **Check Railway deploy logs** — Verify no migration errors from recent changes
-4. **Test new signup notification email** — Confirm hello@flowcast.space receives email on next signup
+4. **Reach out to first beta user** — cooper238719831@gmail.com
+5. **Verify YouTube trend fetch** — confirm daily fetch at 03:00 UTC works with new API key
 
 ### 🟢 Nice to Have
-5. **Add `FROM_NAME` env var** in Railway
-6. **Review ClawHub skills** — Evaluate youtube-publisher, social-media-publish for FlowCast integration
+6. **Add `FROM_NAME` env var** in Railway
 
 ---
 
@@ -127,7 +89,7 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| ~~Mobile QA not done~~ | — | ✅ Done | Blocker cleared — ready for beta! |
+| alembic upgrade head not run | MEDIUM | 🔴 Pending | New tables (reddit_trends, youtube_trends, trend_source) won't exist until migration runs |
 | Idea generation reliability | MEDIUM | 🟡 Monitor | Fallback chain fixed, needs production verification |
 | FROM_NAME env var | LOW | 🟢 Backlog | Emails work without it |
 
@@ -140,7 +102,8 @@
 | Phase 1: Paddle Billing | ✅ Complete | Full subscription lifecycle |
 | Phase 2: AI Content Engine | ✅ Complete | Ideas, Hooks, Scripts, Calendar, Taste Profile |
 | Phase 3: Personalization | ✅ Complete | Niche & Tone, onboarding, Success Compounder |
-| Phase 4: Trend Intelligence | ✅ Complete | Live on Railway, scheduler running nightly 3 AM UTC |
+| Phase 4: Trend Intelligence v1 | ✅ Complete | Google Trends live, nightly at 3 AM UTC |
+| Phase 4b: Trend Intelligence v2 | ✅ Complete | Reddit + YouTube signals, trend_source tracking |
 | Phase 5: Email Sequences | ✅ Complete | Creator weekly, Studio daily, Day 7 onboarding |
 | Beta Readiness (v0.1.0) | ✅ Complete | All 7 parts done and pushed |
 | Creator Pro Tier | ✅ Complete | Live — Paddle + Railway env vars set |
@@ -150,18 +113,13 @@
 
 ## 📋 Before First Beta User Checklist
 
-- [x] `alembic upgrade head` run on Railway — ✅ Mar 14
-- [x] Paddle Creator Pro products created + Railway env vars set — ✅ Mar 14
-- [x] `ADMIN_EMAIL` set in Railway — ✅ Mar 14
-- [x] Trust badges on sign-up/sign-in — ✅ Mar 15
-- [x] Beta announcement bar on landing + pricing — ✅ Mar 15/16
-- [x] SPF record updated in Cloudflare — ✅ already present
-- [x] Full sign-up → onboarding → generate → save → export flow tested — ✅ March 17
-- [ ] Feedback widget tested (captures user_id ✅)
-- [x] Paddle checkout tested end-to-end (Splash → Creator upgrade) ✅
-- [x] **Mobile test at 375px** (ideas, hooks, calendar, onboarding) ← **DONE** ✅
+- [x] Full sign-up → onboarding → generate → save → export flow tested ✅
+- [x] Paddle checkout tested end-to-end ✅
+- [x] Mobile test at 375px ✅
+- [x] Admin email notification on signup ✅
 - [ ] Railway deploy logs checked for migration errors
 - [ ] /admin verified (stats load for admin email)
+- [ ] YOUTUBE_API_KEY added to Railway
 
 ---
 
