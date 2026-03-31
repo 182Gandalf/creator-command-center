@@ -22,8 +22,9 @@
 
 ### ✅ Completed (March 31)
 
+- [x] **TikTok Sound & Trend Intelligence via EnsembleData** — Fourth signal source added! Free tier (50 units/day) with 5-day niche rotation. Backend + frontend complete. (`afd75bd`)
 - [x] **Admin Dashboard v2** — Reddit and YouTube trends now visible in admin panel; user signups and beta feedback moved to top for priority visibility (`6d919ea`)
-- [x] **Reddit + YouTube Trend Intelligence (Phase 2)** — AI prompts now include Reddit/YouTube trend context; `trend_source` field tracks which intelligence source inspired each idea (google_trends, reddit, youtube, seed, tweak, ai_generated) (`88b1832`)
+- [x] **Reddit + YouTube Trend Intelligence (Phase 2)** — AI prompts now include Reddit/YouTube trend context; `trend_source` field tracks which intelligence source inspired each idea (`88b1832`)
 - [x] **YOUTUBE_API_KEY added to Railway** — YouTube trend intelligence now fully operational
 
 ### ✅ Completed (March 30)
@@ -73,9 +74,10 @@ Nothing currently in progress.
 ## 🎯 Next Priorities
 
 ### 🔴 Must Do
-1. **Run `alembic upgrade head`** on Railway — Apply pending migrations
-2. **Verify /admin stats** — confirm stats load correctly for admin email
-3. **Check Railway deploy logs** — Verify no migration errors post-deploy
+1. **Get ENSEMBLEDATA_TOKEN** — Sign up at dashboard.ensembledata.com and add token to Railway
+2. **Run `alembic upgrade head`** on Railway — Apply pending migrations
+3. **Verify /admin stats** — confirm stats load correctly for admin email
+4. **Check Railway deploy logs** — Verify no migration errors post-deploy
 
 ### 🟡 Should Do
 4. **Reach out to first beta user** — cooper238719831@gmail.com
@@ -90,7 +92,8 @@ Nothing currently in progress.
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| alembic upgrade head not run | MEDIUM | 🔴 Pending | New tables (reddit_trends, youtube_trends, trend_source) won't exist until migration runs |
+| ENSEMBLEDATA_TOKEN not configured | HIGH | 🔴 Blocked | TikTok trend intelligence needs API token from dashboard.ensembledata.com |
+| alembic upgrade head not run | MEDIUM | 🔴 Pending | New tables (reddit_trends, youtube_trends, tiktok_trends, trend_source) won't exist until migration runs |
 | Idea generation reliability | MEDIUM | 🟡 Monitor | Fallback chain fixed, needs production verification |
 | FROM_NAME env var | LOW | 🟢 Backlog | Emails work without it |
 
@@ -104,7 +107,7 @@ Nothing currently in progress.
 | Phase 2: AI Content Engine | ✅ Complete | Ideas, Hooks, Scripts, Calendar, Taste Profile |
 | Phase 3: Personalization | ✅ Complete | Niche & Tone, onboarding, Success Compounder |
 | Phase 4: Trend Intelligence v1 | ✅ Complete | Google Trends live, nightly at 3 AM UTC |
-| Phase 4b: Trend Intelligence v2 | ✅ Complete | Reddit + YouTube signals, trend_source tracking |
+| Phase 4b: Trend Intelligence v2 | ✅ Complete | Reddit + YouTube + TikTok signals, trend_source tracking |
 | Phase 5: Email Sequences | ✅ Complete | Creator weekly, Studio daily, Day 7 onboarding |
 | Beta Readiness (v0.1.0) | ✅ Complete | All 7 parts done and pushed |
 | Creator Pro Tier | ✅ Complete | Live — Paddle + Railway env vars set |
