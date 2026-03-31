@@ -1,11 +1,177 @@
-# Critical Context & Lessons Learned - Updated March 26, 2026
+# Critical Context & Lessons Learned - Updated March 31, 2026
 
-## March 26, 2026 — End of Day Summary (12:00 UTC)
+## March 31, 2026 — End of Day Summary (15:00 UTC)
+
+### Activity Today
+- **10:00 UTC** — Daily improvement suggestion sent: "Success Compounder" gated to Creator Pro in Splash but absent from Creator Pro's own feature list — broken upgrade path
+- **~11:30 UTC** — Crypto Raven confirmed feature is live; fix implemented and shipped immediately
+  - Added Success Compounder description to Creator Pro's Personalization section
+  - Commit `dbc7851` pushed to main
+- **15:00 UTC** — End-of-day review completed
+
+### ✅ Resolved Today
+- **Success Compounder pricing page gap** — feature now appears in Creator Pro's card with full description
+- Upgrade path from Splash → Creator Pro for this feature is now complete and verifiable
+
+### Today's Suggestion Quality
+Fresh and valid — 3rd consecutive fresh suggestion after the Mar 28–29 stale period. Actioned within ~90 minutes of delivery — best same-day turnaround in recent memory.
+
+### Key Learning
+**Quick user confirmation + immediate execution is the ideal workflow.** The daily suggestion system works best when:
+1. Suggestion is fresh and specific (not a repeat)
+2. User can confirm or deny in one message ("it exists" / "not yet")
+3. Fix is isolated and low-risk enough to ship without further discussion
+
+Today's flow was exactly this. No deliberation, no back-and-forth — suggestion → confirm → fix → push.
+
+### Persistent Bug Tracker (15+ Days — Critical)
+1. Dashboard double "Loading trends…" render — since Mar 16 ← **15 days**
+2. Pricing page closing section has no CTA button — since Mar 16 ← **15 days**
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" — since Mar 16 ← **15 days**
+4. Dashboard "Use this hook" instruction misplaced — since Mar 17 ← **14 days**
+5. Creator plan lists Zapier inline as "(Creator Pro+)" in paid plan — since Mar 23 ← **8 days**
+
+### Pattern Observation
+Tuesday follows the Mon/Tue low-activity pattern — no direct user sessions, all activity automated. Exception today: Crypto Raven replied to a suggestion and a fix was shipped. Tuesdays are not always silent.
+
+---
+
+# Critical Context & Lessons Learned - Updated March 30, 2026
+
+## March 30, 2026 — Midday Summary (11:00 UTC)
+
+### Activity Today
+- **10:00 UTC** — Daily improvement suggestion sent: Features section "30-day calendar" copy contradicts hero fix from Mar 26
+- **No direct user sessions** — quiet Monday morning, all activity automated
+
+### Key Learning
+**Stale suggestion streak broken.** After two consecutive stale days (Mar 28–29), today's Mar 30 analysis correctly identified a genuinely new issue: the hero fix last week was not propagated to the features section, creating an internal page inconsistency. The analysis system is working correctly when the analysis file is up to date.
+
+### Today's Suggestion Quality
+Valid and fresh — the "30-day calendar" features block contradiction is a real issue created by the Mar 26 hero fix not being fully applied across the page. Not stale.
+
+### End-of-Day Status (15:00 UTC)
+- No direct user sessions all day — quiet Monday, consistent with weekly pattern
+- Suggestion delivered, no user response received
+- All persistent bugs remain unresolved
+
+### Persistent Bug Tracker (14+ Days)
+1. Dashboard double "Loading trends…" render — since Mar 16
+2. Pricing page closing section has no CTA button — since Mar 16
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" — since Mar 16
+4. Dashboard "Use this hook" instruction misplaced — since Mar 17
+5. Creator plan lists Zapier inline as "(Creator Pro+)" in paid plan — since Mar 23
+
+### New Issues Surfaced (Mar 30 Analysis)
+- Monthly pricing may now be invisible on pricing page (toggle section removed or JS-only)
+- "Ten questions at signup" homepage copy still universal — Splash only gets 5
+- "Success Compounder" gate tightened to Creator Pro but still unexplained anywhere on site
+- "50 Early-Access Spots" static banner — 8+ days unchanged, growing credibility risk
+
+---
+
+# Critical Context & Lessons Learned - Updated March 29, 2026
+
+## March 29, 2026 — End of Day Summary (15:00 UTC)
+
+### Activity Today
+- **10:00 UTC** — Daily improvement suggestion presented (hero trust micro-copy inaccuracy)
+- **User context:** Fix already implemented on Mar 26 — suggestion was stale
+- **15:00 UTC** — End-of-day review completed
+- **No direct work sessions** — quiet Sunday, all activity automated
+
+### Key Learning
+**Stale analysis is now a confirmed pattern.**
+Two consecutive days (Mar 28 and Mar 29) of presenting the same stale suggestion confirms this isn't a one-off. The daily improvement system pulls from `flowcast-daily-improvements.md`, which was last updated on 2026-03-26. When fixes are implemented, the analysis file doesn't automatically refresh. The system needs either: (a) a way to mark suggestions as resolved, or (b) more frequent re-analysis to ensure suggestions reflect current site state.
+
+### Pattern Observation
+- Weekends remain predictably quiet — no user sessions
+- Persistent UX bugs continue unresolved (now 13+ days for the oldest issues)
+- No new issues introduced today
+
+### Persistent Bug Tracker (13+ Days)
+1. Dashboard double "Loading trends…" render — since Mar 16
+2. Pricing page closing section has no CTA button — since Mar 16
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" — since Mar 16
+4. Dashboard "Use this hook" instruction misplaced — since Mar 17
+
+---
+
+## March 29, 2026 — Midday Summary (11:00 UTC)
+
+### Activity Today
+- **10:00 UTC** — Daily improvement suggestion presented (hero trust micro-copy inaccuracy)
+- **User context:** Fix already implemented on Mar 26 — suggestion was stale
+- **No direct work sessions** — quiet Sunday morning, all activity automated
+
+### Key Learning
+**Stale analysis persists as a systemic issue.**
+The daily improvement suggestion presented today was based on 2026-03-26 analysis data, but the fix had already been implemented on March 26. This is the second consecutive day of stale suggestions. The root cause: the analysis log isn't being updated to mark items as resolved when fixes are deployed. The system needs a mechanism to invalidate or refresh suggestions once confirmed resolved.
+
+### Pattern Observation
+Weekend Sundays remain predictably quiet — no user sessions, only automated crons. This is consistent and acceptable.
+
+### Persistent Bug Tracker (13+ Days)
+1. Dashboard double "Loading trends…" render — since Mar 16
+2. Pricing page closing section has no CTA button — since Mar 16
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" — since Mar 16
+4. Dashboard "Use this hook" instruction misplaced — since Mar 17
+
+---
+
+## March 28, 2026 — End of Day Summary (20:00 UTC)
+
+### Activity Today
+- **11:00 UTC** — Daily improvement suggestion presented (hero trust micro-copy inaccuracy)
+- **User response:** Fix already implemented — suggestion was stale
+- **16:00 UTC** — Midday memory review completed
+- **20:00 UTC** — Final end-of-day review — no new activity since 16:00 UTC
+- **No direct work sessions** — quiet Saturday
+
+### Key Learning
+**Analysis file lag creates stale suggestions.**
+The daily improvement suggestion was based on 2026-03-26 analysis, but the fix had already been implemented. When the user confirms a fix is done, the analysis file may be behind reality. Consider noting resolved items more promptly in the analysis log to avoid repeat suggestions.
+
+### Pattern Observation
+Weekends (Saturday/Sunday) consistently show minimal activity — this is predictable and acceptable. No action needed.
+
+---
+
+# Critical Context & Lessons Learned - Updated March 27, 2026
+
+## March 27, 2026 — End of Day Summary (16:00 UTC)
+
+### Activity Today
+- **11:35 UTC** — Daily improvement suggestion presented (from 2026-03-26 analysis: hero trust micro-copy inaccuracy)
+- **11:35–13:52 UTC** — Cron misfired repeatedly (5+ triggers within ~2 hours)
+- **No direct user sessions** — quiet Friday, all activity automated
+
+### Key Learning
+When cron jobs misfire repeatedly, the schedule configuration is likely incorrect (e.g., `*/8 * * * *` instead of `0 12 * * *`). The user should be alerted to check and fix the cron schedule to prevent notification fatigue.
+
+### Cron Issue
+- **Daily suggestion job** fired 5+ times between 11:35 and 13:52 UTC
+- **End-of-day review** fired twice (13:44 and 16:00 UTC)
+- **Action needed:** Verify cron expression is `0 12 * * *` (daily at noon), not `*/8 * * * *` (every 8 minutes)
+
+### Site Status
+✅ **Operational** — No outages reported
+
+### Persistent Bug Tracker (11+ Days)
+1. Dashboard double "Loading trends…" render — since Mar 16
+2. Pricing page closing section has no CTA button — since Mar 16
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" — since Mar 16
+4. Dashboard "Use this hook" instruction misplaced — since Mar 17
+
+---
+
+## March 26, 2026 — End of Day Summary (16:00 UTC)
 
 ### Activity Today
 - **11:00 UTC** — Daily improvement suggestion presented: Hero trust micro-copy inaccuracy (30-day vs 7-day calendar)
 - **~11:00 UTC** — Crypto Raven requested Discord link in footer; added to pricing.html, faq.html, help.html
 - **~12:00 UTC** — Crypto Raven requested implementation of today's improvement; fixed hero copy
+- **16:00 UTC** — End-of-day review completed
 - **Commits:** `fe9cbca` (Discord links), `2157c30` (calendar copy fix)
 
 ### Key Learning
