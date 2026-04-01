@@ -1,3 +1,31 @@
+# Critical Context & Lessons Learned - Updated April 1, 2026
+
+## April 1, 2026 — Midday Summary (15:00 UTC)
+
+### Activity Today
+- **11:00 UTC** — Daily reminder triggered; reviewed morning activity
+- **~11:05 UTC** — Crypto Raven requested hero copy updates on landing page
+  - Changed badge: "The Content Intelligence Engine..." → "The Personalized Content Intelligence Engine..."
+  - Changed subtitle: "...scored hooks..." → "...personalized scored hooks..."
+  - Commit `d570666` pushed to main
+- **15:00 UTC** — Midday review completed
+
+### ✅ Completed Today
+- Landing page hero copy refresh emphasizing "personalized" positioning
+- Quick turnaround: request → execution → commit in under 5 minutes
+
+### Key Learning
+**Micro-copy iterations are frictionless when scope is tight.** Small, single-purpose copy changes (one word additions) don't need debate or deliberation. When the user knows exactly what they want changed, just execute and commit.
+
+### Persistent Bug Tracker (16+ Days — Critical)
+1. Dashboard double "Loading trends…" render — since Mar 16 ← **16 days**
+2. Pricing page closing section has no CTA button — since Mar 16 ← **16 days**
+3. Studio plan reads "Everything in Creator, plus:" — should be "Creator Pro" — since Mar 16 ← **16 days**
+4. Dashboard "Use this hook" instruction misplaced — since Mar 17 ← **15 days**
+5. Creator plan lists Zapier inline as "(Creator Pro+)" in paid plan — since Mar 23 ← **9 days**
+
+---
+
 # Critical Context & Lessons Learned - Updated March 31, 2026
 
 ## March 31, 2026 — End of Day Summary (15:00 UTC)
