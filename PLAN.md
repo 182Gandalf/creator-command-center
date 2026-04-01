@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-03-31 00:00 UTC
+**Last Updated:** 2026-04-01 00:00 UTC
 
 ---
 
@@ -20,8 +20,15 @@
 
 ## 📊 Current Status
 
+### ✅ Completed (April 1)
+
+- [x] **SociaVault 20-niche test** — Scheduled for 07:00 CEST; cron will auto-report results
+- [x] **Mobile "The Difference" section formatting** — Comparison cards now side-by-side on mobile with tighter spacing (`01fd651`)
+
 ### ✅ Completed (March 31)
 
+- [x] **TikTok migrated from EnsembleData → SociaVault** — New API, x-api-key auth, dict-to-list aweme_list handling, /music/popular + /trending endpoints, credit tracking, 402 failsafe (`783cd6a`)
+- [x] **Success Compounder added to Creator Pro pricing card** — Upgrade path from Splash → Creator Pro now complete (`dbc7851`)
 - [x] **TikTok Sound & Trend Intelligence via EnsembleData** — Fourth signal source added! Free tier (50 units/day) with 5-day niche rotation. Backend + frontend complete. (`afd75bd`)
 - [x] **Admin Dashboard v2** — Reddit and YouTube trends now visible in admin panel; user signups and beta feedback moved to top for priority visibility (`6d919ea`)
 - [x] **Reddit + YouTube Trend Intelligence (Phase 2)** — AI prompts now include Reddit/YouTube trend context; `trend_source` field tracks which intelligence source inspired each idea (`88b1832`)
@@ -57,7 +64,7 @@
 
 ### 🚧 In Progress
 
-Nothing currently in progress.
+- [ ] **SociaVault 20-niche test** — Cron running at 07:00 CEST today; awaiting results report
 
 ---
 
@@ -74,17 +81,18 @@ Nothing currently in progress.
 ## 🎯 Next Priorities
 
 ### 🔴 Must Do
-1. **Get ENSEMBLEDATA_TOKEN** — Sign up at dashboard.ensembledata.com and add token to Railway
-2. **Run `alembic upgrade head`** on Railway — Apply pending migrations
-3. **Verify /admin stats** — confirm stats load correctly for admin email
-4. **Check Railway deploy logs** — Verify no migration errors post-deploy
+1. **Await SociaVault test results** — Cron fires 07:00 CEST today; verify posts + sounds across all 20 niches
+2. **Remove ENSEMBLEDATA_TOKEN from Railway** — SociaVault is live; old key is dead weight
+3. **Run `alembic upgrade head`** on Railway — Apply pending migrations
+4. **Verify /admin stats** — confirm stats load correctly for admin email
 
 ### 🟡 Should Do
-4. **Reach out to first beta user** — cooper238719831@gmail.com
-5. **Verify YouTube trend fetch** — confirm daily fetch at 03:00 UTC works with new API key
+5. **Reach out to first beta user** — cooper238719831@gmail.com
+6. **Verify YouTube trend fetch** — confirm daily fetch at 03:00 UTC works with new API key
+7. **Fix persistent UX bugs** — 5 bugs have been open 8–15+ days (see MEMORY.md bug tracker)
 
 ### 🟢 Nice to Have
-6. **Add `FROM_NAME` env var** in Railway
+8. **Add `FROM_NAME` env var** in Railway
 
 ---
 
@@ -92,7 +100,7 @@ Nothing currently in progress.
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| ENSEMBLEDATA_TOKEN configured | — | ✅ Resolved | Token added to Railway, TikTok intelligence ready |
+| ENSEMBLEDATA_TOKEN → SociaVault | — | ✅ Complete | Migrated to SociaVault; remove old env var from Railway |
 | alembic upgrade head not run | MEDIUM | 🔴 Pending | New tables (reddit_trends, youtube_trends, tiktok_trends, trend_source) won't exist until migration runs |
 | Idea generation reliability | MEDIUM | 🟡 Monitor | Fallback chain fixed, needs production verification |
 | FROM_NAME env var | LOW | 🟢 Backlog | Emails work without it |
