@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-04-01 00:00 UTC
+**Last Updated:** 2026-04-02 00:00 UTC
 
 ---
 
@@ -22,77 +22,68 @@
 
 ### ✅ Completed (April 1)
 
-- [x] **SociaVault 20-niche test** — Scheduled for 07:00 CEST; cron will auto-report results
-- [x] **Mobile "The Difference" section formatting** — Comparison cards now side-by-side on mobile with tighter spacing (`01fd651`)
+- [x] **Hero copy refresh** — "Personalized Content Intelligence Engine" + "personalized scored hooks" (`d570666`)
+- [x] **Trend UI consolidation** — 4 trend sources merged into single expandable button in Ideas tab
+- [x] **Blur effect for Splash users** — Reddit/YouTube/TikTok trends blurred; Google Trends stays clear
+- [x] **TikTok sound suggestions in scripts** — Pink-styled `sound_suggestion` field in dashboard scripts
+- [x] **Daily digest endpoints** — `/digest-status`, `/send-daily-digest-to-all`, `/send-digest-to-user` added
+- [x] **TikTok sound context enrichment** — `sound_context` column added to DB; AI generates 8-12 word descriptions per sound
+- [x] **Async fix for sound context generation** — Functions made async; AI calls now properly awaited
+- [x] **TikTok cron Phase 5** — Context generation runs automatically after each fetch cycle
+- [x] **Discord links in footer** — Added to pricing, faq, help pages (`fe9cbca`)
+- [x] **Hero calendar copy fix** — "30-day calendar" → "7-day calendar on Splash" (`2157c30`)
+- [x] **Landing page demo enhanced** — Engagement predictions, viral probability, hook scores, content angles
+- [x] **Demo fallback mock data** — Demo always works even if AI parsing fails
+- [x] **Demo switched to Anthropic** — Higher quality output for landing page
 
 ### ✅ Completed (March 31)
 
 - [x] **TikTok migrated from EnsembleData → SociaVault** — New API, x-api-key auth, dict-to-list aweme_list handling, /music/popular + /trending endpoints, credit tracking, 402 failsafe (`783cd6a`)
 - [x] **Success Compounder added to Creator Pro pricing card** — Upgrade path from Splash → Creator Pro now complete (`dbc7851`)
-- [x] **TikTok Sound & Trend Intelligence via EnsembleData** — Fourth signal source added! Free tier (50 units/day) with 5-day niche rotation. Backend + frontend complete. (`afd75bd`)
-- [x] **Admin Dashboard v2** — Reddit and YouTube trends now visible in admin panel; user signups and beta feedback moved to top for priority visibility (`6d919ea`)
-- [x] **Reddit + YouTube Trend Intelligence (Phase 2)** — AI prompts now include Reddit/YouTube trend context; `trend_source` field tracks which intelligence source inspired each idea (`88b1832`)
-- [x] **YOUTUBE_API_KEY added to Railway** — YouTube trend intelligence now fully operational
 
-### ✅ Completed (March 30)
+### ✅ Completed (March 22–30)
 
-- [x] **Mobile onboarding header spacing fixed** — Padding, logo size, category chip grid all fixed for <640px (`846cf15`)
-- [x] **Excel Bulk Export (Creator+ tiers)** — Ideas, Hooks, Scripts — exports freshly generated session content, not saved; locked for Splash (`cb3946f`, `eb7ec28`)
-- [x] **Beta feedback widget captures user email** — Clerk JWT email extracted and stored; admin console shows email instead of user_id (`2f6ee3c`, `f5846c0`)
-- [x] **Hook Video Direction feature** — AI generates 1-2 sentence visual direction for first 3 seconds; expandable on hook cards (▸/▾); appears between HOOK and SCRIPT BODY in script output; hook type alignment rules in prompt (`727bc1a`, `f4b6b58`, `4475ce7`)
-- [x] **Reddit + YouTube Trend Intelligence (Phase 1)** — Unified NICHE_CONFIG (20 niches × subreddits + YouTube queries), new DB tables (reddit_trends, youtube_trends), Reddit public .json fetch (no API key), YouTube Data API v3, trend aggregation service, scheduler updated (Reddit 02:00+14:00, YouTube 03:00)
-
-### ✅ Completed (March 29)
-
-- [x] **Default tier changed from Splash → Creator** — All user creation paths updated
-- [x] **Pricing page — collapsible feature categories accordion** — Synced across all 4 tiers
-- [x] **"Creator+" renamed to "Creator Pro" site-wide**
-- [x] **Admin email notification for new signups**
-- [x] **First real user signed up** — cooper238719831@gmail.com
-
-### ✅ Completed (March 26–28)
-
-- [x] **Site recovered from HTTP 500 outage**
-- [x] **Discord links added to footer**
-- [x] **Hero trust micro-copy fixed** — "30-day calendar" → "7-day calendar on Splash"
-
-### ✅ Completed (March 22 and Earlier)
-
-- [x] All Phase 1–5 work, beta readiness, Paddle billing, AI engine, personalization, trend intelligence v1, email sequences
+- [x] All Phase 1–5 work, beta readiness, Paddle billing, AI engine, personalization, trend intelligence (Google + Reddit + YouTube + TikTok), email sequences, mobile fixes, Excel exports, Hook Video Direction, admin dashboard v2
 
 ---
 
 ### 🚧 In Progress
 
-- [ ] **SociaVault 20-niche test** — Cron running at 07:00 CEST today; awaiting results report
+- [ ] **Sound context population** — 7/96 sounds have AI contexts; cron will fill remaining over next few runs
+- [ ] **Verify daily digest delivery** — 26 eligible beta users; confirm emails received
 
 ---
 
 ### 🚧 Pending — Needs Action
 
+- [ ] **Remove ENSEMBLEDATA_TOKEN from Railway** — SociaVault is live; old key is dead weight
 - [ ] **Admin page verified** — confirm stats load correctly for admin email
-- [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
-- [ ] **Railway deploy logs** — Check for migration errors post-deploy
-- [ ] **Run `alembic upgrade head`** — Apply new migrations (reddit_trends, youtube_trends, trend_source)
+- [ ] **Run `alembic upgrade head`** — Verify migration applied on Railway (`sound_context` column)
 - [ ] **Reach out to first user** — cooper238719831@gmail.com signed up; worth a personal welcome
+- [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
 
 ---
 
 ## 🎯 Next Priorities
 
 ### 🔴 Must Do
-1. **Await SociaVault test results** — Cron fires 07:00 CEST today; verify posts + sounds across all 20 niches
-2. **Remove ENSEMBLEDATA_TOKEN from Railway** — SociaVault is live; old key is dead weight
-3. **Run `alembic upgrade head`** on Railway — Apply pending migrations
+1. **Verify sound suggestion format in generated scripts** — Test that `sound_suggestion` now shows in TikTok scripts with correct format: `🎵 "Sound Name" by @artist (245K videos) — specific direction`
+2. **Verify daily digest delivery** — Confirm all 26 beta users received emails; trigger again if needed
+3. **Remove ENSEMBLEDATA_TOKEN from Railway** — Cleanup dead env var
 4. **Verify /admin stats** — confirm stats load correctly for admin email
 
 ### 🟡 Should Do
 5. **Reach out to first beta user** — cooper238719831@gmail.com
-6. **Verify YouTube trend fetch** — confirm daily fetch at 03:00 UTC works with new API key
-7. **Fix persistent UX bugs** — 5 bugs have been open 8–15+ days (see MEMORY.md bug tracker)
+6. **Fix persistent UX bugs** — 5 bugs open 15–16+ days (see MEMORY.md bug tracker)
+   - Dashboard double "Loading trends…" render
+   - Pricing page closing section — no CTA button
+   - Studio plan "Everything in Creator, plus:" → should say "Creator Pro"
+   - Dashboard "Use this hook" instruction misplaced
+   - Creator plan lists Zapier as "(Creator Pro+)" in paid plan
 
 ### 🟢 Nice to Have
-8. **Add `FROM_NAME` env var** in Railway
+7. **Add `FROM_NAME` env var** in Railway
+8. **Daily auto-fetch for all niches** — Digest emails need sounds for all niches, not just rotation group
 
 ---
 
@@ -100,8 +91,8 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| ENSEMBLEDATA_TOKEN → SociaVault | — | ✅ Complete | Migrated to SociaVault; remove old env var from Railway |
-| alembic upgrade head not run | MEDIUM | 🔴 Pending | New tables (reddit_trends, youtube_trends, tiktok_trends, trend_source) won't exist until migration runs |
+| 5 persistent UX bugs (15–16 days) | MEDIUM | 🔴 Overdue | See MEMORY.md bug tracker |
+| alembic upgrade head not verified | MEDIUM | 🟡 Monitor | sound_context column — run-migration endpoint returned success |
 | Idea generation reliability | MEDIUM | 🟡 Monitor | Fallback chain fixed, needs production verification |
 | FROM_NAME env var | LOW | 🟢 Backlog | Emails work without it |
 
@@ -116,6 +107,7 @@
 | Phase 3: Personalization | ✅ Complete | Niche & Tone, onboarding, Success Compounder |
 | Phase 4: Trend Intelligence v1 | ✅ Complete | Google Trends live, nightly at 3 AM UTC |
 | Phase 4b: Trend Intelligence v2 | ✅ Complete | Reddit + YouTube + TikTok signals, trend_source tracking |
+| Phase 4c: TikTok Sound Intelligence | ✅ Complete | SociaVault, 6K credits, music fetch, sound context AI |
 | Phase 5: Email Sequences | ✅ Complete | Creator weekly, Studio daily, Day 7 onboarding |
 | Beta Readiness (v0.1.0) | ✅ Complete | All 7 parts done and pushed |
 | Creator Pro Tier | ✅ Complete | Live — Paddle + Railway env vars set |
@@ -129,9 +121,9 @@
 - [x] Paddle checkout tested end-to-end ✅
 - [x] Mobile test at 375px ✅
 - [x] Admin email notification on signup ✅
+- [x] YOUTUBE_API_KEY added to Railway ✅
 - [ ] Railway deploy logs checked for migration errors
 - [ ] /admin verified (stats load for admin email)
-- [ ] YOUTUBE_API_KEY added to Railway
 
 ---
 
