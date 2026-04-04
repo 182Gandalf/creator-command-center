@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-04-03 00:00 UTC
+**Last Updated:** 2026-04-04 00:00 UTC
 
 ---
 
@@ -19,6 +19,28 @@
 ---
 
 ## 📊 Current Status
+
+### ✅ Completed (April 3)
+
+- [x] **Admin signup dates fixed** — Clerk webhook now extracts `created_at` from payload (ms → UTC); backfill endpoint added and run — all 28 users now have correct dates
+- [x] **Admin table mobile fixes** — Font size reduced, email wrapping fixed, sorting with nulls last
+- [x] **Beta feedback shows user email** — Backend now looks up user email from users table when beta_feedback.email is null
+- [x] **Billing page Creator Pro tier** — Added `creator_pro` to planDetails JS object (was showing Splash info for Pro users)
+- [x] **"Invalid Date" fix on account page** — Scheduled cancellation message no longer uses non-existent `effective_date` field
+- [x] **Welcome/upgrade email text brightened** — Feature list and tip text changed from `#94a3b8` → `#e2e8f0` for better readability on dark backgrounds
+- [x] **FAQ and Help Guide major update** — Added Creator Pro tier throughout, all 4 trend sources, TikTok Sounds section, Cover Frame section, Excel export, Zapier Integrations section, Studio workspaces note
+- [x] **Pricing page toggle bug fixed** — Summary section buttons were defaulting to monthly; fixed to match annual toggle default
+- [x] **Landing page double bullets fixed** — Comparison section had both hardcoded `•` and CSS `::before` bullets on mobile
+- [x] **Paddle checkout tax ID field** — Added `showAddTaxId: true` and `showAddDiscountCode: true` to Paddle.Initialize checkout settings
+- [x] **Ideas counter turns orange at limit** — Splash users see orange counter + "Want more ideas? Upgrade now." button + explanatory message when at 20/20
+- [x] **Excel export locked to Creator Pro+** — Splash and Creator users see 🔒 locked buttons with hover tooltip "Available only on Creator Pro and above"
+- [x] **Pricing page: "Saves & Exports"** — Renamed from "Saves & Storage"; Excel and PDF export rows added per tier
+- [x] **Pricing page: Creator tier cleanup** — Removed "All tones + custom voice input" and "Full Taste Profile"; added "Full Taste Profile Unlocked"; Hook Scorer line moved and reworded
+- [x] **Pricing page: Studio Trend Intelligence** — Matched to Creator Pro exactly (removed "Enhanced" and "Daily alerts" lines)
+- [x] **Pricing page: Studio Workflow** — Matched to Creator Pro; updated to "5 workspaces" and "Priority support (24h response)"
+- [x] **Pricing page: Studio Personalization** — Matched to Creator Pro exactly; "Full Taste Profile Unlocked" line added
+- [x] **Pricing page: Studio Workspaces section** — Renamed from "Agency Economics"; updated with workspace-focused copy
+- [x] **Local backup created** — Full codebase snapshot at `backups/flowcast_backup_20260403_090218/` (522 MB)
 
 ### ✅ Completed (April 2)
 
@@ -54,38 +76,36 @@
 ### 🚧 In Progress
 
 - [ ] **Sound context population** — cron filling remaining sounds over next few runs
-- [ ] **Admin signup date display** — Debug logging added; needs verification that date renders correctly
-- [ ] **Cover Frame rollout** — Live for new scripts; older scripts will not show section (expected)
+- [ ] **Excel export lock for Creator** — Button still active for Creator users despite lockExportButtons() — delayed DOMContentLoaded fix pushed, needs verification
+- [ ] **Paddle tax ID field** — showAddTaxId set in Paddle.Initialize; needs verification in live checkout
 
 ---
 
 ### 🚧 Pending — Needs Action
 
-- [ ] **Verify admin signup dates** — Check browser console on /admin to confirm created_at is populated
 - [ ] **Remove ENSEMBLEDATA_TOKEN from Railway** — SociaVault is live; old key is dead weight
 - [ ] **Run `alembic upgrade head`** — Verify entertainment → music migration applied on Railway
-- [ ] **Verify /admin stats load** — Confirm stats load correctly for admin email
 - [ ] **Reach out to first user** — cooper238719831@gmail.com signed up; worth a personal welcome
 - [ ] **`FROM_NAME` env var** — Add to Railway dashboard *(low priority — emails work)*
+- [ ] **Verify Excel export lock works for Creator** — Daz reported it was still active; fix pushed, needs confirmation
 
 ---
 
 ## 🎯 Next Priorities
 
 ### 🔴 Must Do
-1. **Verify admin signup date rendering** — Open /admin, check browser console for "Signups data:" log, confirm created_at values present
-2. **Verify entertainment → music migration ran** — Check Railway deploy logs for alembic errors
+1. **Verify Excel export locked for Creator** — Confirm 🔒 tooltip shows and export is blocked
+2. **Verify Paddle tax ID field visible** — Confirm "Add tax number" field shows in checkout
 3. **Remove ENSEMBLEDATA_TOKEN from Railway** — Cleanup dead env var
-4. **Fix persistent UX bugs** — Now 17–18+ days old — getting critical
+4. **Fix persistent UX bugs** — Now 19+ days old — getting critical
 
 ### 🟡 Should Do
 5. **Reach out to first beta user** — cooper238719831@gmail.com
-6. **Verify Cover Frame in generated scripts** — Test that new scripts show COVER FRAME between Script Body and Caption
+6. **Verify entertainment → music migration ran** — Check Railway deploy logs for alembic errors
 7. **Verify daily digest delivery** — Confirm beta users received emails
 
 ### 🟢 Nice to Have
-8. **Google Trends fetch for new niches** — Will auto-run tonight at 3 AM UTC; no manual action needed
-9. **Add `FROM_NAME` env var** in Railway
+8. **Add `FROM_NAME` env var** in Railway
 
 ---
 
@@ -93,8 +113,9 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| Persistent UX bugs (17-18 days) | MEDIUM | 🔴 Overdue | Pricing CTA, Studio label, Zapier gate, double loading render |
-| Admin signup date not displaying | LOW | 🟡 Investigating | Debug logging added — needs verification |
+| Persistent UX bugs (19+ days) | MEDIUM | 🔴 Overdue | Pricing CTA, Studio label, double loading render |
+| Excel export not locking for Creator | LOW | 🟡 Investigating | Fix pushed with delayed DOM load — needs verification |
+| Paddle tax field not visible | LOW | 🟡 Investigating | showAddTaxId added to Initialize — needs live test |
 | Entertainment migration not verified | MEDIUM | 🟡 Monitor | Check Railway deploy logs |
 | FROM_NAME env var | LOW | 🟢 Backlog | Emails work without it |
 
