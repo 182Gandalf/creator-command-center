@@ -1,6 +1,6 @@
 # FlowCast.space - Project Plan & Roadmap
 
-**Last Updated:** 2026-04-04 00:00 UTC
+**Last Updated:** 2026-04-05 00:00 UTC
 
 ---
 
@@ -19,6 +19,16 @@
 ---
 
 ## 📊 Current Status
+
+### ✅ Completed (April 4)
+
+- [x] **CTA/footer gap fixed** — Removed `margin-top: 4rem` from footer and reduced CTA `padding-bottom` from 80px → 32px (`commit: landing page footer gap fix`)
+- [x] **Tweak button upgraded messaging** — "Regenerate with Tweaks" button now shows "Want more ideas? Upgrade now." and redirects to `/pricing` when Splash user is at 0 tweaks; counter shows "0" in red
+- [x] **Trends tab link fixed** — "Visit the Trends Tab for More →" was calling non-existent `switchIdeasTab()` — corrected to `navigate('trends')`
+- [x] **Generate Ideas button upgraded messaging** — `updateIdeaCounter()` now updates button text to "💎 Want more ideas? Upgrade now." when Splash user hits 0 remaining ideas
+- [x] **TXT Downloads added to all pricing tiers** — Added to Saves & Exports section for Splash, Creator, Creator Pro, and Studio
+- [x] **Reddit scheduler KeyError fixed** — Scheduler was referencing `result['total_posts']`; corrected to `result['total_new']` and `result['total_updated']`
+- [x] **Reddit 429 retry logic added** — Exponential backoff (5s, 10s, 20s) with 3 retries per subreddit; delay increased from 2s → 3s
 
 ### ✅ Completed (April 3)
 
@@ -78,6 +88,7 @@
 - [ ] **Sound context population** — cron filling remaining sounds over next few runs
 - [ ] **Excel export lock for Creator** — Button still active for Creator users despite lockExportButtons() — delayed DOMContentLoaded fix pushed, needs verification
 - [ ] **Paddle tax ID field** — showAddTaxId set in Paddle.Initialize; needs verification in live checkout
+- [ ] **Reddit 429 rate limiting** — Railway IP may be blocked by Reddit; retry logic added but if block is IP-level, frequency reduction or proxy needed
 
 ---
 
@@ -91,18 +102,18 @@
 
 ---
 
-## 🎯 Next Priorities
+## 🎯 Next Priorities (April 5)
 
 ### 🔴 Must Do
-1. **Verify Excel export locked for Creator** — Confirm 🔒 tooltip shows and export is blocked
-2. **Verify Paddle tax ID field visible** — Confirm "Add tax number" field shows in checkout
-3. **Remove ENSEMBLEDATA_TOKEN from Railway** — Cleanup dead env var
-4. **Fix persistent UX bugs** — Now 19+ days old — getting critical
+1. **Investigate Reddit IP block** — Confirm if Railway's IP is permanently blocked or temporary throttle; consider reducing fetch frequency from 4x → 1x daily
+2. **Verify Excel export locked for Creator** — Confirm 🔒 tooltip shows and export is blocked
+3. **Verify Paddle tax ID field visible** — Confirm "Add tax number" field shows in checkout
+4. **Fix persistent UX bugs** — Now 20+ days old — critical
 
 ### 🟡 Should Do
-5. **Reach out to first beta user** — cooper238719831@gmail.com
-6. **Verify entertainment → music migration ran** — Check Railway deploy logs for alembic errors
-7. **Verify daily digest delivery** — Confirm beta users received emails
+5. **Remove ENSEMBLEDATA_TOKEN from Railway** — Cleanup dead env var
+6. **Reach out to first beta user** — cooper238719831@gmail.com
+7. **Verify entertainment → music migration ran** — Check Railway deploy logs for alembic errors
 
 ### 🟢 Nice to Have
 8. **Add `FROM_NAME` env var** in Railway
@@ -113,7 +124,8 @@
 
 | Risk | Impact | Status | Notes |
 |------|--------|--------|-------|
-| Persistent UX bugs (19+ days) | MEDIUM | 🔴 Overdue | Pricing CTA, Studio label, double loading render |
+| Persistent UX bugs (20+ days) | MEDIUM | 🔴 Overdue | Pricing CTA, Studio label, double loading render |
+| Reddit 429 rate limiting | MEDIUM | 🔴 Active | Railway IP may be blocked; sports/politics/DIY data stale |
 | Excel export not locking for Creator | LOW | 🟡 Investigating | Fix pushed with delayed DOM load — needs verification |
 | Paddle tax field not visible | LOW | 🟡 Investigating | showAddTaxId added to Initialize — needs live test |
 | Entertainment migration not verified | MEDIUM | 🟡 Monitor | Check Railway deploy logs |
