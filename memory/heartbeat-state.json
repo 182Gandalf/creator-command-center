@@ -2,7 +2,7 @@
   "lastChecks": {
     "email": null,
     "calendar": null,
-    "heartbeat": 1740858060
+    "heartbeat": 1742398260
   },
   "pendingActions": [
     "Instagram Graph API: Implement OAuth callback and token storage"

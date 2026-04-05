@@ -22,9 +22,9 @@ Applying a generic escalation schedule to a P0 security incident. 14 days is an 
 ```
 P0 Security Issues (exposed secrets):
 - Day 1: Initial notification
-- Day 2: Check for blockers — "What's preventing rotation?"
-- Day 3: Offer alternative solutions (if manual rotation is hard)
-- Day 5: Propose immediate containment (disable key, generate new)
+- Day 2: Check for blockers
+- Day 3: Offer alternative solutions
+- Day 5: Propose immediate containment
 - Day 7: Final notice with clear risk statement
 - NEVER exceed 7 days for P0 security
 ```
@@ -109,14 +109,13 @@ Treating reminder schedule as sufficient. If user hasn't acted after 3 reminders
 **Evidence from Memory:**
 - March 3: "Day 7 urgent reminder SENT"
 - March 5: "Day 10 reminder due March 6"
-- Never: "User indicated X is blocking rotation"
 
 **Concrete Improvement:**
 ```
 Barrier Detection Protocol (Day 3+ of inaction):
 Instead of: "This is your Day 3 reminder"
 Try: "I notice this hasn't been addressed. Common blockers:
-  - Unsure how to rotate the key?
+  - Technical complexity?
   - Worried about breaking existing integrations?
   - Need me to handle it directly?
   - Different priority right now?

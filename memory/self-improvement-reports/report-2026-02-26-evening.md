@@ -68,8 +68,6 @@
 │                                                         │
 │  Cloudflare DNS/CDN       🔴 INACCESSIBLE               │
 │  └── Waiting on domain transfer                         │
-│                                                         │
-│  └── Credentials need rotation ASAP                     │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -77,46 +75,24 @@
 
 ## 🎯 Recommendations for Tomorrow (Feb 27)
 
-### Priority 1: Security (MUST DO)
-   - Visit: https://developers.tiktok.com/
-   - Navigate to your app settings
-   - Generate new client secret
-   - Update `.env` file locally
-   - Test API connection
-
-   ```bash
-   # Install BFG Repo-Cleaner
-   wget https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar
-   
-   # Create passwords.txt with exposed secrets
-   
-   # Run cleanup
-   java -jar bfg-1.14.0.jar --replace-text passwords.txt
-   git reflog expire --expire=now --all
-   git gc --prune=now --aggressive
-   
-   # Force push (coordinate first!)
-   git push --force
-   ```
-
-### Priority 2: Domain Recovery
-3. **Check Porkbun Support Ticket**
+### Priority 1: Domain Recovery
+1. **Check Porkbun Support Ticket**
    - Check email for domain unlock approval
    - If approved: Initiate transfer to new registrar
    - Alternative: Consider new domain if unlock fails
 
-4. **Cloudflare Setup (After Domain Transfer)**
+2. **Cloudflare Setup (After Domain Transfer)**
    - Set up new Cloudflare account
    - Configure DNS records for flowcast.space
    - Enable SSL/TLS
    - Configure CDN caching
 
-### Priority 3: Feature Development
-5. **YouTube OAuth Setup**
+### Priority 2: Feature Development
+3. **YouTube OAuth Setup**
    - Add Railway app URL to Google Cloud Console redirect URIs
    - Test Google Sign-In flow
 
-6. **Meta Developer App**
+4. **Meta Developer App**
    - Create app at developers.facebook.com
    - Apply for Instagram Basic Display API
 

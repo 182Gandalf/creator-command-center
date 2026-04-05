@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FlowCast — Trends Scraper Test</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f13;
+      color: #e2e2e2;
+      padding: 32px 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      color: #a78bfa;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      background: #1a1a24;
+      border: 1px solid #333;
+      color: #e2e2e2;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      width: 280px;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: #a78bfa;
+    }
+
+    button {
+      background: #7c3aed;
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: #6d28d9; }
+    button:disabled { background: #444; cursor: not-allowed; }
+
+    .status-bar {
+      font-size: 0.8rem;
+      padding: 8px 14px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .status-bar.ok    { background: #14532d; color: #86efac; display: block; }
+    .status-bar.error { background: #450a0a; color: #fca5a5; display: block; }
+    .status-bar.info  { background: #1e3a5f; color: #93c5fd; display: block; }
+
+    .meta {
+      font-size: 0.78rem;
+      color: #555;
+      margin-bottom: 18px;
+    }
+
+    .meta span { color: #888; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: #1a1a24;
+      border: 1px solid #2a2a38;
+      border-radius: 12px;
+      padding: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover { border-color: #7c3aed; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .niche-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e2e2e2;
+      flex: 1;
+    }
+
+    .score-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: #2d1b69;
+      color: #a78bfa;
+      white-space: nowrap;
+      margin-left: 8px;
+    }
+
+    .bar-track {
+      background: #2a2a38;
+      border-radius: 4px;
+      height: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #7c3aed, #a78bfa);
+      transition: width 0.6s ease;
+    }
+
+    .topic-list {
+      font-size: 0.78rem;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    .topic-list span {
+      display: inline-block;
+      background: #222232;
+      border-radius: 4px;
+      padding: 1px 6px;
+      margin: 2px 2px 0 0;
+      color: #aaa;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 60px 0;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #555;
+      border-top-color: #a78bfa;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <h1>🔮 FlowCast — Trends Scraper Test</h1>
+  <p class="subtitle">Checks <code>/api/trends/current</code> — live data from pytrends</p>
+
+  <div class="controls">
+    <input type="text" id="baseUrl" value="https://flowcast.space" placeholder="https://flowcast.space" />
+    <button id="fetchBtn" onclick="fetchTrends()">Fetch Trends</button>
+    <button onclick="clearResults()" style="background:#333;">Clear</button>
+  </div>
+
+  <div id="statusBar" class="status-bar"></div>
+  <div id="meta" class="meta"></div>
+  <div id="grid" class="grid">
+    <div class="empty">Hit "Fetch Trends" to check the scraper ↑</div>
+  </div>
+
+  <script>
+    async function fetchTrends() {
+      const base = document.getElementById('baseUrl').value.replace(/\/$/, '');
+      const btn = document.getElementById('fetchBtn');
+      const statusBar = document.getElementById('statusBar');
+      const meta = document.getElementById('meta');
+      const grid = document.getElementById('grid');
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Fetching…';
+      statusBar.className = 'status-bar info';
+      statusBar.textContent = 'Contacting ' + base + '/api/trends/current …';
+      grid.innerHTML = '';
+      meta.textContent = '';
+
+      try {
+        const res = await fetch(base + '/api/trends/current');
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.detail || data.error || 'HTTP ' + res.status);
+        }
+
+        const topics = data.topics || data.trends || data || [];
+        const fetchedAt = data.fetched_at || data.timestamp || null;
+        const count = Array.isArray(topics) ? topics.length : 0;
+
+        if (count === 0) {
+          statusBar.className = 'status-bar error';
+          statusBar.textContent = '⚠️ Response OK but no topics returned — scraper may not have run yet.';
+          grid.innerHTML = '<div class="empty">No trend data found in response.</div>';
+          return;
+        }
+
+        statusBar.className = 'status-bar ok';
+        statusBar.textContent = `✅ ${count} niche${count !== 1 ? 's' : ''} returned successfully.`;
+
+        if (fetchedAt) {
+          const date = new Date(fetchedAt);
+          const age = Math.round((Date.now() - date) / 60000);
+          meta.innerHTML = `Last scraped: <span>${date.toUTCString()}</span> &nbsp;·&nbsp; <span>${age} min${age !== 1 ? 's' : ''} ago</span>`;
+        }
+
+        // Find max score for relative bar widths
+        const maxScore = Math.max(...topics.map(t => t.score ?? t.value ?? 0), 1);
+
+        topics.forEach((t, i) => {
+          const name = t.niche || t.name || t.title || 'Unknown';
+          const score = t.score ?? t.value ?? 0;
+          const relScore = Math.round((score / maxScore) * 100);
+          const rawTopics = t.topics || t.keywords || [];
+
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div class="card-header">
+              <div class="niche-name">#${i + 1} ${name}</div>
+              <div class="score-badge">Score: ${score}</div>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 0%" data-width="${relScore}%"></div>
+            </div>
+            ${rawTopics.length ? `<div class="topic-list">${rawTopics.map(k => `<span>${k}</span>`).join('')}</div>` : ''}
+          `;
+          grid.appendChild(card);
+        });
+
+        // Animate bars after paint
+        requestAnimationFrame(() => {
+          document.querySelectorAll('.bar-fill').forEach(b => {
+            b.style.width = b.dataset.width;
+          });
+        });
+
+      } catch (err) {
+        statusBar.className = 'status-bar error';
+        statusBar.textContent = '❌ Error: ' + err.message;
+        grid.innerHTML = '<div class="empty">Failed to fetch. Check the URL or CORS settings.</div>';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Fetch Trends';
+      }
+    }
+
+    function clearResults() {
+      document.getElementById('grid').innerHTML = '<div class="empty">Hit "Fetch Trends" to check the scraper ↑</div>';
+      document.getElementById('statusBar').className = 'status-bar';
+      document.getElementById('meta').textContent = '';
+    }
+
+    // Auto-fetch on load
+    window.addEventListener('load', fetchTrends);
+  </script>
+</body>
+</html>

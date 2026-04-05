@@ -1,0 +1,18 @@
+AutoMod Rule Setup Log
+======================
+Date: Wednesday, March 25th, 2026 — 2:20 PM (UTC)
+Guild: 1486337670102913024
+Rule: Block Non-Approved Links
+
+Attempt 1 — 2:20 PM UTC
+  Result: FAILED
+  Error: HTTP 403 — Discord error code 1010
+
+Attempt 2 (retry after 30s) — 2:21 PM UTC
+  Result: FAILED
+  Error: HTTP 403 — Discord error code 1010
+
+Status: FAILED (both attempts exhausted)
+Action Required: Bot is missing required permissions for AutoMod management.
+  → Ensure the bot has the "Manage Server" (MANAGE_GUILD) permission on the guild.
+  → AutoMod rule creation requires the bot to have MANAGE_GUILD + the automod_manage scope.

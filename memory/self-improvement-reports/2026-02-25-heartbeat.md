@@ -76,7 +76,6 @@ For this specific case:
 - **Found:** 2026-02-24 04:08 UTC
 - **Status:** PARTIALLY RESOLVED
 - **Done:** Removed from app.py, added to .env
-- **Pending:** Rotate secret in TikTok Developer Portal
 - **Blocked:** Waiting for user action
 ```
 

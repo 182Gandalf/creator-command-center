@@ -14,40 +14,7 @@ This review identified **7 critical issues** across four categories: errors/fail
 
 ## 🔴 Critical Findings
 
-| Attribute | Details |
-|-----------|---------|
-| **First Flagged** | February 24, 2026 (4+ days ago) |
-| **Status** | PARTIAL (incomplete) |
-| **Severity** | 🔴 CRITICAL |
-
-**What Happened:**
-- Removed from current code on Feb 24
-- **NEVER rotated in TikTok Developer Portal**
-- Secret remains in git history (accessible to anyone with repo access)
-
-**Why It Persisted:**
-- No tracking system to ensure completion
-- Documented in 3+ memory files as "needs rotation" but never created as tracked action
-- "DO NOT FORGET" notes instead of structured follow-up
-
-**Impact:**
-- Ongoing security vulnerability
-- Potential unauthorized API access
-- Compliance risk if audited
-
-**Required Action:**
-```
-1. User logs into https://developers.tiktok.com/
-2. Navigate to app settings
-3. Generate new client secret
-4. Update .env file
-5. Run BFG Repo-Cleaner on git history
-6. Force push to GitHub
-```
-
----
-
-### 2. COMMUNICATION WASTE: Redundant Subagent Work
+### 1. COMMUNICATION WASTE: Redundant Subagent Work
 | Attribute | Details |
 |-----------|---------|
 | **Date** | February 24, 2026 |
