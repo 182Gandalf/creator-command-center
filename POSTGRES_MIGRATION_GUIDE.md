@@ -135,6 +135,5 @@ DATABASE_URL=postgresql://postgres:password@containers.railway.app:5432/railway
 3. **Once working, I can help with:**
    - Meta/Instagram API setup
    - AI API keys configuration
-   - TikTok secret rotation (security fix)
 
 Ready to proceed?
