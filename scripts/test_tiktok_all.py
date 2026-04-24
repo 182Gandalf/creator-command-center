@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Test all TikTok endpoints"""
+import os
 import requests
 
 api_key = os.environ.get("SOCIAVAULT_API_KEY", "your-api-key-here")

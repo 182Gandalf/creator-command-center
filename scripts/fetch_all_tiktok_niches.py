@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Manual trigger for TikTok trend scraping via SociaVault API
+FORCE FETCH: All TikTok niches for admin dashboard update
+Bypasses rotation group - fetches every niche immediately
 """
 import os
 import sys
@@ -8,49 +9,55 @@ import sys
 # Add flowcast to path
 sys.path.insert(0, '/home/daz/.openclaw/workspace/flowcast')
 
-# Set required env vars if not already set (Railway will have these)
 os.environ.setdefault('DATABASE_URL', os.environ.get('DATABASE_URL', ''))
 os.environ.setdefault('SOCIAVAULT_API_KEY', os.environ.get('SOCIAVAULT_API_KEY', ''))
 
-from database import SessionLocal
+from database import SessionLocal, engine
 from services.tiktok_trends import fetch_tiktok_trends_for_rotation_group, SOCIAVAULT_API_KEY
+from config.niche_intelligence import get_all_tracked_niches
 
 def main():
-    print("=" * 60)
-    print("TikTok Trend Scraper - Manual Trigger")
-    print("=" * 60)
+    print("=" * 70)
+    print("FORCE FETCH: ALL TikTok Niches")
+    print("=" * 70)
     
-    # Check API key
     if not SOCIAVAULT_API_KEY:
         print("\n❌ ERROR: SOCIAVAULT_API_KEY not configured!")
-        print("Add it to Railway environment variables.")
         sys.exit(1)
     
-    print(f"\n✓ SOCIAVAULT_API_KEY configured: {SOCIAVAULT_API_KEY[:10]}...")
+    # Get ALL niches (23 total)
+    all_niches = get_all_tracked_niches()
+    print(f"\n📊 Total niches to fetch: {len(all_niches)}")
+    print(f"Niches: {', '.join(all_niches)}")
     
-    # Get database session
     db = SessionLocal()
     
+    total_credits = 0
+    total_posts = 0
+    total_sounds = 0
+    total_errors = 0
+    
     try:
-        print("\n🚀 Starting TikTok trend fetch...")
-        print("-" * 60)
+        # Fetch ALL niches in one batch
+        print("\n🚀 Starting FULL fetch for all niches...")
+        print("-" * 70)
         
-        # Fetch ALL niches (force full update)
-        from config.niche_intelligence import get_all_tracked_niches
-        all_niches = get_all_tracked_niches()
-        print(f"\n📊 Fetching ALL {len(all_niches)} niches...")
-        result = fetch_tiktok_trends_for_rotation_group(db, force=True, override_niches=all_niches)
+        result = fetch_tiktok_trends_for_rotation_group(
+            db, 
+            force=True,
+            override_niches=all_niches
+        )
         
-        print("\n" + "=" * 60)
-        print("FETCH RESULTS")
-        print("=" * 60)
+        print("\n" + "=" * 70)
+        print("FETCH RESULTS - ALL NICHES")
+        print("=" * 70)
         print(f"Status: {result.get('status', 'unknown')}")
         print(f"Credits Used: {result.get('credits_used', 0)}")
         print(f"Credits Remaining: {result.get('credits_remaining', 'N/A')}")
         print(f"Posts Stored: {result.get('posts_stored', 0)}")
         print(f"Sounds Stored: {result.get('sounds_stored', 0)}")
         print(f"Errors: {result.get('errors', 0)}")
-        print(f"Rotation Group: {result.get('rotation_group', [])}")
+        print(f"Niches Processed: {len(all_niches)}")
         
         if result.get('old_posts_deleted'):
             print(f"Old Posts Deleted: {result['old_posts_deleted']}")
@@ -58,9 +65,10 @@ def main():
             print(f"Old Sounds Deleted: {result['old_sounds_deleted']}")
         
         if result.get('status') == 'success':
-            print("\n✅ TikTok trend fetch completed successfully!")
-        elif result.get('status') == 'skipped':
-            print(f"\n⚠️ Fetch skipped: {result.get('message', '')}")
+            print("\n✅ All niches fetched successfully!")
+            print("📊 Admin dashboard data is now updated with fresh TikTok trends.")
+        elif result.get('status') == 'partial':
+            print(f"\n⚠️ Partial success - some niches may have failed")
         else:
             print(f"\n❌ Fetch failed: {result.get('error', 'Unknown error')}")
             sys.exit(1)
@@ -72,6 +80,9 @@ def main():
         sys.exit(1)
     finally:
         db.close()
+        print("\n" + "=" * 70)
+        print("Admin Dashboard Update Complete")
+        print("=" * 70)
 
 if __name__ == "__main__":
     main()

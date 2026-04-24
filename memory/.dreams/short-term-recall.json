@@ -1,0 +1,495 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-22T17:14:05.822Z",
+  "entries": {
+    "memory:memory/2026-03-09.md:86:118": {
+      "key": "memory:memory/2026-03-09.md:86:118",
+      "path": "memory/2026-03-09.md",
+      "startLine": 86,
+      "endLine": 118,
+      "source": "memory",
+      "snippet": "- `applyPlatformLocks()` called after tier loads — handles all lock state - Backend: `/home/daz/.openclaw/workspace/flowcast/` - Dashboard: `templates/dashboard-new.html` - Hook scorer standalone: `templates/hooks.html` - Repo: `github.com/182Gandalf/FlowCast` (Railway auto-deploys on push to main) --- ## Key Lessons Learned Today ### Clerk Auth Pattern Always call `await window.Clerk.load()` before ANY `window.Clerk.session.getToken()` call, even in functions where the user is known to be logged in. Missing this causes `TypeError: Cannot read property 'getToken' of null`. ### FastAPI ORM Serialization Returning SQLAlchemy ORM objects directly can cause silent 500s if: - Pydantic model l",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "totalScore": 1.621963562405102,
+      "maxScore": 0.8156652258195823,
+      "firstRecalledAt": "2026-04-21T07:15:49.005Z",
+      "lastRecalledAt": "2026-04-21T07:16:07.637Z",
+      "queryHashes": [
+        "bd17e2307065",
+        "c9889718c3c8"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "home/daz",
+        "openclaw/workspace/flowcast",
+        "templates/dashboard-new.html",
+        "templates/hooks.html",
+        "github.com/182gandalf/flowcast",
+        "auto-deploys",
+        "window.clerk.load",
+        "window.clerk.session.gettoken"
+      ]
+    },
+    "memory:memory/2026-03-12.md:1:27": {
+      "key": "memory:memory/2026-03-12.md:1:27",
+      "path": "memory/2026-03-12.md",
+      "startLine": 1,
+      "endLine": 27,
+      "source": "memory",
+      "snippet": "# Daily Log — March 12, 2026 ## Session Summary (07:00–13:54 UTC) ### FlowCast — Major Build Day **DB & Infrastructure** - Ran `alembic upgrade head` locally (Railway DB already up to date — tables existed) - Fixed pytrends `urllib3<2` compatibility issue — pinned in requirements.txt, pushed - Scheduler: increased trend fetch delay from 10s → 60s+jitter, moved from 06:00 → 03:00 UTC - Manually fetched fitness trends (10 topics saved to DB for Daz's test account) **Trends Tab** - Wired up `/api/trends/current` to return full 10 topics with `?limit=` param + `fetched_at` - Built live Trends tab in dashboard-new.html: score bars, meta timestamp, empty state - Added Splash gating: trend #1 v",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "totalScore": 2.475633842894605,
+      "maxScore": 0.8456720733990781,
+      "firstRecalledAt": "2026-04-21T07:15:49.005Z",
+      "lastRecalledAt": "2026-04-21T07:21:24.195Z",
+      "queryHashes": [
+        "bd17e2307065",
+        "af67aa802818",
+        "e4ec0a94bba6"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "requirements.txt",
+        "api/trends/current",
+        "fetched-at",
+        "dashboard-new.html",
+        "log",
+        "march",
+        "summary",
+        "utc"
+      ]
+    },
+    "memory:memory/2026-03-12.md:22:49": {
+      "key": "memory:memory/2026-03-12.md:22:49",
+      "path": "memory/2026-03-12.md",
+      "startLine": 22,
+      "endLine": 49,
+      "source": "memory",
+      "snippet": "- Admin endpoints: `/api/admin/test/send-digest`, `/api/admin/test/send-day7-email` - Successfully triggered test digest to `darren.stegmann@gmail.com` (Fitness, Creator tier) ✅ - Successfully triggered Day 7 email to `stgdar001@gmail.com` (Fitness, Splash tier) ✅ - DIGEST_API_KEY was initially a suspended Gemini key — Daz replaced it, now working **Onboarding Fix** - Splash users couldn't submit onboarding — blocked by `contentTypes.length === 0` check even when Q7 was disabled - Fix: frontend checks `input.disabled` before validating; backend made Q6–10 Optional in Pydantic model - Validation and save logic conditional on fields being provided **OG Image** - Generated new 1200×630 OG ima",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "totalScore": 2.4592460872618185,
+      "maxScore": 0.8305716728149146,
+      "firstRecalledAt": "2026-04-21T07:15:49.005Z",
+      "lastRecalledAt": "2026-04-21T07:21:24.195Z",
+      "queryHashes": [
+        "bd17e2307065",
+        "af67aa802818",
+        "e4ec0a94bba6"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "api/admin/test/send-digest",
+        "api/admin/test/send-day7-email",
+        "darren.stegmann",
+        "gmail.com",
+        "digest-api-key",
+        "contenttypes.length",
+        "input.disabled",
+        "admin"
+      ]
+    },
+    "memory:memory/2026-03-12.md:43:75": {
+      "key": "memory:memory/2026-03-12.md:43:75",
+      "path": "memory/2026-03-12.md",
+      "startLine": 43,
+      "endLine": 75,
+      "source": "memory",
+      "snippet": "- Studio: Full 10 topics + daily digest + daily alerts **Email Deliverability** - Day 7 email rewritten as plain personal email (no template, no buttons, no images) - Added plain-text versions to ALL emails - Added `List-Unsubscribe` headers to digest emails - Subject line cleanup: Day 7 → \"One week in — a quick note about your FlowCast\" - FROM display name: `Daz from FlowCast <hello@flowcast.space>` - `FROM_NAME` env var needed in Railway - DNS check: DMARC already `p=quarantine` ✅, DKIM configured ✅, SPF missing Resend (`include:amazonses.com` needs adding in Cloudflare) **PLAN.md** - Removed all launch date targets — \"ship when ready\" philosophy adopted ### Plans / Reminders Logged to",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "totalScore": 2.4339956933097304,
+      "maxScore": 0.8359967805048737,
+      "firstRecalledAt": "2026-04-21T07:15:49.005Z",
+      "lastRecalledAt": "2026-04-21T07:21:24.195Z",
+      "queryHashes": [
+        "bd17e2307065",
+        "af67aa802818",
+        "e4ec0a94bba6"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "plain-text",
+        "list-unsubscribe",
+        "flowcast.space",
+        "from-name",
+        "amazonses.com",
+        "plan.md",
+        "studio",
+        "full"
+      ]
+    },
+    "memory:memory/2026-03-09.md:112:148": {
+      "key": "memory:memory/2026-03-09.md:112:148",
+      "path": "memory/2026-03-09.md",
+      "startLine": 112,
+      "endLine": 148,
+      "source": "memory",
+      "snippet": "### Platform Selector Architecture Decision Chosen: **Global default + per-idea override** - Global platform stored in `flowcast_workspace` localStorage - Per-idea overrides stored in `flowcast_workspace.platform_overrides[ideaId]` - `getIdeaPlatform(ideaId)` resolves effective platform for any idea ## Git Commits Today (chronological) - `bbacfc1` — Phase 2 Features 2 & 3 - `597fdab` — PHASE2-PLAN.md updated - `2092f51` — Splash plan badge text - `ed5f6f7` — Primary Platform label + brand icons - `0f3f98e` — Master dashboard redesign - `56051ba` — Content header bar - `b94e729` — 502 error handling - `2bc8b24` — AI timeout + moonshot-v1-8k - `910f007` — Platform tab defaults to primary plat",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7979529787478067,
+      "maxScore": 0.7979529787478067,
+      "firstRecalledAt": "2026-04-21T07:15:49.005Z",
+      "lastRecalledAt": "2026-04-21T07:15:49.005Z",
+      "queryHashes": [
+        "bd17e2307065"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "per-idea",
+        "flowcast-workspace",
+        "phase2-plan.md",
+        "moonshot-v1-8k",
+        "platform",
+        "selector",
+        "architecture",
+        "decision"
+      ]
+    },
+    "memory:memory/2026-04-01.md:1:24": {
+      "key": "memory:memory/2026-04-01.md:1:24",
+      "path": "memory/2026-04-01.md",
+      "startLine": 1,
+      "endLine": 24,
+      "source": "memory",
+      "snippet": "# April 1, 2026 — Activity Log ## Morning (11:00 UTC) - **11:04 UTC** — Daily reminder triggered; no prior activity logged for today - **~11:05 UTC** — Crypto Raven requested hero copy updates on landing page - Changed: \"The Content Intelligence Engine...\" → \"The Personalized Content Intelligence Engine...\" - Changed: \"...turns those signals into scored hooks...\" → \"...turns those signals into personalized scored hooks...\" - Commit `d570666` pushed to main ## Afternoon/Evening (15:00–19:00 UTC) - **15:00 UTC** — Midday review completed; no new user requests - Development activity observed (post-15:00): - Consolidated trend data into single expandable button in Ideas tab - Added s",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "totalScore": 2.4291733610953656,
+      "maxScore": 0.8384180100126717,
+      "firstRecalledAt": "2026-04-21T07:15:49.005Z",
+      "lastRecalledAt": "2026-04-21T07:21:24.195Z",
+      "queryHashes": [
+        "bd17e2307065",
+        "af67aa802818",
+        "e4ec0a94bba6"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "afternoon/evening",
+        "post-15",
+        "april",
+        "activity",
+        "log",
+        "morning",
+        "utc",
+        "reminder"
+      ]
+    },
+    "memory:memory/2026-02-26.md:141:163": {
+      "key": "memory:memory/2026-02-26.md:141:163",
+      "path": "memory/2026-02-26.md",
+      "startLine": 141,
+      "endLine": 163,
+      "source": "memory",
+      "snippet": "- Present top suggestion to user - Include: Category, Observation, Recommendation, Impact, Effort ### Local File Created: - **Path:** `/home/daz/.openclaw/workspace/flowcast-daily-improvements.md` - **Purpose:** Store all daily analysis findings - **Access:** Local only (not on GitHub) - **Format:** Date-stamped entries with categories ### Analysis Categories: - **Design:** UX/UI, visual appeal, mobile responsiveness, loading speed - **Marketing:** Copy, CTAs, social proof, headlines, SEO - **Flow:** User journey, onboarding, navigation, forms - **Logic:** Functionality, bugs, errors, security - **Financial:** Pricing clarity, conversion optimization, trust signals ### First Analysis:",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7836537713609192,
+      "maxScore": 0.7836537713609192,
+      "firstRecalledAt": "2026-04-21T07:15:49.005Z",
+      "lastRecalledAt": "2026-04-21T07:15:49.005Z",
+      "queryHashes": [
+        "bd17e2307065"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "home/daz",
+        "date-stamped",
+        "ux/ui",
+        "present",
+        "top",
+        "suggestion",
+        "user",
+        "include"
+      ]
+    },
+    "memory:memory/2026-03-12.md:109:132": {
+      "key": "memory:memory/2026-03-12.md:109:132",
+      "path": "memory/2026-03-12.md",
+      "startLine": 109,
+      "endLine": 132,
+      "source": "memory",
+      "snippet": "- **Ideas counter always showed 20**: `User.splash_ideas_used_this_month` was never written to — the ideas router writes to `CreatorProfile.splash_ideas_used_this_month`. Fixed profile API to read from CreatorProfile. ### Key Features Added **White-label PDF exports (Studio):** - 3 new columns on creator_profiles: brand_name, brand_color, brand_logo_url - Migration: 2024_03_13_brand_settings.py - New router: routers/export.py — GET/POST /api/export/branding, GET /api/export/pdf/{scripts,hooks,content-pack} - Dashboard: Brand Settings modal with live color preview, sidebar button (Studio only) - PDF export bars on Saved > Hooks and Saved > Scripts tabs **Studio plan completions (audit + bui",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7597707922404533,
+      "maxScore": 0.7597707922404533,
+      "firstRecalledAt": "2026-04-21T07:15:49.007Z",
+      "lastRecalledAt": "2026-04-21T07:15:49.007Z",
+      "queryHashes": [
+        "af67aa802818"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "router",
+        "white-label",
+        "creator-profiles",
+        "brand-name",
+        "brand-color",
+        "brand-logo-url",
+        "2024-03-13-brand-settings.py",
+        "routers/export.py"
+      ]
+    },
+    "memory:memory/2026-04-05.md:1:41": {
+      "key": "memory:memory/2026-04-05.md:1:41",
+      "path": "memory/2026-04-05.md",
+      "startLine": 1,
+      "endLine": 41,
+      "source": "memory",
+      "snippet": "# Daily Log — April 5, 2026 ## 18:01 UTC — Heartbeat Test with phi4-mini-reasoning **Status:** ✅ OPERATIONAL **Configuration Changes:** - Added `phi4-mini-reasoning` to OpenClaw Ollama provider - Updated heartbeat model: `moonshot/kimi-k2.5` → `ollama/phi4-mini-reasoning` - Heartbeat interval: Every 30 minutes **Heartbeat Check Results:** - ⏰ Current time: 2026-04-05 18:01 UTC - 📋 DASHBOARD.md review: No P0 blockers, no user action required - 📝 Recent memory files: Up to 2026-04-04.md - 🔧 Uncommitted changes: 2 files (levelup-ai/creator-app, scripts/test_tiktok_all.py) - ✅ Ollama status: phi4-mini-reasoning responding **Next Heartbeat:** 18:30 UTC ## 17:26 UTC — Memory System Refact",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8108818941902934,
+      "maxScore": 0.8108818941902934,
+      "firstRecalledAt": "2026-04-21T07:16:07.637Z",
+      "lastRecalledAt": "2026-04-21T07:16:07.637Z",
+      "queryHashes": [
+        "c9889718c3c8"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "phi4-mini-reasoning",
+        "moonshot/kimi-k2.5",
+        "ollama/phi4-mini-reasoning",
+        "dashboard.md",
+        "levelup-ai/creator-app",
+        "scripts/test-tiktok-all.py",
+        "log",
+        "april"
+      ]
+    },
+    "memory:memory/2026-03-13.md:57:86": {
+      "key": "memory:memory/2026-03-13.md:57:86",
+      "path": "memory/2026-03-13.md",
+      "startLine": 57,
+      "endLine": 86,
+      "source": "memory",
+      "snippet": "- Splash: 2→5, Creator: 7→15 saves each - Updated: backend (saved_content.py, ideas.py), pricing, FAQ, help guide, dashboard JS - Creator Pro save limit set to 20 (separate update) - Commit: `4b9fede`, `461d6ff` ### Annual 14-Day Money-Back Guarantee - Added trust badge under both pricing toggles (shows on annual, swaps to cancel-anytime on monthly) - Refund policy updated: new banner at top + section 4.2 updated - Commit: `e737f06`, `21b5af6` ### Creator Pro Tier Added - New tier: `creator_pro` — $25/mo / $20/mo annual ($240/yr) - Features: All Creator + daily digest + 90-day calendar + Zapier/Make integration - 20 saves (vs Creator's 15) - Zapier now requires creator_pro or studio (remov",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8052403178581274,
+      "maxScore": 0.8052403178581274,
+      "firstRecalledAt": "2026-04-21T07:16:07.637Z",
+      "lastRecalledAt": "2026-04-21T07:16:07.637Z",
+      "queryHashes": [
+        "c9889718c3c8"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "saved-content.py",
+        "ideas.py",
+        "14-day",
+        "money-back",
+        "cancel-anytime",
+        "4.2",
+        "creator-pro",
+        "25/mo"
+      ]
+    },
+    "memory:memory/2026-03-06.md:217:261": {
+      "key": "memory:memory/2026-03-06.md:217:261",
+      "path": "memory/2026-03-06.md",
+      "startLine": 217,
+      "endLine": 261,
+      "source": "memory",
+      "snippet": "- Document timing gap lesson (high-velocity days need end-of-day updates) --- *Review completed silently per protocol.* *No chat notification sent.* *Key finding: Hourly reviews redundant — disable cron, keep weekly + daily security checks.* --- ## March 6, 2026 — FlowCast Build Plan Saved **Status:** Paused for testing. Full implementation plan documented below. ### Current State (Built Today) - ✅ FastAPI skeleton with PostgreSQL - ✅ Clerk authentication (login/signup) - ✅ Basic Paddle integration (checkout overlay, webhooks) - ✅ Account settings with tier display - ✅ Pricing page with monthly/annual toggle - ✅ Onboarding flow with skip option ### Missing (Per 13-Step Build Guide) -",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7997022313578684,
+      "maxScore": 0.7997022313578684,
+      "firstRecalledAt": "2026-04-21T07:16:07.637Z",
+      "lastRecalledAt": "2026-04-21T07:16:07.637Z",
+      "queryHashes": [
+        "c9889718c3c8"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "high-velocity",
+        "end-of-day",
+        "login/signup",
+        "monthly/annual",
+        "13-step",
+        "document",
+        "timing",
+        "gap"
+      ]
+    },
+    "memory:memory/2026-03-10.md:18:52": {
+      "key": "memory:memory/2026-03-10.md:18:52",
+      "path": "memory/2026-03-10.md",
+      "startLine": 18,
+      "endLine": 52,
+      "source": "memory",
+      "snippet": "- `f8292de` — Generate ideas button: show loading instantly on tap, then do async work - `970b4a8` — Animated logo in sidebar (replace static img with looping video) - `7d35ac1` — Generate btn mobile: touch-action:manipulation, z-index:2, :active state - `eeb2770` — Bind generate ideas button via addEventListener+touchend at script end --- ## Key Features Built / Fixed Today ### Phase 3 Personalization Engine (already built in March 9 evening session) - Thumbs up/down on idea cards with weekly Splash limits - Regenerate with Tweaks (1/week Splash, unlimited Creator+) - Taste Profile progress bar in sidebar (8 items × 12.5% = 100%) - APScheduler weekly reset (Monday 00:00 UTC) via FastAPI",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7949595468859901,
+      "maxScore": 0.7949595468859901,
+      "firstRecalledAt": "2026-04-21T07:16:07.637Z",
+      "lastRecalledAt": "2026-04-21T07:16:07.637Z",
+      "queryHashes": [
+        "c9889718c3c8"
+      ],
+      "recallDays": [
+        "2026-04-21"
+      ],
+      "conceptTags": [
+        "touch-action",
+        "z-index",
+        "up/down",
+        "1/week",
+        "12.5",
+        "f8292de",
+        "generate",
+        "ideas"
+      ]
+    },
+    "memory:memory/2026-03-09.md:51:58": {
+      "key": "memory:memory/2026-03-09.md:51:58",
+      "path": "memory/2026-03-09.md",
+      "startLine": 51,
+      "endLine": 58,
+      "source": "memory",
+      "snippet": "- **Regenerate 500 error FIXED** — `created_at NULL` caused `ResponseValidationError`; made `IdeaGenerationResponse.created_at` `Optional[datetime] = None`; set `idea.created_at = datetime.now()` before commit if NULL; fallback in return dict — commit `c15a2a3` - **Regenerate button HIDDEN** — `.regen-btn { display: none !important; }` CSS, all code preserved — commit `f89d1d7` - **Splash tier TikTok-only lock** — Reels & Shorts locked in sidebar platform selector, idea card tabs (Ideas + Saved), script tabs; `showPlatformUpsell()` orange toast; `applyPlatformLocks()` called after tier loads — commits `9f26746`, `b28ee68` - **Ideas remaining counter persistence** — `ideasUsed` synced from AP",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8355813269071164,
+      "maxScore": 0.8355813269071164,
+      "firstRecalledAt": "2026-04-22T17:14:05.822Z",
+      "lastRecalledAt": "2026-04-22T17:14:05.822Z",
+      "queryHashes": [
+        "d0d18c6c0663"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "created-at",
+        "idea.created-at",
+        "datetime.now",
+        "regen-btn",
+        "tiktok-only",
+        "regenerate",
+        "error",
+        "fixed"
+      ]
+    },
+    "memory:memory/2026-02-26.md:74:120": {
+      "key": "memory:memory/2026-02-26.md:74:120",
+      "path": "memory/2026-02-26.md",
+      "startLine": 74,
+      "endLine": 120,
+      "source": "memory",
+      "snippet": "> \"Compile a to do list for the weekend. These should include all the steps needed before we can begin live testing on the app. This should include all missing app integrations for posting, payment, hosting, operation, database, logins, AI integration etc. Then commit this to memory and send me a reminder at 9am Saturday morning.\" ### Weekend Checklist Created: Comprehensive pre-launch checklist covering: **🔴 CRITICAL PATH:** 1. Authentication & Login System 2. Database & Data Persistence 3. AI Integration (Gemini API) 4. Payment Integration (Paddle) 5. Social Platform Integrations (YouTube, Instagram, TikTok) 6. Post Scheduling System (enable cron jobs) 7. Email Notifications 8. Hosting",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8311919262503644,
+      "maxScore": 0.8311919262503644,
+      "firstRecalledAt": "2026-04-22T17:14:05.822Z",
+      "lastRecalledAt": "2026-04-22T17:14:05.822Z",
+      "queryHashes": [
+        "d0d18c6c0663"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "pre-launch",
+        "compile",
+        "list",
+        "the",
+        "weekend",
+        "include",
+        "all",
+        "steps"
+      ]
+    },
+    "memory:memory/2026-03-03.md:32:72": {
+      "key": "memory:memory/2026-03-03.md:32:72",
+      "path": "memory/2026-03-03.md",
+      "startLine": 32,
+      "endLine": 72,
+      "source": "memory",
+      "snippet": "### 5. Refund Page Fixes - **Added /refund route** to main.py (was missing) - Fixed section numbering: \"10. Contact Us\" → \"8. Contact Us\" - **Completely rewrote refund policy** to align with Paddle Merchant of Record terms: - Clarifies Paddle handles all payments & refunds - 30-day FlowCast guarantee + 14-day EU legal right - Eligibility criteria (qualifying and non-qualifying) - Two methods: direct via paddle.net OR FlowCast support - Links to Paddle Checkout Buyer Terms - Subscription-specific rules (monthly, annual, free) ### 6. Clerk Auth Fixes - Fixed syntax error (unterminated triple-quoted string in main.py) - **Sign-up redirect**: Now goes to /onboarding instead of /dash",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8108344910359865,
+      "maxScore": 0.8108344910359865,
+      "firstRecalledAt": "2026-04-22T17:14:05.822Z",
+      "lastRecalledAt": "2026-04-22T17:14:05.822Z",
+      "queryHashes": [
+        "d0d18c6c0663"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "main.py",
+        "30-day",
+        "14-day",
+        "non-qualifying",
+        "paddle.net",
+        "subscription-specific",
+        "triple-quoted",
+        "sign-up"
+      ]
+    },
+    "memory:memory/2026-03-09.md:63:96": {
+      "key": "memory:memory/2026-03-09.md:63:96",
+      "path": "memory/2026-03-09.md",
+      "startLine": 63,
+      "endLine": 96,
+      "source": "memory",
+      "snippet": "- **Reviewed `routers/ideas.py`** — save/unsave endpoint pattern confirmed for replication ### NEXT TASK (resume here) **Saved Hooks + Scripts Feature** — in progress at compaction, nothing implemented yet: 1. **Models** (`models.py`): Add `SavedHook` and `SavedScript` tables 2. **Migration**: New Alembic file, `down_revision = '2024_03_08_ideas_platform'` 3. **API endpoints** (tier-gated): - `POST /generate/hooks/{id}/save` (toggle) - `POST /generate/scripts/{id}/save` (toggle) - `GET /generate/hooks/saved` - `GET /generate/scripts/saved` 4. **UI**: Save buttons on hook cards + script panel in `dashboard-new.html` 5. **Saved tab**: Restructure into 3 subsections (Ideas / Hooks",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7988830941114163,
+      "maxScore": 0.7988830941114163,
+      "firstRecalledAt": "2026-04-22T17:14:05.822Z",
+      "lastRecalledAt": "2026-04-22T17:14:05.822Z",
+      "queryHashes": [
+        "d0d18c6c0663"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "router",
+        "routers/ideas.py",
+        "save/unsave",
+        "models.py",
+        "down-revision",
+        "2024-03-08-ideas-platform",
+        "tier-gated",
+        "generate/hooks"
+      ]
+    }
+  }
+}
