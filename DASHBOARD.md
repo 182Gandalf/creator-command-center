@@ -2,7 +2,7 @@
 
 **Single source of truth for all active blockers and action items.**
 
-**Last Updated:** April 25, 2026 UTC  
+**Last Updated:** April 25, 2026 UTC (2:58 PM)  
 **Next Review:** Weekly (Sundays)
 
 ---
@@ -23,7 +23,11 @@ None.
 
 | ID | Issue | Completed Date | Impact |
 |----|-------|----------------|--------|
-| **PERF-001** | **Dashboard Performance Fix** | **Apr 25, 2026** | **🚀 Committed 6e71385** |
+| **PERF-002** | **Dashboard Slowness Fix** | **Apr 25, 2026** | **🚀 Committed a6ab756** |
+| | - Increased DB pool: 5→10, max_overflow: 10→20 | | |
+| | - Removed Clerk API call from hot path | | |
+| | - Only fetch email on user creation (not every request) | | |
+| **PERF-001** | **Trend Query Optimization** | **Apr 25, 2026** | **🚀 Committed 6e71385** |
 | | - Fixed slow trend queries (ilike → exact match) | | |
 | | - Services: trends.py, reddit_trends.py | | |
 | | - Enables PostgreSQL index usage | | |
